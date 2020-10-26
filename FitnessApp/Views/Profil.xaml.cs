@@ -1,15 +1,19 @@
 ﻿using System;
 using System.ComponentModel;
+using FitnessApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace FitnessApp.Views
 {
-    public partial class AboutPage : ContentPage
+    public partial class Profil : ContentPage
     {
-        public AboutPage()
+        private ProfilVM profilVM;
+
+        public Profil()
         {
             InitializeComponent();
+            BindingContext = profilVM;
         }
     }
 }
