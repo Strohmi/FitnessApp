@@ -16,7 +16,6 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>false</AndroidUseLatestPlatformSdk>
     <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidUseAapt2>true</AndroidUseAapt2>
@@ -90,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FitnessApp\FitnessApp.csproj">
-      <Project>{C51283DA-0553-4DF2-9D69-414D7DDB046D}</Project>
+      <Project>{10224418-5C3A-4AE5-8476-50C14C9CBE32}</Project>
       <Name>FitnessApp</Name>
     </ProjectReference>
   </ItemGroup>
