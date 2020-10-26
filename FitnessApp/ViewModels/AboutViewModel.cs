@@ -9,7 +9,7 @@ namespace FitnessApp.ViewModels
     {
         public AboutViewModel()
         {
-            Title = "About";
+            Title = "TEST!";
             OpenWebCommand = new Command(async () => await Browser.OpenAsync("https://aka.ms/xamain-quickstart"));
         }
 
