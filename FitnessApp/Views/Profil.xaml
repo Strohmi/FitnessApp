@@ -6,17 +6,24 @@
              Title="{Binding Title}">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" BackgroundColor="Red" VerticalOptions="Start">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="xamarin_logo.png" HeightRequest="50" WidthRequest="50" VerticalOptions="Start"/>
-            <Label Grid.Column="1" Text="Vorname Nachname" FontSize="Large" TextColor="Black" VerticalOptions="Center"/>
+            <Label Text="{Binding ProfilVM.User.VollName}" FontSize="Large" TextColor="Black" VerticalOptions="Center"/>
+        </Grid>
+
+        <Grid Grid.Row="1" x:Name="gridEdit" IsVisible="false" BackgroundColor="Yellow" VerticalOptions="Start">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+
+            <Entry Grid.Row="0" Placeholder="Vorname" PlaceholderColor="Gray" Text="{Binding ProfilVM.User.Vorname}" TextColor="Black" BackgroundColor="White"/>
+            <Entry Grid.Row="1" Placeholder="Nachname" PlaceholderColor="Gray" Text="{Binding ProfilVM.User.Nachname}" TextColor="Black" BackgroundColor="White"/>
+            <DatePicker Grid.Row="2" Date="{Binding ProfilVM.User.Nachname}" TextColor="Black" BackgroundColor="White" MaximumDate="{Binding MaxDate}" MinimumDate="{Binding MinDate}"/>
         </Grid>
     </Grid>
 </ContentPage>

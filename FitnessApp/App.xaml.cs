@@ -14,6 +14,7 @@ namespace FitnessApp
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
+            //MainPage = new NavigationPage(new AppShell());
             MainPage = new AppShell();
         }
 
