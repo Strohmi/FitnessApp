@@ -1,7 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using FitnessApp.Services;
 using FitnessApp.Views;
 
 namespace FitnessApp
@@ -12,9 +11,6 @@ namespace FitnessApp
         public App()
         {
             InitializeComponent();
-
-            DependencyService.Register<MockDataStore>();
-            //MainPage = new NavigationPage(new AppShell());
             MainPage = new AppShell();
         }
 

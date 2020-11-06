@@ -11,7 +11,14 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" BackgroundColor="Red" VerticalOptions="Start">
-            <Label Text="{Binding ProfilVM.User.VollName}" FontSize="Large" TextColor="Black" VerticalOptions="Center"/>
+            <Label FontSize="Large" TextColor="Black" VerticalOptions="Center">
+                <Label.Text>
+                    <MultiBinding StringFormat="{}{0} {1}">
+                        <Binding Path="User.Vorname"/>
+                        <Binding Path="User.Nachname"/>
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
         </Grid>
 
         <Grid Grid.Row="1" x:Name="gridEdit" IsVisible="false" BackgroundColor="Yellow" VerticalOptions="Start">
@@ -21,9 +28,9 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <Entry Grid.Row="0" Placeholder="Vorname" PlaceholderColor="Gray" Text="{Binding ProfilVM.User.Vorname}" TextColor="Black" BackgroundColor="White"/>
-            <Entry Grid.Row="1" Placeholder="Nachname" PlaceholderColor="Gray" Text="{Binding ProfilVM.User.Nachname}" TextColor="Black" BackgroundColor="White"/>
-            <DatePicker Grid.Row="2" Date="{Binding ProfilVM.User.Nachname}" TextColor="Black" BackgroundColor="White" MaximumDate="{Binding MaxDate}" MinimumDate="{Binding MinDate}"/>
+            <Entry Grid.Row="0" x:Name="vorname" Placeholder="Vorname" PlaceholderColor="Gray" Text="{Binding User.Vorname}" TextColor="Black" BackgroundColor="White"/>
+            <Entry Grid.Row="1" x:Name="nachname" Placeholder="Nachname" PlaceholderColor="Gray" Text="{Binding User.Nachname}" TextColor="Black" BackgroundColor="White"/>
+            <DatePicker Grid.Row="2" Date="{Binding User.Geburtsdatum}" TextColor="Black" BackgroundColor="White" MaximumDate="{Binding MaxDate}" MinimumDate="{Binding MinDate}"/>
         </Grid>
     </Grid>
 </ContentPage>

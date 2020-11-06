@@ -11,9 +11,8 @@ namespace FitnessApp
         public AppShell()
         {
             InitializeComponent();
-            Routing.RegisterRoute(nameof(ItemDetailPage), typeof(ItemDetailPage));
-            Routing.RegisterRoute(nameof(NewItemPage), typeof(NewItemPage));
             Routing.RegisterRoute(nameof(Profil), typeof(Profil));
+            Routing.RegisterRoute(nameof(NewsFeed), typeof(NewsFeed));
         }
 
     }
