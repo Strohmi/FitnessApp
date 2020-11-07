@@ -14,6 +14,5 @@ namespace FitnessApp
             Routing.RegisterRoute(nameof(Profil), typeof(Profil));
             Routing.RegisterRoute(nameof(NewsFeed), typeof(NewsFeed));
         }
-
     }
 }
