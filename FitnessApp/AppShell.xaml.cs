@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using FitnessApp.ViewModels;
-using FitnessApp.Views;
 using Xamarin.Forms;
 
 namespace FitnessApp

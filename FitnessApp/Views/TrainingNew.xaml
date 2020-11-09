@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.TrainingNew"
+             xmlns:vm="clr-namespace:FitnessApp.ViewModels"
+             Title="{Binding Title}">
+    <Grid>
+        <ListView ItemsSource="{Binding Options}" SeparatorVisibility="None">
+            <!--<ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding Options.Value}"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>-->
+        </ListView>
+    </Grid>
+</ContentPage>

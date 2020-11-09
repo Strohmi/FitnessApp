@@ -1,7 +1,6 @@
 ﻿using System;
-using FitnessApp.Models;
 
-namespace FitnessApp.ViewModels
+namespace FitnessApp
 {
     public class ProfilVM : NotifyPropertyBase
     {

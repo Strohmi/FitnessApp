@@ -1,5 +1,5 @@
 ﻿using System;
-namespace FitnessApp.Models
+namespace FitnessApp
 {
     public class User : NotifyPropertyBase
     {

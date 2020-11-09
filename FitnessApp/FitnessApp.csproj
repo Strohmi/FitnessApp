@@ -12,4 +12,8 @@
   <ItemGroup>
     <Compile Remove="Views\AboutPage %28Kopie%29.xaml.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Profil\" />
+    <Folder Include="Views\NewsFeed\" />
+  </ItemGroup>
 </Project>

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.NewsFeed"
+             Title="{Binding Title}">
+    <Grid>
+        <ListView ItemsSource="{Binding ListNews}" HasUnevenRows="True" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="10,0" Margin="15,10,15,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto"/>
+                                    <RowDefinition Height="1"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="auto"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Row="0" Text="{Binding Title}" FontSize="Large" LineBreakMode="CharacterWrap" TextColor="Black" VerticalOptions="End" Margin="0,2,0,0"/>
+                                <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                                <Grid Grid.Row="2">
+                                    <Label Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap"/>
+                                    <Image x:Name="image"/>
+                                </Grid>
+                                <Grid Grid.Row="3" VerticalOptions="End" Margin="0,5,0,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Ersteller.VollName}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                                    <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small"/>
+                                </Grid>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

@@ -1,7 +1,6 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
-using FitnessApp.Views;
 
 namespace FitnessApp
 {

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.StatusNew"
+             xmlns:vm="clr-namespace:FitnessApp.ViewModels"
+             Title="{Binding Title}">
+    <Grid BackgroundColor="White">
+        <Frame Margin="20" Padding="0" BackgroundColor="RoyalBlue">
+            <Grid BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Beschreibung" TextColor="White" FontSize="Medium"/>
+                    <Switch Grid.Column="1" Toggled="SwitchToggeled"/>
+                    <Label Grid.Column="2" Text="Foto" TextColor="White" FontSize="Medium"/>
+                </Grid>
+
+                <Entry Grid.Row="1" Placeholder="Titel" Style="{StaticResource Key=DefaultEntry}"/>
+                <Grid Grid.Row="2">
+                    <Entry Placeholder="Beschreibung" Style="{StaticResource Key=DefaultEntry}"/>
+                    <Button Text="Foto suchen..." FontSize="Medium" BackgroundColor="Orange" TextColor="Black"/>
+                </Grid>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

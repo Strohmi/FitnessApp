@@ -1,10 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
-using FitnessApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace FitnessApp.Views
+namespace FitnessApp
 {
     public partial class Profil : ContentPage
     {
