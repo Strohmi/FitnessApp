@@ -68,6 +68,9 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helper\CloseIOS.cs" />
+    <Compile Include="Helper\MessageIOS.cs" />
+    <Compile Include="Helper\FileTypeIOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -123,7 +126,7 @@
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <ImageAsset Include="Assets.xcassets\Plus.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png" />
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -146,5 +149,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets.xcassets\Plus.imageset\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
 </Project>

@@ -17,7 +17,7 @@
                 <Setter Property="Shell.TabBarBackgroundColor" Value="{StaticResource Primary}" />
                 <Setter Property="Shell.TabBarForegroundColor" Value="White"/>
                 <Setter Property="Shell.TabBarUnselectedColor" Value="White"/>
-                <Setter Property="Shell.TabBarTitleColor" Value="Red"/>
+                <Setter Property="Shell.TabBarTitleColor" Value="Orange"/>
             </Style>
             <Style TargetType="TabBar" BasedOn="{StaticResource BaseStyle}" />
             <Style TargetType="FlyoutItem" BasedOn="{StaticResource BaseStyle}" />

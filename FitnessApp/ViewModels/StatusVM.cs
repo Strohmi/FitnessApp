@@ -9,7 +9,7 @@ namespace FitnessApp
 
         public StatusVM()
         {
-
+            Status = new Status();
         }
     }
 }

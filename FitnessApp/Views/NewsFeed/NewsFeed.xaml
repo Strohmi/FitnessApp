@@ -2,9 +2,10 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitnessApp.NewsFeed"
-             Title="{Binding Title}">
-    <Grid>
-        <ListView ItemsSource="{Binding ListNews}" HasUnevenRows="True" SeparatorVisibility="None">
+             Title="{Binding Title}"
+             Appearing="Loaded">
+    <Grid BackgroundColor="Black">
+        <ListView ItemsSource="{Binding ListNews}" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -19,7 +20,7 @@
                                 <Label Grid.Row="0" Text="{Binding Title}" FontSize="Large" LineBreakMode="CharacterWrap" TextColor="Black" VerticalOptions="End" Margin="0,2,0,0"/>
                                 <BoxView Grid.Row="1" BackgroundColor="Black"/>
                                 <Grid Grid.Row="2">
-                                    <Label Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap"/>
+                                    <Label Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black"/>
                                     <Image x:Name="image"/>
                                 </Grid>
                                 <Grid Grid.Row="3" VerticalOptions="End" Margin="0,5,0,2">
@@ -28,7 +29,7 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Grid.Column="0" Text="{Binding Ersteller.VollName}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
-                                    <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small"/>
+                                    <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
                                 </Grid>
                             </Grid>
                         </Frame>

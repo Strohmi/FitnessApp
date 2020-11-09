@@ -2,10 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitnessApp.StatusNew"
-             xmlns:vm="clr-namespace:FitnessApp.ViewModels"
              Title="{Binding Title}">
     <Grid BackgroundColor="White">
-        <Frame Margin="20" Padding="0" BackgroundColor="RoyalBlue">
+        <Frame Margin="20" Padding="10" BackgroundColor="Orange" VerticalOptions="Start">
             <Grid BackgroundColor="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -19,15 +18,15 @@
                         <ColumnDefinition Width="auto"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Beschreibung" TextColor="White" FontSize="Medium"/>
-                    <Switch Grid.Column="1" Toggled="SwitchToggeled"/>
-                    <Label Grid.Column="2" Text="Foto" TextColor="White" FontSize="Medium"/>
+                    <Label Grid.Column="0" Text="Beschreibung" TextColor="Black" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Switch Grid.Column="1" Toggled="SwitchToggeled" VerticalOptions="Center"/>
+                    <Label Grid.Column="2" Text="Foto" TextColor="Black" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center"/>
                 </Grid>
 
-                <Entry Grid.Row="1" Placeholder="Titel" Style="{StaticResource Key=DefaultEntry}"/>
+                <Entry Grid.Row="1" Placeholder="Titel" Text="{Binding Status.Title}" Style="{StaticResource Key=DefaultEntry}"/>
                 <Grid Grid.Row="2">
-                    <Entry Placeholder="Beschreibung" Style="{StaticResource Key=DefaultEntry}"/>
-                    <Button Text="Foto suchen..." FontSize="Medium" BackgroundColor="Orange" TextColor="Black"/>
+                    <Editor x:Name="beschreibung" Placeholder="Beschreibung" Text="{Binding Status.Beschreibung}" Style="{StaticResource Key=DefaultEntry}" AutoSize="TextChanges"/>
+                    <Button x:Name="btFoto" Text="Foto suchen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" IsVisible="false"/>
                 </Grid>
             </Grid>
         </Frame>

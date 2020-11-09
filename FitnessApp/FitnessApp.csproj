@@ -15,5 +15,14 @@
   <ItemGroup>
     <Folder Include="Views\Profil\" />
     <Folder Include="Views\NewsFeed\" />
+    <Folder Include="Views\Trainingsplan\" />
+    <Folder Include="Views\Ernährungsplan\" />
+    <Folder Include="Models\General\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Trainingsplan\TrainingNew.xaml.cs">
+      <DependentUpon>TrainingNew.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

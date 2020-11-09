@@ -4,6 +4,7 @@ using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Linq;
+using FitnessApp.Models;
 
 namespace FitnessApp
 {
@@ -28,33 +29,12 @@ namespace FitnessApp
 
         private void SetNavBar()
         {
-            var list = new List<News>()
-            {
-                new News()
-                {
-                    Title = "Test Title",
-                    Beschreibung = "Hier steht eine Beschreibung drin",
-                    Ersteller = new User()
-                    {
-                        Vorname = "Niklas",
-                        Nachname = "Erichsen"
-                    },
-                    ErstelltAm = DateTime.Now
-                },
-                new News()
-                {
-                    Title = "Test Title 2",
-                    Beschreibung = "Hier steht eine Beschreibung drin jdausfdismlfim usnduiajsdjiuoasndunasljdnisamd\njduasndinsakdnsaubndiusakldmnasdjas",
-                    Ersteller = new User()
-                    {
-                        Vorname = "Tester",
-                        Nachname = "Nachnamemdismfsm"
-                    },
-                    ErstelltAm = new DateTime(2019,03,20)
-                }
-            };
 
-            NewsFeedVM.ListNews = list.OrderByDescending(s => s.ErstelltAm).ToList();
+        }
+
+        void Loaded(System.Object sender, System.EventArgs e)
+        {
+            NewsFeedVM.ListNews = TESTER.ListNews.OrderByDescending(s => s.ErstelltAm).ToList();
         }
     }
 }
