@@ -31,5 +31,9 @@
 	<string>FitnessApp</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Zugriff auf die Kamera wird für den Status benötigt</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Zugriff für die Fotos wird für den Status benötigt</string>
 </dict>
 </plist>

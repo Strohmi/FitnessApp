@@ -21,8 +21,8 @@ namespace FitnessApp
 
         protected override void OnStart()
         {
-            //if (DeviceInfo.Platform.ToString() == "iOS")
-            //                CheckPermissions();
+            if (DeviceInfo.Platform.ToString() == "iOS")
+                CheckPermissions();
 
             SetUser();
 
@@ -80,7 +80,8 @@ namespace FitnessApp
                 List<Permission> cache = new List<Permission>();
                 Permission[] permissions = new Permission[]
                 {
-                    Permission.Camera
+                    Permission.Camera,
+                    Permission.Photos
                 };
 
                 foreach (var item in permissions)
@@ -93,11 +94,8 @@ namespace FitnessApp
 
                 if (cache.Count > 0)
                 {
-                    if (CrossPermissions.IsSupported)
-                    {
-                        Permission[] array = cache.ToArray();
-                        await CrossPermissions.Current.RequestPermissionsAsync(array);
-                    }
+                    Permission[] array = cache.ToArray();
+                    var result = await CrossPermissions.Current.RequestPermissionsAsync(array);
                 }
             }
             catch (Exception ex)
