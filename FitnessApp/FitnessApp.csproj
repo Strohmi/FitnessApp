@@ -20,6 +20,7 @@
     <Folder Include="Views\Trainingsplan\" />
     <Folder Include="Views\Ernährungsplan\" />
     <Folder Include="Models\General\" />
+    <Folder Include="Views\Status\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Trainingsplan\TrainingNew.xaml.cs">
