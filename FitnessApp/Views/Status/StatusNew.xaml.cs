@@ -106,18 +106,15 @@ namespace FitnessApp
 
                 if (photo != null)
                 {
-                    MemoryStream memoryStream = new MemoryStream();
-                    StatusVM.Status.FotoBytes = memoryStream.ToArray();
+                    MemoryStream memory = new MemoryStream();
+                    FileStream fs = File.OpenRead(photo.Path);
+                    fs.CopyTo(memory);
+                    StatusVM.Status.FotoBytes = memory.ToArray();
 
-                    image.Source = ImageSource.FromStream(() =>
-                    {
-                        var stream = photo.GetStream();
-                        photo.Dispose();
-                        memoryStream = new MemoryStream();
-                        stream.CopyTo(memoryStream);
-                        StatusVM.Status.FotoBytes = memoryStream.ToArray();
-                        return stream;
-                    });
+                    Image image = new Image();
+                    image.Aspect = Aspect.AspectFit;
+                    image.Source = ImageSource.FromStream(() => memory);
+                    grid.Children.Add(image);
                 }
             }
             else

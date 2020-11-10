@@ -41,6 +41,7 @@
                 <Image Grid.Row="3" x:Name="image"/>
             </Grid>
         </Frame>
-        <Image Grid.Row="1" x:Name="image"/>
+        <!--<Image Grid.Row="1" x:Name="IncidentImageData" BackgroundColor="DarkGray" Aspect="AspectFill" WidthRequest="50" HeightRequest="175"/>-->
+        <Grid Grid.Row="1" x:Name="grid" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="LightGray"/>
     </Grid>
 </ContentPage>
