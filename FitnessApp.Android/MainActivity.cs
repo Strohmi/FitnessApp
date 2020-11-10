@@ -11,7 +11,10 @@ using Android.Util;
 using Android.Views;
 
 using FitnessApp.Droid.Helper;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(CloseDROID))]
+[assembly: Dependency(typeof(MessageDROID))]
 namespace FitnessApp.Droid
 {
     [Activity(Label = "FitnessApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
