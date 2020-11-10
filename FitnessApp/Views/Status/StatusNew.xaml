@@ -4,10 +4,13 @@
              x:Class="FitnessApp.StatusNew"
              Title="{Binding Title}">
     <Grid BackgroundColor="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <Frame Margin="20" Padding="10" BackgroundColor="Orange" VerticalOptions="Start">
             <Grid BackgroundColor="Transparent">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
@@ -35,8 +38,8 @@
                         <Button Grid.Row="1" Text="Foto hochladen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" Clicked="UploadPhoto"/>
                     </Grid>
                 </Grid>
-                <Image Grid.Row="3" x:Name="image"/>
             </Grid>
         </Frame>
+        <Image Grid.Row="1" x:Name="image"/>
     </Grid>
 </ContentPage>
