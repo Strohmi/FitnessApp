@@ -109,6 +109,9 @@ namespace FitnessApp
                     MemoryStream memoryStream = new MemoryStream();
                     photo.GetStream().CopyTo(memoryStream);
                     StatusVM.Status.FotoBytes = memoryStream.ToArray();
+
+                    Stream stream = new MemoryStream(byteArray);
+                    image.Source = ImageSource.FromStream(stream);
                 }
             }
             else
