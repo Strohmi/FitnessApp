@@ -8743,7 +8743,7 @@ namespace FitnessApp.Droid
 			public const int notify_panel_notification_icon_bg = 2131165299;
 			
 			// aapt resource value: 0x7F070074
-			public const int plus = 2131165300;
+			public const int Plus = 2131165300;
 			
 			// aapt resource value: 0x7F070075
 			public const int tab_about = 2131165301;
