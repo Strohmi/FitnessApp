@@ -8,7 +8,6 @@ using FitnessApp.iOS.Helper;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(MessageIOS))]
-[assembly: Dependency(typeof(FileTypeIOS))]
 [assembly: Dependency(typeof(CloseIOS))]
 namespace FitnessApp.iOS
 {

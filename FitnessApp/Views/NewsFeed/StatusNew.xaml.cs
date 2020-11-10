@@ -5,6 +5,9 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using FitnessApp.Models.General;
 using FitnessApp.Models;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using System.IO;
 
 namespace FitnessApp
 {
@@ -91,8 +94,52 @@ namespace FitnessApp
 
         private void Change()
         {
-            btFoto.IsVisible = isFoto;
+            gridFoto.IsVisible = isFoto;
             beschreibung.IsVisible = !isFoto;
+        }
+
+        private async void UploadPhoto(object sender, EventArgs e)
+        {
+            if (CrossMedia.Current.IsPickPhotoSupported)
+            {
+                MediaFile photo = await CrossMedia.Current.PickPhotoAsync();
+
+                if (photo != null)
+                {
+                    MemoryStream memoryStream = new MemoryStream();
+                    photo.GetStream().CopyTo(memoryStream);
+                    StatusVM.Status.FotoBytes = memoryStream.ToArray();
+                }
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Keine Berechtigung für PickPhotos");
+            }
+        }
+
+        private async void TakePhoto(object sender, EventArgs e)
+        {
+            if (CrossMedia.Current.IsCameraAvailable)
+            {
+                MediaFile photo = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()
+                {
+                    DefaultCamera = CameraDevice.Rear,
+                    AllowCropping = true,
+                    SaveToAlbum = true,
+                    Name = $"FitnessApp_{DateTime.Now:yyyyMMdd_HHmmss}"
+                });
+
+                if (photo != null)
+                {
+                    MemoryStream memoryStream = new MemoryStream();
+                    photo.GetStream().CopyTo(memoryStream);
+                    StatusVM.Status.FotoBytes = memoryStream.ToArray();
+                }
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Keine Berechtigung für TakePhotos");
+            }
         }
 
         protected override bool OnBackButtonPressed()

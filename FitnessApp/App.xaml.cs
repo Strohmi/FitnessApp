@@ -1,9 +1,12 @@
 ﻿using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Essentials;
 using FitnessApp.Models.General;
 using FitnessApp.Models;
 using System.Collections.Generic;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
 
 namespace FitnessApp
 {
@@ -18,6 +21,9 @@ namespace FitnessApp
 
         protected override void OnStart()
         {
+            //if (DeviceInfo.Platform.ToString() == "iOS")
+            //                CheckPermissions();
+
             SetUser();
 
             TESTER.ListNews = new List<News>()
@@ -65,6 +71,39 @@ namespace FitnessApp
                 Nachname = "Erichsen",
                 Geburtsdatum = new DateTime(1996, 02, 09)
             };
+        }
+
+        private async void CheckPermissions()
+        {
+            try
+            {
+                List<Permission> cache = new List<Permission>();
+                Permission[] permissions = new Permission[]
+                {
+                    Permission.Camera
+                };
+
+                foreach (var item in permissions)
+                {
+                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(item);
+
+                    if (status != Plugin.Permissions.Abstractions.PermissionStatus.Granted)
+                        cache.Add(item);
+                }
+
+                if (cache.Count > 0)
+                {
+                    if (CrossPermissions.IsSupported)
+                    {
+                        Permission[] array = cache.ToArray();
+                        await CrossPermissions.Current.RequestPermissionsAsync(array);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string s = ex.Message;
+            }
         }
     }
 }
