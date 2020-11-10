@@ -35,10 +35,10 @@ namespace FitnessApp
 
             if (listView != null && listView.SelectedItem != null)
             {
-                string result = listView.SelectedItem.ToString();
-                msg = result;
+                KeyValuePair<int, string> result = (KeyValuePair<int, string>)listView.SelectedItem;
+                msg = result.ToString();
 
-                switch (result)
+                switch (result.Value)
                 {
                     case "Status":
                         await this.Navigation.PushAsync(new StatusNew());

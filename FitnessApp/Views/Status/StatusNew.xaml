@@ -27,8 +27,12 @@
                 <Grid Grid.Row="2">
                     <Editor x:Name="beschreibung" Placeholder="Beschreibung" Text="{Binding Status.Beschreibung}" Style="{StaticResource Key=DefaultEntry}" AutoSize="TextChanges"/>
                     <Grid x:Name="gridFoto" IsVisible="false">
-                        <Button Text="Foto hochladen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" Clicked="UploadPhoto"/>
-                        <Button Text="Foto aufnehmen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" Clicked="TakePhoto"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Text="Foto aufnehmen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" Clicked="TakePhoto"/>
+                        <Button Grid.Row="1" Text="Foto hochladen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" Clicked="UploadPhoto"/>
                     </Grid>
                 </Grid>
             </Grid>
