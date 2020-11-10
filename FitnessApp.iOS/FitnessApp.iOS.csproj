@@ -68,6 +68,8 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Helper\CloseIOS.cs" />
+    <Compile Include="Helper\MessageIOS.cs" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -122,6 +124,8 @@
     <BundleResource Include="Resources\xamarin_logo%402x.png" />
     <BundleResource Include="Resources\xamarin_logo%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -141,5 +145,9 @@
       <Project>{10224418-5C3A-4AE5-8476-50C14C9CBE32}</Project>
       <Name>FitnessApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets.xcassets\Plus.imageset\" />
+    <Folder Include="Helper\" />
   </ItemGroup>
 </Project>

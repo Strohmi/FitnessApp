@@ -4,7 +4,11 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using FitnessApp.iOS.Helper;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(MessageIOS))]
+[assembly: Dependency(typeof(CloseIOS))]
 namespace FitnessApp.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 

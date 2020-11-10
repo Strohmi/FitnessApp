@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace FitnessApp.Models
+namespace FitnessApp
 {
     public class NotifyPropertyBase : INotifyPropertyChanged
     {

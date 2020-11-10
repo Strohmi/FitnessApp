@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.StatusNew"
+             Title="{Binding Title}">
+    <Grid BackgroundColor="White">
+        <Frame Margin="20" Padding="10" BackgroundColor="Orange" VerticalOptions="Start">
+            <Grid BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Text="Beschreibung" TextColor="Black" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Switch Grid.Column="1" Toggled="SwitchToggeled" VerticalOptions="Center"/>
+                    <Label Grid.Column="2" Text="Foto" TextColor="Black" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Center"/>
+                </Grid>
+
+                <Entry Grid.Row="1" Placeholder="Titel" Text="{Binding Status.Title}" Style="{StaticResource Key=DefaultEntry}"/>
+                <Grid Grid.Row="2">
+                    <Editor x:Name="beschreibung" Placeholder="Beschreibung" Text="{Binding Status.Beschreibung}" Style="{StaticResource Key=DefaultEntry}" AutoSize="TextChanges"/>
+                    <Grid x:Name="gridFoto" IsVisible="false">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="0" Text="Foto aufnehmen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" Clicked="TakePhoto"/>
+                        <Button Grid.Row="1" Text="Foto hochladen..." FontSize="Medium" BackgroundColor="White" TextColor="Black" Clicked="UploadPhoto"/>
+                    </Grid>
+                </Grid>
+                <Image Grid.Row="3" x:Name="image"/>
+            </Grid>
+        </Frame>
+    </Grid>
+</ContentPage>

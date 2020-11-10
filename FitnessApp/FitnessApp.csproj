@@ -8,8 +8,24 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1560" />  
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
+    <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\AboutPage %28Kopie%29.xaml.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Profil\" />
+    <Folder Include="Views\NewsFeed\" />
+    <Folder Include="Views\Trainingsplan\" />
+    <Folder Include="Views\Ernährungsplan\" />
+    <Folder Include="Models\General\" />
+    <Folder Include="Views\Status\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Trainingsplan\TrainingNew.xaml.cs">
+      <DependentUpon>TrainingNew.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
