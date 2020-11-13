@@ -25,7 +25,7 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="News" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:NewsFeed}" />
+        <ShellContent Title="FitFeed" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:NewsFeed}" />
         <ShellContent Icon="Plus.png" ContentTemplate="{DataTemplate local:AddNew}" />
         <ShellContent Title="Profil" Icon="tab_about.png" ContentTemplate="{DataTemplate local:Profil}" />
     </TabBar>

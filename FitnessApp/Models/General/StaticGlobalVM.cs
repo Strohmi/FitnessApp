@@ -4,5 +4,6 @@ namespace FitnessApp.Models.General
     public static class StaticGlobalVM
     {
         public static User User { get; set; }
+        public static Datenbank Datenbank { get; set; }
     }
 }

@@ -10,7 +10,12 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" BackgroundColor="Red" VerticalOptions="Start">
-            <Label FontSize="Large" TextColor="Black" VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="Plus.png" HeightRequest="50" WidthRequest="50"/>
+            <Label Grid.Column="1" FontSize="Large" TextColor="Black" VerticalOptions="Center">
                 <Label.Text>
                     <MultiBinding StringFormat="{}{0} {1}">
                         <Binding Path="User.Vorname"/>
@@ -26,6 +31,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+
 
             <Entry Grid.Row="0" x:Name="vorname" Placeholder="Vorname" PlaceholderColor="Gray" Text="{Binding User.Vorname}" TextColor="Black" BackgroundColor="White"/>
             <Entry Grid.Row="1" x:Name="nachname" Placeholder="Nachname" PlaceholderColor="Gray" Text="{Binding User.Nachname}" TextColor="Black" BackgroundColor="White"/>

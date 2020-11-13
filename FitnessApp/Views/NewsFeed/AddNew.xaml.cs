@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.SqlClient;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -44,7 +45,7 @@ namespace FitnessApp
                         await this.Navigation.PushAsync(new StatusNew());
                         break;
                     case "Trainingsplan":
-                        //TEST();
+                        await DisplayAlert("Auswahl:", msg, "OK");
                         break;
                     default:
                         await DisplayAlert("Auswahl:", msg, "OK");
@@ -53,48 +54,5 @@ namespace FitnessApp
                 listView.SelectedItem = null;
             }
         }
-
-        //private void TEST()
-        //{
-        //    var list = GetData();
-        //    _ = list;
-        //}
-
-        //private SqlConnection Connection;
-        //private List<User> GetData()
-        //{
-        //    try
-        //    {
-        //        List<User> Liste = new List<User>();
-        //        string conString = "server=goliath.wi.fh-flensburg.de;Database=WS2021_FitnessApp;user=WS2021_FitnessApp;password=kpes_2120";
-        //        Connection = new SqlConnection(conString);
-
-        //        string com = "SELECT * FROM User";
-        //        SqlCommand command = new SqlCommand(com, Connection);
-        //        Connection.Open();
-        //        var reader = command.ExecuteReader();
-
-        //        while (reader.Read())
-        //        {
-        //            User user = new User()
-        //            {
-        //                Vorname = reader.GetString(1),
-        //                Nachname = reader.GetString(2)
-        //            };
-        //            Liste.Add(user);
-        //        }
-
-        //        Connection.Close();
-        //        return Liste;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _ = ex.Message;
-        //        if (Connection != null)
-        //            if (Connection.State != System.Data.ConnectionState.Closed)
-        //                Connection.Close();
-        //        return null;
-        //    }
-        //}
     }
 }

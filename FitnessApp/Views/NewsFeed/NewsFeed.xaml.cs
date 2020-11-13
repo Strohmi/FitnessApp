@@ -22,7 +22,7 @@ namespace FitnessApp
 
         private void Start()
         {
-            Title = "Feed";
+            Title = "FitFeed";
             NavigationPage.SetIconColor(this, Color.White);
             SetNavBar();
         }
@@ -34,7 +34,7 @@ namespace FitnessApp
 
         void Loaded(System.Object sender, System.EventArgs e)
         {
-            NewsFeedVM.ListNews = TESTER.ListNews.OrderByDescending(s => s.ErstelltAm).ToList();
+
         }
     }
 }

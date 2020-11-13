@@ -62,14 +62,6 @@ namespace FitnessApp
 
                 if (isRichtig)
                 {
-                    TESTER.ListNews.Add(new News()
-                    {
-                        Title = StatusVM.Status.Title,
-                        Beschreibung = StatusVM.Status.Beschreibung,
-                        Ersteller = StaticGlobalVM.User,
-                        ErstelltAm = DateTime.Now
-                    });
-
                     OnBackButtonPressed();
                     DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gespeichert");
                 }
