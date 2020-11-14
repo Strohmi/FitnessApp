@@ -28,6 +28,7 @@
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <MtouchI18n>west</MtouchI18n>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -63,6 +64,7 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchLink>SdkOnly</MtouchLink>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -133,14 +135,14 @@
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Logo.appiconset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Logo.appiconset\40.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.appiconset\60.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.appiconset\58.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.appiconset\87.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.appiconset\80.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.appiconset\180.png" />
     <ImageAsset Include="Assets.xcassets\Logo.appiconset\120.png" />
     <ImageAsset Include="Assets.xcassets\Logo.appiconset\120-1.png" />
-    <ImageAsset Include="Assets.xcassets\Logo.appiconset\180.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.appiconset\80.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.appiconset\87.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.appiconset\58.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.appiconset\60.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.appiconset\40.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -151,7 +153,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1560" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1687" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

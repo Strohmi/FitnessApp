@@ -23,8 +23,6 @@ namespace FitnessApp
         {
             if (DeviceInfo.Platform.ToString() == "iOS")
                 CheckPermissions();
-
-            SetUser();
         }
 
         protected override void OnSleep()
@@ -35,14 +33,6 @@ namespace FitnessApp
         protected override void OnResume()
         {
 
-        }
-
-        private void SetUser()
-        {
-            StaticGlobalVM.User = new User()
-            {
-                Nutzername = "NikEri"
-            };
         }
 
         private async void CheckPermissions()
