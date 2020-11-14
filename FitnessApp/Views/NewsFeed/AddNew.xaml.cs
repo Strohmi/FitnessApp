@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
+using FitnessApp.Models.General;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -45,7 +46,7 @@ namespace FitnessApp
                         await this.Navigation.PushAsync(new StatusNew());
                         break;
                     case "Trainingsplan":
-                        await DisplayAlert("Auswahl:", msg, "OK");
+                        Test();
                         break;
                     default:
                         await DisplayAlert("Auswahl:", msg, "OK");
@@ -53,6 +54,11 @@ namespace FitnessApp
                 }
                 listView.SelectedItem = null;
             }
+        }
+
+        private void Test()
+        {
+            AllVM.User = AllVM.Datenbank.User.Get("nikeri");
         }
     }
 }

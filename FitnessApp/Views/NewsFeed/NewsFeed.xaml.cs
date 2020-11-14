@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Linq;
 using FitnessApp.Models;
+using FitnessApp.Models.General;
 
 namespace FitnessApp
 {
@@ -32,9 +33,18 @@ namespace FitnessApp
 
         }
 
-        void Loaded(System.Object sender, System.EventArgs e)
+        async void Loaded(System.Object sender, System.EventArgs e)
         {
+            string result = await DisplayActionSheet("Nutzername", null, null, new string[]
+            {
+                "nikeri",
+                "tuneke",
+                "timbru",
+                "nicmis",
+                "lasstr"
+            });
 
+            AllVM.User = AllVM.Datenbank.User.Get(result);
         }
     }
 }

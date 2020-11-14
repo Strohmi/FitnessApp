@@ -2,40 +2,55 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitnessApp.Profil"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             Appearing="Loaded">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" BackgroundColor="Red" VerticalOptions="Start">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="Plus.png" HeightRequest="50" WidthRequest="50"/>
-            <Label Grid.Column="1" FontSize="Large" TextColor="Black" VerticalOptions="Center">
-                <Label.Text>
-                    <MultiBinding StringFormat="{}{0} {1}">
-                        <Binding Path="User.Vorname"/>
-                        <Binding Path="User.Nachname"/>
-                    </MultiBinding>
-                </Label.Text>
-            </Label>
-        </Grid>
-
-        <Grid Grid.Row="1" x:Name="gridEdit" IsVisible="false" BackgroundColor="Yellow" VerticalOptions="Start">
+        <Grid Grid.Row="0" BackgroundColor="Orange">
             <Grid.RowDefinitions>
-                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
+            <Grid Grid.Row="0" Grid.ColumnSpan="2" VerticalOptions="Center" HorizontalOptions="Fill">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Entry Grid.Row="0" x:Name="vorname" Placeholder="Vorname" PlaceholderColor="Gray" Text="{Binding User.Vorname}" TextColor="Black" BackgroundColor="White"/>
-            <Entry Grid.Row="1" x:Name="nachname" Placeholder="Nachname" PlaceholderColor="Gray" Text="{Binding User.Nachname}" TextColor="Black" BackgroundColor="White"/>
-            <DatePicker Grid.Row="2" Date="{Binding User.Geburtsdatum}" TextColor="Black" BackgroundColor="White" MaximumDate="{Binding MaxDate}" MinimumDate="{Binding MinDate}"/>
+                <Frame Grid.Column="0" HasShadow="False" WidthRequest="50" HeightRequest="50" CornerRadius="20" Padding="0" Margin="5">
+                    <Image Source="Plus.png"/>
+                </Frame>
+                <Label Grid.Column="1" Text="{Binding User.Nutzername}" FontSize="Large" TextColor="Black" VerticalOptions="Center" HorizontalOptions="StartAndExpand" LineBreakMode="TailTruncation"/>
+                <Button Grid.Column="2" Text="{Binding AboBtnText}" HorizontalOptions="End" Padding="10,0" Margin="5" FontSize="Medium" Clicked="Follow_UnFollow"/>
+            </Grid>
+
+            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding User.InfoText}" FontSize="Small" TextColor="Black" LineBreakMode="WordWrap" Margin="5,0,5,5" VerticalOptions="Start"/>
         </Grid>
+
+        <Grid Grid.Row="1" Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" ClassId="TP" Text="Trainingspläne" FontSize="Small" BackgroundColor="LightBlue" TextColor="Black" Clicked="GoToPlan"/>
+            <Button Grid.Column="1" ClassId="EP" Text="Ernährungspläne" FontSize="Small" BackgroundColor="LightBlue" TextColor="Black" Clicked="GoToPlan"/>
+        </Grid>
+
+        <ListView Grid.Row="2" ItemsSource="{Binding FitFeed}" SeparatorVisibility="None" Margin="10" Background="gray" VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Never">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentPage>

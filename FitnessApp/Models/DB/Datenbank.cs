@@ -5,27 +5,25 @@ using System.Data.SqlClient;
 
 namespace FitnessApp.Models
 {
-    public class Datenbank
+    public static class StaticDatenbank
     {
-        public object MyProperty { get; set; }
+        public static SqlConnection Connection { get; set; }
 
-        public SqlConnection Connection { get; set; }
-
-        internal void Connect()
+        public static void Connect()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
             {
                 DataSource = "hs-wi.database.windows.net",
                 InitialCatalog = "FitnessApp",
                 UserID = "HSWI_FitnessApp",
-                Password = "qU&Xv4C^QeNjN4rDTCTw!",
+                Password = "qU&Xv4C^QeNjN4rDTCTw",
                 ConnectTimeout = 30
             };
 
             Connection = new SqlConnection(builder.ConnectionString);
         }
 
-        internal bool RunSQL(string com)
+        internal static bool RunSQL(string com)
         {
             try
             {
@@ -44,5 +42,35 @@ namespace FitnessApp.Models
                 return false;
             }
         }
+
+        internal static bool? CheckExistenz(string com)
+        {
+            try
+            {
+                Connect();
+                SqlCommand command = new SqlCommand(com, Connection);
+                Connection.Open();
+                int count = command.ExecuteNonQuery();
+                Connection.Close();
+
+                if (count > 0)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                if (Connection != null)
+                    if (Connection.State != System.Data.ConnectionState.Closed)
+                        Connection.Close();
+                return null;
+            }
+        }
+    }
+
+    public class Datenbank
+    {
+        public DB_Feed Feed { get; set; } = new DB_Feed();
+        public DB_User User { get; set; } = new DB_User();
     }
 }
