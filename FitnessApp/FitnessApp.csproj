@@ -24,6 +24,9 @@
     <Folder Include="Models\DB\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\Allgemein\Login.xaml.cs">
+      <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Trainingsplan\TrainingNew.xaml.cs">
       <DependentUpon>TrainingNew.xaml</DependentUpon>
       <SubType>Code</SubType>

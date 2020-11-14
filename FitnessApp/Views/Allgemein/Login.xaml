@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.Login"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Entry" x:Key="EntryStyle">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="PlaceholderColor" Value="LightGray"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid BackgroundColor="Gray">
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="50,0" BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Entry Grid.Row="0" Margin="0,0,0,20" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}"/>
+            <Entry Grid.Row="1" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True"/>
+
+                                  
+            <Button Grid.Row="2" BackgroundColor="Red"/>
+            <Button Grid.Row="2" BackgroundColor="Green"/>
+
+        </Grid>
+
+    </Grid>
+</ContentPage>
