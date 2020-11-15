@@ -35,7 +35,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Text="Nutzername:" Style="{StaticResource Key=Bezeichner}"/>
+        <Label Grid.Row="0" Grid.Column="0" Text="Nutzername:" Style="{StaticResource Key=Bezeichner}"/>
         <Entry Text="{Binding User.Nutzername}" Style="{StaticResource Key=EingabeFeld}"/>
     </Grid>
 </ContentPage>
