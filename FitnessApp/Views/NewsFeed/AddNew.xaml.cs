@@ -58,7 +58,7 @@ namespace FitnessApp
 
         private void Test()
         {
-            AllVM.User = AllVM.Datenbank.User.Get("nikeri");
+
         }
     }
 }

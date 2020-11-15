@@ -16,7 +16,8 @@ namespace FitnessApp
         public App()
         {
             InitializeComponent();
-            MainPage = new AppShell();
+            //MainPage = new AppShell();
+            MainPage = new Login();
         }
 
         protected override void OnStart()

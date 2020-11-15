@@ -31,5 +31,17 @@
       <DependentUpon>TrainingNew.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Profil\Profil %28Kopie%29.xaml.cs">
+      <DependentUpon>Profil %28Kopie%29.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Profil\ProfilSearch.xaml.cs">
+      <DependentUpon>ProfilSearch.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Profil\ProfilEdit.xaml.cs">
+      <DependentUpon>ProfilEdit.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

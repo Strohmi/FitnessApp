@@ -29,14 +29,14 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Entry Grid.Row="0" Margin="0,0,0,20" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}"/>
-            <Entry Grid.Row="1" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True"/>
-
-                                  
-            <Button Grid.Row="2" BackgroundColor="Red"/>
-            <Button Grid.Row="2" BackgroundColor="Green"/>
+            <!--<Entry Grid.Row="0" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}"/>-->
+            <Picker Grid.Row="0" Title="Nutzername..." FontSize="Large" HorizontalTextAlignment="Center" ItemsSource="{Binding Nutzernamen}" SelectedItem="{Binding Nutzername}"/>
+            <Entry Grid.Row="1" Margin="0,20" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True"/>
+            <Button Grid.Row="2" Text="Anmelden" BackgroundColor="LimeGreen" Clicked="Save"/>
 
         </Grid>
+
+        <Label Grid.Row="2" Text="Für den Test kann Passwort leer sein! Nutzername muss gefüllt werden" TextColor="Yellow" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
 
     </Grid>
 </ContentPage>

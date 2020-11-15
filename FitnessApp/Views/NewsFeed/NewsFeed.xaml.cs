@@ -33,18 +33,18 @@ namespace FitnessApp
 
         }
 
-        async void Loaded(System.Object sender, System.EventArgs e)
+        void Loaded(System.Object sender, System.EventArgs e)
         {
-            string result = await DisplayActionSheet("Nutzername", null, null, new string[]
-            {
-                "nikeri",
-                "tuneke",
-                "timbru",
-                "nicmis",
-                "lasstr"
-            });
 
-            AllVM.User = AllVM.Datenbank.User.Get(result);
+        }
+
+        void GoToSearch(System.Object sender, System.EventArgs e)
+        {
+            this.Navigation.PushAsync(new ProfilSearch());
+        }
+
+        void GoToChats(System.Object sender, System.EventArgs e)
+        {
         }
     }
 }

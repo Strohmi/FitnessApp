@@ -143,6 +143,10 @@
     <ImageAsset Include="Assets.xcassets\Logo.appiconset\58.png" />
     <ImageAsset Include="Assets.xcassets\Logo.appiconset\60.png" />
     <ImageAsset Include="Assets.xcassets\Logo.appiconset\40.png" />
+    <ImageAsset Include="Assets.xcassets\Lupe.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Inbox.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Lupe.imageset\Lupe.png" />
+    <ImageAsset Include="Assets.xcassets\Inbox.imageset\Inbox.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -167,5 +171,7 @@
     <Folder Include="Assets.xcassets\Plus.imageset\" />
     <Folder Include="Helper\" />
     <Folder Include="Assets.xcassets\Logo.appiconset\" />
+    <Folder Include="Assets.xcassets\Lupe.imageset\" />
+    <Folder Include="Assets.xcassets\Inbox.imageset\" />
   </ItemGroup>
 </Project>
