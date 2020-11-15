@@ -4,6 +4,15 @@
              x:Class="FitnessApp.Profil"
              Title="{Binding Title}"
              Appearing="Loaded">
+
+    <Shell.BackgroundColor>
+        <!--<Color>#FFA500</Color>-->
+        <Color>White</Color>
+    </Shell.BackgroundColor>
+    <Shell.TitleColor>
+        <Color>Black</Color>
+    </Shell.TitleColor>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -11,7 +20,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" BackgroundColor="Orange">
+        <Grid Grid.Row="0" BackgroundColor="#FFA500">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -28,10 +37,10 @@
                     <Image Source="Plus.png"/>
                 </Frame>
                 <Label Grid.Column="1" Text="{Binding User.Nutzername}" FontSize="Large" TextColor="Black" VerticalOptions="Center" HorizontalOptions="StartAndExpand" LineBreakMode="TailTruncation"/>
-                <Button Grid.Column="2" Text="{Binding AboBtnText}" HorizontalOptions="End" Padding="10,0" Margin="5" FontSize="Medium" Clicked="Follow_UnFollow"/>
+                <Button Grid.Column="2" Text="{Binding AboBtnText}" HorizontalOptions="End" Padding="10,0" Margin="5" FontSize="Medium" TextColor="White" BackgroundColor="Black" Clicked="Follow_UnFollow"/>
             </Grid>
 
-            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding User.InfoText}" FontSize="Small" TextColor="Black" LineBreakMode="WordWrap" Margin="5,0,5,5" VerticalOptions="Start"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding User.InfoText}" FontSize="Medium" TextColor="Black" LineBreakMode="WordWrap" Margin="5,0,5,5" VerticalOptions="Start"/>
         </Grid>
 
         <Grid Grid.Row="1" Margin="10,0">
@@ -39,18 +48,96 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" ClassId="TP" Text="Trainingspläne" FontSize="Small" BackgroundColor="LightBlue" TextColor="Black" Clicked="GoToPlan"/>
-            <Button Grid.Column="1" ClassId="EP" Text="Ernährungspläne" FontSize="Small" BackgroundColor="LightBlue" TextColor="Black" Clicked="GoToPlan"/>
+            <Button Grid.Column="0" ClassId="TP" Text="Trainingspläne" FontSize="Medium" BackgroundColor="LightBlue" TextColor="Black" Clicked="GoToPlan"/>
+            <Button Grid.Column="1" ClassId="EP" Text="Ernährungspläne" FontSize="Medium" BackgroundColor="LightBlue" TextColor="Black" Clicked="GoToPlan"/>
         </Grid>
 
-        <ListView Grid.Row="2" ItemsSource="{Binding FitFeed}" SeparatorVisibility="None" Margin="10" Background="gray" VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Never">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
+        <Grid Grid.Row="2" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" Text="Persönlicher FitFeed:" HorizontalOptions="Center" FontSize="Large" TextColor="Black"/>
+            <ListView Grid.Row="1" ItemsSource="{Binding FitFeed}" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="White" VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Never">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="10,0" Margin="15,10,15,0">
+                                <Grid>
+                                    <Grid BackgroundColor="Green">
+                                        <Grid.Triggers>
+                                            <DataTrigger TargetType="Grid" Binding="{Binding IsText}" Value="True">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                        </Grid.Triggers>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
+                                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
+                                        </Grid>
+                                    </Grid>
 
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+                                    <Grid BackgroundColor="Red">
+                                        <Grid.Triggers>
+                                            <DataTrigger TargetType="Grid" Binding="{Binding IsFoto}" Value="True">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                        </Grid.Triggers>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
+                                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
+                                        </Grid>
+                                    </Grid>
+
+                                    <Grid BackgroundColor="White">
+                                        <Grid.Triggers>
+                                            <DataTrigger TargetType="Grid" Binding="{Binding IsPlan}" Value="True">
+                                                <Setter Property="IsVisible" Value="True"/>
+                                            </DataTrigger>
+                                        </Grid.Triggers>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="1"/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,0,0,2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
+                                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </Grid>
 </ContentPage>

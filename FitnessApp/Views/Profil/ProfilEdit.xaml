@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.ProfilEdit"
+             Title="{Binding Title}"
+             Appearing="Loaded">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="Bezeichner">
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="Black"/>
+        </Style>
+        <Style TargetType="Entry" x:Key="EingabeFeld">
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <!--<Setter Property="ClearButtonVisibility" Value="WhileEditing"/>-->
+        </Style>
+    </ContentPage.Resources>
+
+    <Shell.BackgroundColor>
+        <Color>White</Color>
+    </Shell.BackgroundColor>
+    <Shell.TitleColor>
+        <Color>Black</Color>
+    </Shell.TitleColor>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Text="Nutzername:" Style="{StaticResource Key=Bezeichner}"/>
+        <Entry Grid.Row="0" Grid.Column="1" Text="{Binding User.Nutzername}" Style="{StaticResource Key=EingabeFeld}"/>
+    </Grid>
+</ContentPage>

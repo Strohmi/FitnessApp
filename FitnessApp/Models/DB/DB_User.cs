@@ -6,7 +6,47 @@ namespace FitnessApp.Models
 {
     public class DB_User
     {
-        public User Get(string nutzername)
+        internal List<User> GetList()
+        {
+            try
+            {
+                List<User> list = new List<User>();
+                StaticDatenbank.Connect();
+
+                string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, info.Status " +
+                             "FROM User_Base AS base " +
+                             "INNER JOIN User_Info AS info " +
+                             "ON info.ID = base.Nutzername ";
+                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
+                StaticDatenbank.Connection.Open();
+                var r = command.ExecuteReader();
+
+                while (r.Read())
+                {
+                    User user = new User()
+                    {
+                        Nutzername = r.GetString(0),
+                        ErstelltAm = r.GetDateTime(1),
+                        InfoText = r.GetString(2),
+                        Status = r.GetString(3)
+                    };
+                    list.Add(user);
+                }
+
+                StaticDatenbank.Connection.Close();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDatenbank.Connection != null)
+                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDatenbank.Connection.Close();
+                return null;
+            }
+        }
+
+        public User GetByName(string nutzername)
         {
             try
             {
