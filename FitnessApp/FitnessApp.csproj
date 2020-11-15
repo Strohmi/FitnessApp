@@ -24,6 +24,12 @@
     <Folder Include="Models\DB\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\Allgemein\Help.xaml.cs">
+      <DependentUpon>Help.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Allgemein\Registrate.xaml.cs">
+      <DependentUpon>Registrate.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Allgemein\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>

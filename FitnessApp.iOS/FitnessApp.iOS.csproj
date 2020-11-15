@@ -194,10 +194,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets.xcassets\Plus.imageset\" />
-    <Folder Include="Helper\" />
+    <Folder Include="Assets.xcassets\Inbox.imageset\" />
     <Folder Include="Assets.xcassets\Logo.appiconset\" />
     <Folder Include="Assets.xcassets\Lupe.imageset\" />
-    <Folder Include="Assets.xcassets\Inbox.imageset\" />
+    <Folder Include="Assets.xcassets\Plus.imageset\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\logo.png" />
   </ItemGroup>
 </Project>

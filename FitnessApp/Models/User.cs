@@ -18,9 +18,4 @@ namespace FitnessApp
         public byte[] ProfilBild { get { return _profilbild; } set { OnPropertyChanged(ref _profilbild, value); } }
     }
 
-    public class User2
-    {
-        public string Nutzername { get; set; }
-        public string Infotext { get; set; }
-    }
 }

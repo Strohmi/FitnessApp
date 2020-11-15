@@ -6,7 +6,7 @@
 
     <ContentPage.Resources>
         <Style TargetType="Entry" x:Key="EntryStyle">
-            <Setter Property="BackgroundColor" Value="Red"/>
+            <Setter Property="BackgroundColor" Value="White"/>
             <Setter Property="PlaceholderColor" Value="LightGray"/>
             <Setter Property="TextColor" Value="Black"/>
             <Setter Property="FontSize" Value="Large"/>
@@ -14,7 +14,7 @@
         </Style>
     </ContentPage.Resources>
 
-    <Grid BackgroundColor="Gray">
+    <Grid BackgroundColor="White">
 
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -22,21 +22,37 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <Image Source="logo.png" Grid.Row="0" Margin="50"></Image>
+        
         <Grid Grid.Row="1" Margin="50,0" BackgroundColor="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <!--asdasdasd-->
-            <!--<Entry Grid.Row="0" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}"/>-->
-            <Picker Grid.Row="0" Title="Nutzername..." FontSize="Large" HorizontalTextAlignment="Center" ItemsSource="{Binding Nutzernamen}" SelectedItem="{Binding Nutzername}"/>
-            <Entry Grid.Row="1" Margin="0,20" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True"/>
-            <Button Grid.Row="2" Text="Anmelden" BackgroundColor="LimeGreen" Clicked="Save"/>
+            <Entry Grid.Row="0" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}" ReturnType="Next"/>
+            <!--<Picker Grid.Row="0" Title="Nutzername..." FontSize="Large" HorizontalTextAlignment="Center" ItemsSource="{Binding Nutzernamen}" SelectedItem="{Binding Nutzername}"/>-->
+            <Entry Grid.Row="1" Margin="0,10" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True" ReturnType="Go" Completed="Save"/>
 
+            <Grid Grid.Row="2" >
+                <Button Text="Anmelden" x:Name="anmelden" BackgroundColor="Green" Clicked="Save"/>
+                <!--<ActivityIndicator x:Name="loading" Color="Red" Scale="2" IsVisible="False"/>-->
+            </Grid>
+    
+            
         </Grid>
 
-        <Label Grid.Row="2" Text="Für den Test kann Passwort leer sein! Nutzername muss gefüllt werden" TextColor="Yellow" FontSize="Title" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+        <Grid Grid.Row="2" VerticalOptions="End" Margin="50,0,50,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Button Grid.Row="0" Text="Registrieren" BackgroundColor="LightGreen" Clicked="Registrate"/>
+            <Button Grid.Row="1" Text="Hilfe" BackgroundColor="LightBlue" Clicked="Help"/>
+        
+         </Grid>
+
 
     </Grid>
 </ContentPage>

@@ -33,6 +33,7 @@ namespace FitnessApp
         {
             if (!string.IsNullOrWhiteSpace(Nutzername))
             {
+                Loading();
                 AllVM.User = AllVM.Datenbank.User.GetByName(Nutzername);
                 App.Current.MainPage = new AppShell();
             }
@@ -40,6 +41,25 @@ namespace FitnessApp
             {
                 DependencyService.Get<IMessage>().ShortAlert("Nutzername eingeben!");
             }
+        }
+
+        private void Registrate(object sender, EventArgs e)
+        {
+            this.Navigation.PushAsync(new Registrate()); //Öffnet die neue Seite Registrate
+
+            //this.Navigation.PopAsync(); Terminiert die aktuelle Seite
+        }
+
+        private void Help(object sender, EventArgs e)
+        {
+            this.Navigation.PushAsync(new Help());
+        }
+
+        private void Loading()
+        {
+            anmelden.IsEnabled = false;
+            //loading.IsVisible = true;
+            //loading.IsRunning = true;
         }
     }
 }

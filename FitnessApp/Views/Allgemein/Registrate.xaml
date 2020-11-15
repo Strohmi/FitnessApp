@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.Registrate"
+             Title="{Binding Title}">
+
+    <ContentPage.Resources>
+        <Style TargetType="Entry" x:Key="EntryStyle">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="PlaceholderColor" Value="LightGray"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid BackgroundColor="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="50,0" BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Entry Grid.Row="0" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewNutzername}" ReturnType="Next"/>
+            <Entry Grid.Row="1" Margin="0,10,0,10" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewPasswort}" IsPassword="True" ReturnType="Next"/>
+            <Entry Grid.Row="2" Placeholder="Passwort wiederholen" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewPasswort2}" IsPassword="True" ReturnType="Go"/>
+            
+        </Grid>
+
+        
+        <Grid Grid.Row="2" VerticalOptions="End" Margin="50,0,50,20">
+            <Button Text="Registrieren" x:Name="registrieren" BackgroundColor="Green" FontSize="Large" Padding="20" Clicked="NewUser"/>
+            <!--<ActivityIndicator x:Name="loading" Color="Red" Scale="2" IsVisible="False"/>-->
+        </Grid>
+
+
+    </Grid>
+</ContentPage>
