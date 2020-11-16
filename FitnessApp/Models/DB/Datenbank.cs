@@ -36,6 +36,7 @@ namespace FitnessApp.Models
             }
             catch (Exception ex)
             {
+                _ = ex.Message;
                 if (Connection != null)
                     if (Connection.State != System.Data.ConnectionState.Closed)
                         Connection.Close();
@@ -47,13 +48,18 @@ namespace FitnessApp.Models
         {
             try
             {
+                int rows = 0;
                 Connect();
                 SqlCommand command = new SqlCommand(com, Connection);
                 Connection.Open();
-                int count = command.ExecuteNonQuery();
+                var r = command.ExecuteReader();
+                while (r.Read())
+                {
+                    rows += 1;
+                }
                 Connection.Close();
 
-                if (count > 0)
+                if (rows > 0)
                     return true;
                 else
                     return false;

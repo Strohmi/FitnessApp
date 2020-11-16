@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net;
 using FitnessApp.Models.General;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -10,35 +11,42 @@ namespace FitnessApp
 {
     public partial class Profil : ContentPage
     {
-        private User userCache;
-        public ProfilVM ProfilVM { get; set; }
+        public ProfilShowVM ProfilVM { get; set; }
+        private User user;
+        private bool isOther;
 
         public Profil()
         {
             InitializeComponent();
-            userCache = null;
+            isOther = false;
             Start();
         }
 
-        public Profil(User user)
+        public Profil(User _user, bool _isOther = true)
         {
             InitializeComponent();
-            userCache = user;
+            user = AllVM.Datenbank.User.GetByName(_user.Nutzername);
+            isOther = _isOther;
             Start();
         }
 
         private void Loaded(object sender, EventArgs e)
         {
-            User user = null;
-            if (userCache == null)
-                user = AllVM.User;
-            else
-                user = userCache;
-            ProfilVM = new ProfilVM(user);
+            if (isOther == false)
+                user = AllVM.ConvertToUser();
+            ProfilVM = new ProfilShowVM(user);
+
+            //Entfernen nach Auto-Login !
+            if (ProfilVM.User.ProfilBild == null)
+                using (var webClient = new WebClient())
+                {
+                    ProfilVM.User.ProfilBild = webClient.DownloadData("https://cdn.pixabay.com/photo/2016/11/11/09/59/white-male-1816195_1280.jpg");
+                }
+
             BindingContext = ProfilVM;
-            SetNavBar();
 
             SetBeispiele();
+            SetButton();
         }
 
         private void SetBeispiele()
@@ -65,31 +73,23 @@ namespace FitnessApp
             Title = "Profil";
         }
 
-        private void SetNavBar()
+        private void SetButton()
         {
-            ToolbarItems.Clear();
             if (ProfilVM.User.Nutzername == AllVM.User.Nutzername)
             {
-                ToolbarItem item = new ToolbarItem
-                {
-                    Text = "Bearbeiten",
-                    Order = ToolbarItemOrder.Primary,
-                    Priority = 0
-                };
-                item.Clicked += Edit;
-                ToolbarItems.Add(item);
+                ProfilVM.AboBtnText = "Bearbeiten";
             }
-            //else
-            //{
-            List<User> follows = AllVM.Datenbank.User.GetFollows(ProfilVM.User.Nutzername);
-            if (follows != null)
+            else
             {
-                if (follows.Exists(s => s.Nutzername == AllVM.User.Nutzername))
-                    ProfilVM.AboBtnText = "Entfolgen";
-                else
-                    ProfilVM.AboBtnText = "Folgen";
+                List<User> follows = AllVM.Datenbank.User.GetFollows(ProfilVM.User.Nutzername);
+                if (follows != null)
+                {
+                    if (follows.Exists(s => s.Nutzername == AllVM.User.Nutzername))
+                        ProfilVM.AboBtnText = "Entfolgen";
+                    else
+                        ProfilVM.AboBtnText = "Folgen";
+                }
             }
-            //}
         }
 
         void Follow_UnFollow(System.Object sender, System.EventArgs e)
@@ -100,11 +100,13 @@ namespace FitnessApp
                 Follow();
             else if (button.Text == "Entfolgen")
                 UnFollow();
+            else if (button.Text == "Bearbeiten")
+                Edit();
         }
 
         private void Follow()
         {
-            if (AllVM.Datenbank.User.Follow(ProfilVM.User, AllVM.User))
+            if (AllVM.Datenbank.User.Follow(ProfilVM.User, AllVM.ConvertToUser()))
             {
                 DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gefolgt!");
                 ProfilVM.AboBtnText = "Entfolgen";
@@ -117,7 +119,7 @@ namespace FitnessApp
 
         private void UnFollow()
         {
-            if (AllVM.Datenbank.User.UnFollow(ProfilVM.User, AllVM.User))
+            if (AllVM.Datenbank.User.UnFollow(ProfilVM.User, AllVM.ConvertToUser()))
             {
                 DependencyService.Get<IMessage>().ShortAlert("Erfolgreich entfolgt!");
                 ProfilVM.AboBtnText = "Folgen";
@@ -128,9 +130,10 @@ namespace FitnessApp
             }
         }
 
-        private void Edit(object sender, EventArgs e)
+        private void Edit()
         {
-            DependencyService.Get<IMessage>().ShortAlert("Bearbeiten geht noch nicht");
+            user = null;
+            this.Navigation.PushAsync(new ProfilEdit());
         }
 
         void GoToPlan(System.Object sender, System.EventArgs e)
@@ -145,6 +148,18 @@ namespace FitnessApp
             {
                 DisplayAlert("Plan", "Hier sehen Sie die Ernährungspläne", "OK");
             }
+        }
+
+        void ProfilBildTapped(System.Object sender, System.EventArgs e)
+        {
+            profilBildBig.IsVisible = true;
+            grid.IsVisible = false;
+        }
+
+        void BigProfilBildTapped(System.Object sender, System.EventArgs e)
+        {
+            profilBildBig.IsVisible = false;
+            grid.IsVisible = true;
         }
     }
 }

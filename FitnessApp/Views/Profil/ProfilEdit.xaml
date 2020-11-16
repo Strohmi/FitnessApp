@@ -1,20 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:FitnessApp.Models.General"
              x:Class="FitnessApp.ProfilEdit"
              Title="{Binding Title}"
              Appearing="Loaded">
 
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="Bezeichner">
-            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="FontSize" Value="Large"/>
             <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
         </Style>
         <Style TargetType="Entry" x:Key="EingabeFeld">
-            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="FontSize" Value="Large"/>
             <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
             <!--<Setter Property="ClearButtonVisibility" Value="WhileEditing"/>-->
         </Style>
+
+        <ResourceDictionary>
+            <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage" />
+        </ResourceDictionary>
     </ContentPage.Resources>
 
     <Shell.BackgroundColor>
@@ -24,21 +30,63 @@
         <Color>Black</Color>
     </Shell.TitleColor>
 
-    <Grid>
+    <Grid Margin="0,10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Margin="10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Text="Nutzername:" Style="{StaticResource Key=Bezeichner}"/>
-        <Entry Grid.Row="0" Grid.Column="1" Text="{Binding User.Nutzername}" Style="{StaticResource Key=EingabeFeld}"/>
+            <Image Grid.Column="0" x:Name="profilBild" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}, UpdateSourceEventName=Save}" HeightRequest="120" WidthRequest="120"/>
+            <Grid Grid.Column="1" VerticalOptions="Center" Margin="10,0" BackgroundColor="Transparent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Frame Grid.Row="0" BackgroundColor="White" Padding="0" VerticalOptions="Center">
+                    <Button Text="Aufnehmen" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Clicked="TakePhoto"/>
+                </Frame>
+                <Frame Grid.Row="1" BackgroundColor="White" Padding="0" VerticalOptions="Center" Margin="0,0">
+                    <Button Text="Hochladen" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Clicked="UploadPhoto"/>
+                </Frame>
+                <Frame Grid.Row="2" BackgroundColor="White" Padding="0" VerticalOptions="Center">
+                    <Button Text="Entfernen" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Clicked="DeletePhoto"/>
+                </Frame>
+            </Grid>
+        </Grid>
 
-        <Label Grid.Row="1" Grid.Column="0" Text="Nutzername:" Style="{StaticResource Key=Bezeichner}"/>
-        <Entry Grid.Row="1" Grid.Column="1" Text="{Binding User.Nutzername}" Style="{StaticResource Key=EingabeFeld}"/>
+        <BoxView Grid.Row="1" HeightRequest="2" BackgroundColor="Black" Margin="0,5"/>
+
+        <Grid Grid.Row="2" Margin="20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Grid.Column="0" Text="Nutzername:" Style="{StaticResource Key=Bezeichner}" TextColor="Black"/>
+            <Entry Grid.Row="0" x:Name="nutzername"  Grid.Column="1" Text="{Binding User.Nutzername}" Style="{StaticResource Key=EingabeFeld}" IsEnabled="False"/>
+
+            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="Infotext:" Style="{StaticResource Key=Bezeichner}" Margin="0,10,0,0"/>
+            <Frame Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="White" Padding="2" HasShadow="False" BorderColor="Black">
+                <Editor x:Name="infoText" Text="{Binding User.InfoText}" AutoSize="TextChanges" BackgroundColor="Transparent" MaxLength="255" TextColor="Black" FontSize="Medium"/>
+            </Frame>
+
+            <Button Grid.Row="3" Grid.ColumnSpan="2" Margin="0,10,0,0" Text="Passwort ändern..." FontSize="Medium" TextColor="Black" BorderColor="Black" BorderWidth="1" Clicked="ChangePWD"/>
+        </Grid>
+
+        <Button Grid.Row="3" VerticalOptions="End" Text="Account löschen" TextColor="White" FontSize="Large" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0,30,5" CornerRadius="20" Clicked="DeleteUser"/>
     </Grid>
 </ContentPage>

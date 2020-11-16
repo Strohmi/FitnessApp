@@ -33,7 +33,7 @@ namespace FitnessApp
         {
             if (!string.IsNullOrWhiteSpace(Nutzername))
             {
-                AllVM.User = AllVM.Datenbank.User.GetByName(Nutzername);
+                AllVM.User = AllVM.ConvertFromUser(AllVM.Datenbank.User.GetByName(Nutzername));
                 App.Current.MainPage = new AppShell();
             }
             else

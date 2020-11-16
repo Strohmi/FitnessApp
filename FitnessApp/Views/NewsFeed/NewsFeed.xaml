@@ -48,8 +48,8 @@
     </Shell.TitleView>
 
     <ContentPage.Content>
-        <Grid BackgroundColor="Black">
-            <ListView ItemsSource="{Binding ListNews}" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="Transparent">
+        <Grid BackgroundColor="White">
+            <ListView ItemsSource="{Binding ListNews}" HasUnevenRows="True" SeparatorVisibility="Default" BackgroundColor="Transparent">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

@@ -10,7 +10,7 @@
         </Grid.RowDefinitions>
         <SearchBar Grid.Row="0" Placeholder="Suchen..." TextChanged="Search" FontSize="Medium" Margin="0" Keyboard="Text" IsSpellCheckEnabled="False"/>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding UserList}" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never" ItemTapped="UserTapped">
+        <ListView Grid.Row="1" ItemsSource="{Binding UsersResult}" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never" ItemTapped="UserTapped">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

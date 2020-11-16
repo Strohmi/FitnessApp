@@ -10,12 +10,12 @@ namespace FitnessApp
 {
     public partial class ProfilSearch : ContentPage
     {
-        public ProfilVM ProfilVM { get; set; }
+        public ProfilSearchVM ProfilVM { get; set; }
 
         public ProfilSearch()
         {
             InitializeComponent();
-            ProfilVM = new ProfilVM();
+            ProfilVM = new ProfilSearchVM();
             Start();
             BindingContext = ProfilVM;
         }
@@ -32,11 +32,11 @@ namespace FitnessApp
 
             if (!string.IsNullOrEmpty(e.NewTextValue))
             {
-                ProfilVM.UserList = ProfilVM.Users.Where(s => s.Nutzername.ToLower().Contains(e.NewTextValue.ToLower()) && s.Nutzername != AllVM.User.Nutzername).ToList();
+                ProfilVM.UsersResult = ProfilVM.Users.Where(s => s.Nutzername.ToLower().Contains(e.NewTextValue.ToLower()) && s.Nutzername != AllVM.User.Nutzername).ToList();
             }
             else
             {
-                ProfilVM.UserList = null;
+                ProfilVM.UsersResult = null;
             }
         }
 

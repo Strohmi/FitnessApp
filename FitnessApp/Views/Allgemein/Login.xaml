@@ -6,7 +6,7 @@
 
     <ContentPage.Resources>
         <Style TargetType="Entry" x:Key="EntryStyle">
-            <Setter Property="BackgroundColor" Value="Red"/>
+            <Setter Property="BackgroundColor" Value="White"/>
             <Setter Property="PlaceholderColor" Value="LightGray"/>
             <Setter Property="TextColor" Value="Black"/>
             <Setter Property="FontSize" Value="Large"/>

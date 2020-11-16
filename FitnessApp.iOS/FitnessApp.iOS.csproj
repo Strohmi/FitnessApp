@@ -76,48 +76,6 @@
     <Compile Include="Helper\MessageIOS.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <BundleResource Include="Resources\tab_about.png" />
     <BundleResource Include="Resources\tab_about%402x.png" />
     <BundleResource Include="Resources\tab_about%403x.png" />
@@ -173,6 +131,14 @@
     <ImageAsset Include="Assets.xcassets\Inbox.imageset\Inbox.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\penguin-149971_1280.png" />
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus1.png" />
+    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\white-male-1816195_1280.jpg" />
+    <ImageAsset Include="Assets.xcassets\Follower.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Follower.imageset\tools-configuration-symbol_318-9134.jpg" />
+    <ImageAsset Include="Assets.xcassets\Follower.imageset\Profil.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -199,5 +165,8 @@
     <Folder Include="Assets.xcassets\Logo.appiconset\" />
     <Folder Include="Assets.xcassets\Lupe.imageset\" />
     <Folder Include="Assets.xcassets\Inbox.imageset\" />
+    <Folder Include="Assets.xcassets\Logo.imageset\" />
+    <Folder Include="Assets.xcassets\ProfilBildDefault.imageset\" />
+    <Folder Include="Assets.xcassets\Follower.imageset\" />
   </ItemGroup>
 </Project>
