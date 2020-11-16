@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -160,13 +160,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets.xcassets\Plus.imageset\" />
-    <Folder Include="Helper\" />
+    <Folder Include="Assets.xcassets\Inbox.imageset\" />
     <Folder Include="Assets.xcassets\Logo.appiconset\" />
     <Folder Include="Assets.xcassets\Lupe.imageset\" />
     <Folder Include="Assets.xcassets\Inbox.imageset\" />
     <Folder Include="Assets.xcassets\Logo.imageset\" />
     <Folder Include="Assets.xcassets\ProfilBildDefault.imageset\" />
     <Folder Include="Assets.xcassets\Follower.imageset\" />
+    <Folder Include="Assets.xcassets\Plus.imageset\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\logo.png" />
   </ItemGroup>
 </Project>

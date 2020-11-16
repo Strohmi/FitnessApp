@@ -41,6 +41,12 @@ namespace FitnessApp.Models
             }
         }
 
+        internal bool Insert(User user)
+        {
+            string com = $"";
+            return StaticDatenbank.RunSQL(com);
+        }
+
         public User GetByName(string nutzername)
         {
             try

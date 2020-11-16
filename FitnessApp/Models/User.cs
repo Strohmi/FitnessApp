@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FitnessApp.Models;
 
 namespace FitnessApp
