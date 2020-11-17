@@ -35,6 +35,7 @@ namespace FitnessApp
             if (isOther == false)
                 user = AllVM.ConvertToUser();
             ProfilVM = new ProfilShowVM(user);
+            ProfilVM.FitFeed = AllVM.Datenbank.Feed.GetByUser(ProfilVM.User);
 
             //Entfernen nach Auto-Login !
             if (ProfilVM.User.ProfilBild == null)
@@ -45,7 +46,7 @@ namespace FitnessApp
 
             BindingContext = ProfilVM;
 
-            SetBeispiele();
+            //SetBeispiele();
             SetButton();
         }
 
