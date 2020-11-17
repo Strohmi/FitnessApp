@@ -9,6 +9,8 @@ namespace FitnessApp.Models
     {
         public static SqlConnection Connection { get; set; }
 
+        //Kommentar
+
         public static void Connect()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()

@@ -131,14 +131,30 @@
     <ImageAsset Include="Assets.xcassets\Inbox.imageset\Inbox.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\penguin-149971_1280.png" />
-    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus1.png" />
-    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\white-male-1816195_1280.jpg" />
-    <ImageAsset Include="Assets.xcassets\Follower.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Follower.imageset\tools-configuration-symbol_318-9134.jpg" />
-    <ImageAsset Include="Assets.xcassets\Follower.imageset\Profil.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\penguin-149971_1280.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\white-male-1816195_1280.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Follower.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Follower.imageset\tools-configuration-symbol_318-9134.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Follower.imageset\Profil.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
