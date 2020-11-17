@@ -57,9 +57,9 @@ namespace FitnessApp.Models
                 string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, bild.Bild " +
                              "FROM User_Base AS base " +
                              "INNER JOIN User_Info AS info " +
-                             "ON info.ID = base.Nutzername " +
+                             "ON info.Nutzername = base.Nutzername " +
                              "LEFT JOIN User_Bild AS bild " +
-                             "ON bild.ID = base.Nutzername " +
+                             "ON bild.Nutzername = base.Nutzername " +
                              $"WHERE base.Nutzername = '{nutzername}';";
                 SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
                 StaticDatenbank.Connection.Open();
@@ -126,7 +126,7 @@ namespace FitnessApp.Models
             string com = $"UPDATE User_Info SET " +
                          $"GeandertAm = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', " +
                          $"Infotext = '{user.InfoText}' " +
-                         $"WHERE ID = '{user.Nutzername}';";
+                         $"WHERE Nutzername = '{user.Nutzername}';";
 
             bool result = StaticDatenbank.RunSQL(com);
 
@@ -137,7 +137,7 @@ namespace FitnessApp.Models
             {
                 com = $"UPDATE User_Bild SET " +
                       $"Bild = @bild " +
-                      $"WHERE ID = '{user.Nutzername}';";
+                      $"WHERE Nutzername = '{user.Nutzername}';";
 
                 StaticDatenbank.Connect();
                 SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
@@ -212,7 +212,7 @@ namespace FitnessApp.Models
             try
             {
                 StaticDatenbank.Connect();
-                string com = $"SELECT * FROM User_Bild WHERE ID = '{user.Nutzername}'";
+                string com = $"SELECT * FROM User_Bild WHERE Nutzername = '{user.Nutzername}'";
                 bool? existenz = StaticDatenbank.CheckExistenz(com);
 
                 if (existenz == null)
@@ -222,7 +222,7 @@ namespace FitnessApp.Models
                 else
                 {
                     if (existenz == true)
-                        com = $"UPDATE User_Bild SET Bild = @bildBytes WHERE ID = '{user.Nutzername}'";
+                        com = $"UPDATE User_Bild SET Bild = @bildBytes WHERE Nutzername = '{user.Nutzername}'";
                     else if (existenz == false)
                         com = $"INSERT INTO User_Bild VALUES('{user.Nutzername}', @bildBytes)";
 
