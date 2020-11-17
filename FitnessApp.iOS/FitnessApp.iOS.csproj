@@ -200,6 +200,8 @@
     <Folder Include="Assets.xcassets\Plus.imageset\" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\logo.png" />
+    <ImageAsset Include="Assets.xcassets\logo.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
 </Project>
