@@ -50,7 +50,7 @@ namespace FitnessApp
 
                             if (AllVM.Datenbank.User.Insert(user))
                             {
-                                AllVM.User = user;
+                                AllVM.User = AllVM.ConvertFromUser(user);
                                 Application.Current.Properties.Add("userid", user.Nutzername);
                                 await Application.Current.SavePropertiesAsync();
                             }

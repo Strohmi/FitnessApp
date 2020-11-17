@@ -13,10 +13,8 @@ namespace FitnessApp.Models
                 List<User> list = new List<User>();
                 StaticDatenbank.Connect();
 
-                string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, info.Status " +
-                             "FROM User_Base AS base " +
-                             "INNER JOIN User_Info AS info " +
-                             "ON info.ID = base.Nutzername ";
+                string com = "SELECT Nutzername " +
+                             "FROM User_Base";
                 SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
                 StaticDatenbank.Connection.Open();
                 var r = command.ExecuteReader();
@@ -25,10 +23,7 @@ namespace FitnessApp.Models
                 {
                     User user = new User()
                     {
-                        Nutzername = r.GetString(0),
-                        ErstelltAm = r.GetDateTime(1),
-                        InfoText = r.GetString(2),
-                        Status = r.GetString(3)
+                        Nutzername = r.GetString(0)
                     };
                     list.Add(user);
                 }
@@ -59,10 +54,12 @@ namespace FitnessApp.Models
                 User user = null;
                 StaticDatenbank.Connect();
 
-                string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, info.Status " +
+                string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, bild.Bild " +
                              "FROM User_Base AS base " +
                              "INNER JOIN User_Info AS info " +
                              "ON info.ID = base.Nutzername " +
+                             "LEFT JOIN User_Bild AS bild " +
+                             "ON bild.ID = base.Nutzername " +
                              $"WHERE base.Nutzername = '{nutzername}';";
                 SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
                 StaticDatenbank.Connection.Open();
@@ -74,12 +71,18 @@ namespace FitnessApp.Models
                     {
                         Nutzername = r.GetString(0),
                         ErstelltAm = r.GetDateTime(1),
-                        InfoText = r.GetString(2),
-                        Status = r.GetString(3)
+                        InfoText = r.GetString(2)
                     };
+
+                    if (!r.IsDBNull(3))
+                        user.ProfilBild = (byte[])r[3];
                 }
 
                 StaticDatenbank.Connection.Close();
+
+                user.AnzahlFollower = GetAnzahlFollower(user.Nutzername);
+                //user.AnzahlFollower = 999999;
+
                 return user;
             }
             catch (Exception ex)
@@ -89,6 +92,68 @@ namespace FitnessApp.Models
                     if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
                         StaticDatenbank.Connection.Close();
                 return null;
+            }
+        }
+
+        private int GetAnzahlFollower(string nutzername)
+        {
+            try
+            {
+                string com = $"SELECT COUNT(*) FROM User_Follows WHERE User_ID = '{nutzername}'";
+                StaticDatenbank.Connect();
+                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
+                StaticDatenbank.Connection.Open();
+                object result = command.ExecuteScalar();
+                StaticDatenbank.Connection.Close();
+
+                if (result != null)
+                    return (int)result;
+                else
+                    return -1;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDatenbank.Connection != null)
+                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDatenbank.Connection.Close();
+                return -1;
+            }
+        }
+
+        internal bool Update(User user)
+        {
+            string com = $"UPDATE User_Info SET " +
+                         $"GeandertAm = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', " +
+                         $"Infotext = '{user.InfoText}' " +
+                         $"WHERE ID = '{user.Nutzername}';";
+
+            bool result = StaticDatenbank.RunSQL(com);
+
+            if (result == false)
+                return result;
+
+            try
+            {
+                com = $"UPDATE User_Bild SET " +
+                      $"Bild = @bild " +
+                      $"WHERE ID = '{user.Nutzername}';";
+
+                StaticDatenbank.Connect();
+                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
+                StaticDatenbank.Connection.Open();
+                command.Parameters.Add("@bild", System.Data.SqlDbType.VarBinary).Value = user.ProfilBild;
+                command.ExecuteNonQuery();
+                StaticDatenbank.Connection.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDatenbank.Connection != null)
+                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDatenbank.Connection.Close();
+                return false;
             }
         }
 
@@ -125,6 +190,11 @@ namespace FitnessApp.Models
             }
         }
 
+        internal bool Delete(User user)
+        {
+            throw new NotImplementedException();
+        }
+
         internal bool Follow(User profil, User follower)
         {
             string com = $"INSERT INTO User_Follows VALUES ('{profil.Nutzername}', '{follower.Nutzername}')";
@@ -142,7 +212,6 @@ namespace FitnessApp.Models
             try
             {
                 StaticDatenbank.Connect();
-
                 string com = $"SELECT * FROM User_Bild WHERE ID = '{user.Nutzername}'";
                 bool? existenz = StaticDatenbank.CheckExistenz(com);
 
@@ -153,7 +222,7 @@ namespace FitnessApp.Models
                 else
                 {
                     if (existenz == true)
-                        com = "UPDATE User_Bild SET Bild = @bildBytes WHERE ID = '{user.Nutzername}'";
+                        com = $"UPDATE User_Bild SET Bild = @bildBytes WHERE ID = '{user.Nutzername}'";
                     else if (existenz == false)
                         com = $"INSERT INTO User_Bild VALUES('{user.Nutzername}', @bildBytes)";
 

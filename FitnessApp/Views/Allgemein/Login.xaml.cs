@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Xamarin.Forms;
@@ -33,8 +33,7 @@ namespace FitnessApp
         {
             if (!string.IsNullOrWhiteSpace(Nutzername))
             {
-                Loading();
-                AllVM.User = AllVM.Datenbank.User.GetByName(Nutzername);
+                AllVM.User = AllVM.ConvertFromUser(AllVM.Datenbank.User.GetByName(Nutzername));
                 App.Current.MainPage = new AppShell();
             }
             else
