@@ -19,7 +19,6 @@
     <Folder Include="Views\Profil\" />
     <Folder Include="Views\NewsFeed\" />
     <Folder Include="Views\Trainingsplan\" />
-    <Folder Include="Views\Ernährungsplan\" />
     <Folder Include="Views\Status\" />
     <Folder Include="Models\DB\" />
   </ItemGroup>
@@ -32,6 +31,9 @@
     </Compile>
     <Compile Update="Views\Allgemein\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Ernährungsplan\AddMeal.xaml.cs">
+      <DependentUpon>AddMeal.xaml</DependentUpon>
     </Compile>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Trainingsplan\TrainingNew.xaml.cs">
       <DependentUpon>TrainingNew.xaml</DependentUpon>

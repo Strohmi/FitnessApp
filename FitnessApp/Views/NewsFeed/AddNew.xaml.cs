@@ -48,6 +48,9 @@ namespace FitnessApp
                     case "Trainingsplan":
                         Test();
                         break;
+                    case "Ernährungsplan":
+                        await this.Navigation.PushAsync(new AddMeal());
+                        break;
                     default:
                         await DisplayAlert("Auswahl:", msg, "OK");
                         break;

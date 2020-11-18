@@ -121,7 +121,9 @@
       <Name>FitnessApp</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\Add.png" />
+  </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\logo.png" />
   </ItemGroup>

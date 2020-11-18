@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.AddMeal"
+             Title="{Binding Title}">
+
+
+    <ContentPage.Resources>
+        <Style TargetType="Entry" x:Key="EntryStyle">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+    </ContentPage.Resources>
+
+
+    <Grid BackgroundColor="White">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+        
+        <!--Mahlzeit benennen-->
+        <Entry Grid.Column="0" Placeholder="Namen der Mahlzeit eingeben..." Margin="10,10,10,0" BackgroundColor="LightBlue" Text="{Binding MealName}"/>
+
+        <!--Mahlzeit mit Lebensmitteln anzeigen-->
+        <ListView Grid.Row="1" x:Name="mealsView" ItemsSource="{Binding Meals}" BackgroundColor="LightBlue" Margin="10,10,10,0"/>
+
+        <!--Neues Lebensmittel zur Mahlzeit hinzufügen-->
+        <Grid Grid.Row="2" BackgroundColor="LightBlue" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Entry Grid.Column="0" Placeholder="Lebensmittel" ReturnType="Next" Text="{Binding NewFood}"/>
+            <Entry Grid.Column="1" HorizontalTextAlignment="Center" Keyboard="Numeric" ReturnType="Next" Text="{Binding NewAmount}"/>
+            <Picker Grid.Column="2" HorizontalTextAlignment="Center" ItemsSource="{Binding Units}" SelectedItem="{Binding NewUnit}"/>
+            <ImageButton Grid.Column="3" Source="Add.png" Clicked="Add" BackgroundColor="Transparent"/>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
