@@ -27,7 +27,7 @@ namespace FitnessApp.Droid
             //var helper = new HelperDROID();
             //permissions.Check(this);
 
-            //InitFontSize();
+            InitFontSize();
 
             base.OnCreate(savedInstanceState);
 

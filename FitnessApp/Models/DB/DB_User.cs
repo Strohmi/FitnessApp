@@ -124,7 +124,7 @@ namespace FitnessApp.Models
         internal bool Update(User user)
         {
             string com = $"UPDATE User_Info SET " +
-                         $"GeandertAm = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', " +
+                         $"GeaendertAm = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', " +
                          $"Infotext = '{user.InfoText}' " +
                          $"WHERE Nutzername = '{user.Nutzername}';";
 
@@ -157,24 +157,31 @@ namespace FitnessApp.Models
             }
         }
 
-        internal List<User> GetFollows(string profil)
+        internal List<Follower> GetFollows(string profil)
         {
             try
             {
-                List<User> list = new List<User>();
+                List<Follower> list = new List<Follower>();
                 StaticDatenbank.Connect();
 
-                string com = "SELECT Follow_ID " +
+                string com = "SELECT Follow_ID, GefolgtAm " +
                              "FROM User_Follows " +
                              $"WHERE User_ID = '{profil}';";
                 SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
                 StaticDatenbank.Connection.Open();
                 var r = command.ExecuteReader();
 
+                int counter = 1;
                 while (r.Read())
                 {
-                    User user = new User() { Nutzername = r.GetString(0) };
-                    list.Add(user);
+                    Follower follower = new Follower()
+                    {
+                        Index = counter,
+                        User = new User() { Nutzername = r.GetString(0) },
+                        GefolgtAm = r.GetDateTime(1)
+                    };
+                    list.Add(follower);
+                    counter += 1;
                 }
 
                 StaticDatenbank.Connection.Close();

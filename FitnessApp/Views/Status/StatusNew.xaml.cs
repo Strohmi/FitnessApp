@@ -28,7 +28,8 @@ namespace FitnessApp
         private void Start()
         {
             Title = "Status hinzufügen";
-            NavigationPage.SetBackButtonTitle(this, "Auswahl");
+            NavigationPage.SetHasBackButton(this, true);
+            NavigationPage.SetBackButtonTitle(this, "Zurück");
 
             ToolbarItem item = new ToolbarItem()
             {
@@ -42,101 +43,88 @@ namespace FitnessApp
 
         private void Save(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(StatusVM.Status.Title))
+            if (!string.IsNullOrWhiteSpace(beschreibung.Text))
             {
-                if (isFoto)
-                {
-                    isRichtig = false;
-                }
-                else
-                {
-                    if (!string.IsNullOrWhiteSpace(StatusVM.Status.Beschreibung))
-                    {
-                        isRichtig = true;
-                    }
-                    else
-                    {
-                        DependencyService.Get<IMessage>().ShortAlert("Beschreibung füllen!");
-                    }
-                }
+                StatusVM.Status.ErstelltVon = AllVM.ConvertToUser();
+                StatusVM.Status.ErstelltAm = DateTime.Now;
 
-                if (isRichtig)
+                if (AllVM.Datenbank.Status.Insert(StatusVM.Status))
                 {
                     OnBackButtonPressed();
                     DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gespeichert");
                 }
-            }
-            else
-            {
-                DependencyService.Get<IMessage>().ShortAlert("Titel füllen!");
-            }
-        }
-
-        void SwitchToggeled(System.Object sender, Xamarin.Forms.ToggledEventArgs e)
-        {
-            Switch switcher = (sender as Switch);
-
-            if (switcher.IsToggled)
-                isFoto = true;
-            else
-                isFoto = false;
-
-            Change();
-        }
-
-        private void Change()
-        {
-            gridFoto.IsVisible = isFoto;
-            beschreibung.IsVisible = !isFoto;
-        }
-
-        private async void UploadPhoto(object sender, EventArgs e)
-        {
-            if (CrossMedia.Current.IsPickPhotoSupported)
-            {
-                MediaFile photo = await CrossMedia.Current.PickPhotoAsync();
-
-                if (photo != null)
+                else
                 {
-                    MemoryStream memory = new MemoryStream();
-                    FileStream fs = File.OpenRead(photo.Path);
-                    fs.CopyTo(memory);
-                    StatusVM.Status.FotoBytes = memory.ToArray();
-
-                    Image image = new Image();
-                    image.Aspect = Aspect.AspectFit;
-                    image.Source = ImageSource.FromStream(() => memory);
-                    grid.Children.Add(image);
+                    DependencyService.Get<IMessage>().ShortAlert("Fehler beim Speichern");
                 }
             }
             else
             {
-                DependencyService.Get<IMessage>().ShortAlert("Keine Berechtigung für PickPhotos");
+                DependencyService.Get<IMessage>().ShortAlert("Beschreibung ausfüllen");
+            }
+        }
+
+        private async void UploadPhoto(object sender, EventArgs e)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                MediaFile photo = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions()
+                {
+                    PhotoSize = PhotoSize.Medium,
+                    CompressionQuality = 50,
+                    SaveMetaData = false,
+                });
+
+                if (photo != null)
+                {
+                    using (FileStream fs = File.OpenRead(photo.Path))
+                    {
+                        fs.CopyTo(ms);
+                        StatusVM.Status.Foto = ms.ToArray();
+                    }
+                }
+            }
+            catch (NotSupportedException ex1)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Foto auswählen wird nicht unterstützt");
+            }
+            catch (Exception ex)
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Es ist ein Fehler aufgetreten");
             }
         }
 
         private async void TakePhoto(object sender, EventArgs e)
         {
-            if (CrossMedia.Current.IsCameraAvailable)
+            try
             {
+                MemoryStream ms = new MemoryStream();
                 MediaFile photo = await CrossMedia.Current.TakePhotoAsync(new StoreCameraMediaOptions()
                 {
-                    DefaultCamera = CameraDevice.Rear,
+                    DefaultCamera = CameraDevice.Front,
                     AllowCropping = true,
-                    SaveToAlbum = true,
-                    Name = $"FitnessApp_{DateTime.Now:yyyyMMdd_HHmmss}"
+                    SaveMetaData = false,
+                    CompressionQuality = 50
                 });
 
                 if (photo != null)
                 {
-                    MemoryStream memoryStream = new MemoryStream();
-                    photo.GetStream().CopyTo(memoryStream);
-                    StatusVM.Status.FotoBytes = memoryStream.ToArray();
+                    using (FileStream fs = File.OpenRead(photo.Path))
+                    {
+                        fs.CopyTo(ms);
+                        StatusVM.Status.Foto = ms.ToArray();
+                    }
                 }
             }
-            else
+            catch (NotSupportedException ex1)
             {
-                DependencyService.Get<IMessage>().ShortAlert("Keine Berechtigung für TakePhotos");
+                DependencyService.Get<IMessage>().ShortAlert("Foto aufnehmen wird nicht unterstützt");
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                DependencyService.Get<IMessage>().ShortAlert("Es ist ein Fehler aufgetreten");
             }
         }
 

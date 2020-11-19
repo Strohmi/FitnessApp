@@ -1,5 +1,10 @@
 using System;
+using System.IO;
 using System.Text;
+using System.Threading.Tasks;
+using Plugin.Media;
+using Plugin.Media.Abstractions;
+using Xamarin.Forms;
 
 namespace FitnessApp.Models.General
 {

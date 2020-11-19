@@ -11,13 +11,7 @@ namespace FitnessApp
 {
     public partial class Login : ContentPage
     {
-        public string[] Nutzernamen
-        {
-            get
-            {
-                return new string[] { "nikeri", "tuneke", "timbru", "nicmis", "lasstr" };
-            }
-        }
+        public List<string> Nutzernamen { get; set; }
         public string Nutzername { get; set; }
         public string Passwort { get; set; }
 
@@ -26,6 +20,7 @@ namespace FitnessApp
         public Login()
         {
             InitializeComponent();
+            Nutzernamen = AllVM.Datenbank.User.GetList().Select(s => s.Nutzername).ToList();
             BindingContext = this;
         }
 

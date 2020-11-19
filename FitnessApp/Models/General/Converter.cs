@@ -23,4 +23,23 @@ namespace FitnessApp.Models.General
             throw new NotImplementedException();
         }
     }
+
+    public class FitFeedTemplateSelector : DataTemplateSelector
+    {
+        public DataTemplate TextTemplate { get; set; }
+        public DataTemplate FotoTemplate { get; set; }
+
+        protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
+        {
+            News news = (item as News);
+            if (news.IsFoto)
+            {
+                return FotoTemplate;
+            }
+            else
+            {
+                return TextTemplate;
+            }
+        }
+    }
 }

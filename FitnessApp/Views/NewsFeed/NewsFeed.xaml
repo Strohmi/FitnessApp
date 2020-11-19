@@ -1,9 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:FitnessApp.Models.General"
              x:Class="FitnessApp.NewsFeed"
              Title="{Binding Title}"
              Appearing="Loaded">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="textTemplate">
+            <ViewCell>
+                <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="fotoTemplate">
+            <ViewCell>
+                <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="250" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
+                        <Label Grid.Row="1" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                        <BoxView Grid.Row="2" BackgroundColor="Black"/>
+                        <Grid Grid.Row="3" VerticalOptions="End" Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
+                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </ViewCell>
+        </DataTemplate>
+
+        <ResourceDictionary>
+            <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage" />
+        </ResourceDictionary>
+        <local:FitFeedTemplateSelector x:Key="fitFeedTemplateSelector"
+            TextTemplate="{StaticResource Key=textTemplate}"
+            FotoTemplate="{StaticResource Key=fotoTemplate}" />
+    </ContentPage.Resources>
 
     <Shell.TitleView>
         <Grid>
@@ -49,86 +108,7 @@
 
     <ContentPage.Content>
         <Grid BackgroundColor="White">
-            <ListView ItemsSource="{Binding ListNews}" HasUnevenRows="True" SeparatorVisibility="Default" BackgroundColor="Transparent">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="10,0" Margin="15,10,15,0">
-                                <Grid>
-                                    <Grid BackgroundColor="Green">
-                                        <Grid.Triggers>
-                                            <DataTrigger TargetType="Grid" Binding="{Binding IsText}" Value="True">
-                                                <Setter Property="IsVisible" Value="True"/>
-                                            </DataTrigger>
-                                        </Grid.Triggers>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="1"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,5,0,2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
-                                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid BackgroundColor="Red">
-                                        <Grid.Triggers>
-                                            <DataTrigger TargetType="Grid" Binding="{Binding IsFoto}" Value="True">
-                                                <Setter Property="IsVisible" Value="True"/>
-                                            </DataTrigger>
-                                        </Grid.Triggers>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="1"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,5,0,2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
-                                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid BackgroundColor="White">
-                                        <Grid.Triggers>
-                                            <DataTrigger TargetType="Grid" Binding="{Binding IsPlan}" Value="True">
-                                                <Setter Property="IsVisible" Value="True"/>
-                                            </DataTrigger>
-                                        </Grid.Triggers>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="1"/>
-                                            <RowDefinition Height="auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,5,0,2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
-                                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <ListView ItemsSource="{Binding ListNews}" ItemTemplate="{StaticResource fitFeedTemplateSelector}" CachingStrategy="RecycleElement" BackgroundColor="Transparent" SeparatorVisibility="None" HasUnevenRows="True" IsPullToRefreshEnabled="True" Refreshing="Refresh"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

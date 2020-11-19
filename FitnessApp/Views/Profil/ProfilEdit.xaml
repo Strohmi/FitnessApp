@@ -43,7 +43,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0" x:Name="profilBild" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}, UpdateSourceEventName=Save}" HeightRequest="120" WidthRequest="120"/>
+            <Image Grid.Column="0" x:Name="profilBild" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}, UpdateSourceEventName=Save}" HeightRequest="100" WidthRequest="100"/>
             <Grid Grid.Column="1" VerticalOptions="Center" Margin="10,0" BackgroundColor="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -79,12 +79,12 @@
             <Label Grid.Row="0" Grid.Column="0" Text="Nutzername:" Style="{StaticResource Key=Bezeichner}" TextColor="Black"/>
             <Entry Grid.Row="0" x:Name="nutzername"  Grid.Column="1" Text="{Binding User.Nutzername}" Style="{StaticResource Key=EingabeFeld}" IsEnabled="False"/>
 
-            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="Infotext:" Style="{StaticResource Key=Bezeichner}" Margin="0,10,0,0"/>
+            <Label Grid.Row="1" Grid.ColumnSpan="2" Text="Infotext:" Style="{StaticResource Key=Bezeichner}" Margin="0,0,0,0"/>
             <Frame Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="White" Padding="2" HasShadow="False" BorderColor="Black">
                 <Editor x:Name="infoText" Text="{Binding User.InfoText}" AutoSize="TextChanges" BackgroundColor="Transparent" MaxLength="255" TextColor="Black" FontSize="Medium"/>
             </Frame>
 
-            <Button Grid.Row="3" Grid.ColumnSpan="2" Margin="0,10,0,0" Text="Passwort ändern..." FontSize="Medium" TextColor="Black" BorderColor="Black" BorderWidth="1" Clicked="ChangePWD"/>
+            <Button Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,0" Text="Passwort ändern..." FontSize="Medium" TextColor="Black" BorderColor="Black" BorderWidth="1" Clicked="ChangePWD"/>
         </Grid>
 
         <Button Grid.Row="3" VerticalOptions="End" Text="Account löschen" TextColor="White" FontSize="Large" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0,30,5" CornerRadius="20" Clicked="DeleteUser"/>

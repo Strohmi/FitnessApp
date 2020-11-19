@@ -6,21 +6,90 @@
              Appearing="Loaded">
 
     <ContentPage.Resources>
+        <DataTemplate x:Key="textTemplate">
+            <ViewCell>
+                <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
+                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="fotoTemplate">
+            <ViewCell>
+                <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="1"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="250" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
+                        <Label Grid.Row="1" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                        <BoxView Grid.Row="2" BackgroundColor="Black"/>
+                        <Grid Grid.Row="3" VerticalOptions="End" Margin="0,2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
+                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black"/>
+                        </Grid>
+                    </Grid>
+                </Frame>
+            </ViewCell>
+        </DataTemplate>
         <ResourceDictionary>
             <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage" />
         </ResourceDictionary>
+        <local:FitFeedTemplateSelector x:Key="fitFeedTemplateSelector"
+            TextTemplate="{StaticResource Key=textTemplate}"
+            FotoTemplate="{StaticResource Key=fotoTemplate}" />
     </ContentPage.Resources>
 
     <Shell.BackgroundColor>
-        <!--<Color>#FFA500</Color>-->
         <Color>White</Color>
     </Shell.BackgroundColor>
     <Shell.TitleColor>
         <Color>Black</Color>
     </Shell.TitleColor>
 
+    <Shell.TitleView>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="{Binding User.Nutzername}" FontSize="Large" TextColor="Black" VerticalOptions="Center" HorizontalOptions="StartAndExpand" LineBreakMode="TailTruncation"/>
+            <Button Grid.Column="1" x:Name="followBtn" Text="{Binding AboBtnText}" HorizontalOptions="End" Padding="10,0" Margin="5" FontSize="Medium" TextColor="White" BackgroundColor="Black" VerticalOptions="Start" Clicked="Follow_UnFollow">
+                <Button.CornerRadius>
+                    <OnPlatform x:TypeArguments="x:Int32">
+                        <On Platform="iOS" Value="15"/>
+                        <On Platform="Android" Value="30"/>
+                    </OnPlatform>
+                </Button.CornerRadius>
+            </Button>
+        </Grid>
+    </Shell.TitleView>
+
     <Grid>
-        <Grid  x:Name="profilBildBig" IsVisible="false">
+        <Grid x:Name="profilBildBig" IsVisible="false">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -37,32 +106,40 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" BackgroundColor="#FFA500" VerticalOptions="Start">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0" Grid.ColumnSpan="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <Image Grid.Column="0" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}}" HeightRequest="65" WidthRequest="65" Margin="5">
-                        <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ProfilBildTapped"/>
-                        </Image.GestureRecognizers>
-                    </Image>
-                    <Label Grid.Column="1" Text="{Binding User.Nutzername}" FontSize="Large" TextColor="Black" VerticalOptions="Center" HorizontalOptions="StartAndExpand" LineBreakMode="TailTruncation"/>
-                    <Grid Grid.Column="2">
+            <Frame Grid.Row="0" BackgroundColor="White" BorderColor="Black" VerticalOptions="Start" CornerRadius="30" Margin="10" Padding="10" HasShadow="True">
+                <StackLayout Orientation="Vertical" Padding="0">
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
                             <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Button x:Name="followBtn" Text="{Binding AboBtnText}" HorizontalOptions="End" Padding="10,0" Margin="5" FontSize="Medium" TextColor="White" BackgroundColor="Black" VerticalOptions="Start" Clicked="Follow_UnFollow"/>
-                        <Grid Grid.Row="1" VerticalOptions="Start" HorizontalOptions="End" Margin="0,-5,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Image Grid.RowSpan="2" Grid.Column="0" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}}" Margin="5">
+                            <Image.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="iOS" Value="100"/>
+                                    <On Platform="Android" Value="65"/>
+                                </OnPlatform>
+                            </Image.HeightRequest>
+                            <Image.WidthRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="iOS" Value="100"/>
+                                    <On Platform="Android" Value="65"/>
+                                </OnPlatform>
+                            </Image.WidthRequest>
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ProfilBildTapped"/>
+                            </Image.GestureRecognizers>
+                        </Image>
+
+                        <Grid Grid.Row="0" Grid.Column="1" VerticalOptions="Start" HorizontalOptions="End" Margin="0,0,10,0">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="Show_Follower"/>
+                            </Grid.GestureRecognizers>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
@@ -70,10 +147,10 @@
                             <Image Grid.Column="0" Source="Follower" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
                             <Label Grid.Column="1" Text="{Binding User.AnzahlFollower, StringFormat='{}{0:#,##0}'}" TextColor="Black" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
                         </Grid>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding User.InfoText}" FontSize="Medium" TextColor="Black" LineBreakMode="WordWrap" Margin="0,0"/>
                     </Grid>
-                </Grid>
-                <Label Grid.Row="1" Grid.ColumnSpan="2" Text="{Binding User.InfoText}" FontSize="Medium" TextColor="Black" LineBreakMode="WordWrap" Margin="5,0"/>
-            </Grid>
+                </StackLayout>
+            </Frame>
 
             <Grid Grid.Row="1" Margin="10,0">
                 <Grid.ColumnDefinitions>
@@ -90,86 +167,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Text="Persönlicher FitFeed:" HorizontalOptions="Center" FontSize="Large" TextColor="Black"/>
-                <ListView Grid.Row="1" ItemsSource="{Binding FitFeed}" HasUnevenRows="True" SeparatorVisibility="None" BackgroundColor="White" VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Never">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="10,0" Margin="15,10,15,0">
-                                    <Grid>
-                                        <Grid BackgroundColor="Green">
-                                            <Grid.Triggers>
-                                                <DataTrigger TargetType="Grid" Binding="{Binding IsText}" Value="True">
-                                                    <Setter Property="IsVisible" Value="True"/>
-                                                </DataTrigger>
-                                            </Grid.Triggers>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="1"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                                            <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                                            <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2,0,2">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
-                                                <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid BackgroundColor="Red">
-                                            <Grid.Triggers>
-                                                <DataTrigger TargetType="Grid" Binding="{Binding IsFoto}" Value="True">
-                                                    <Setter Property="IsVisible" Value="True"/>
-                                                </DataTrigger>
-                                            </Grid.Triggers>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="1"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                                            <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                                            <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2,0,2">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
-                                                <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
-                                            </Grid>
-                                        </Grid>
-
-                                        <Grid BackgroundColor="White">
-                                            <Grid.Triggers>
-                                                <DataTrigger TargetType="Grid" Binding="{Binding IsPlan}" Value="True">
-                                                    <Setter Property="IsVisible" Value="True"/>
-                                                </DataTrigger>
-                                            </Grid.Triggers>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="1"/>
-                                                <RowDefinition Height="auto"/>
-                                            </Grid.RowDefinitions>
-                                            <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                                            <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                                            <Grid Grid.Row="2" VerticalOptions="End" Margin="0,0,0,2">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <!--<Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>-->
-                                                <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Small" TextColor="Black"/>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <ListView Grid.Row="1" ItemsSource="{Binding FitFeed}" ItemTemplate="{StaticResource fitFeedTemplateSelector}" CachingStrategy="RecycleElement" BackgroundColor="Transparent" SeparatorVisibility="None" HasUnevenRows="True"/>
             </Grid>
         </Grid>
     </Grid>

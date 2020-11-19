@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -73,6 +73,30 @@ namespace FitnessApp.Models
                 return null;
             }
         }
+
+        public static int GetID(string com)
+        {
+            try
+            {
+                Connect();
+                SqlCommand command = new SqlCommand(com, Connection);
+                Connection.Open();
+                object result = command.ExecuteScalar();
+                Connection.Close();
+
+                if (result != null)
+                    return (int)result;
+                else
+                    return -1;
+            }
+            catch (Exception ex)
+            {
+                if (Connection != null)
+                    if (Connection.State != System.Data.ConnectionState.Closed)
+                        Connection.Close();
+                return -1;
+            }
+        }
     }
 
     public class Datenbank
@@ -80,5 +104,6 @@ namespace FitnessApp.Models
         public DB_Feed Feed { get; set; } = new DB_Feed();
         public DB_User User { get; set; } = new DB_User();
         public DB_Trainingsplan Trainingsplan { get; set; } = new DB_Trainingsplan();
+        public DB_Status Status { get; set; } = new DB_Status();
     }
 }

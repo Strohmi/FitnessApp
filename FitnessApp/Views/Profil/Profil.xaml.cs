@@ -82,10 +82,10 @@ namespace FitnessApp
             }
             else
             {
-                List<User> follows = AllVM.Datenbank.User.GetFollows(ProfilVM.User.Nutzername);
+                List<Models.Follower> follows = AllVM.Datenbank.User.GetFollows(ProfilVM.User.Nutzername);
                 if (follows != null)
                 {
-                    if (follows.Exists(s => s.Nutzername == AllVM.User.Nutzername))
+                    if (follows.Exists(s => s.User.Nutzername == AllVM.User.Nutzername))
                         ProfilVM.AboBtnText = "Entfolgen";
                     else
                         ProfilVM.AboBtnText = "Folgen";
@@ -161,6 +161,14 @@ namespace FitnessApp
         {
             profilBildBig.IsVisible = false;
             grid.IsVisible = true;
+        }
+
+        void Show_Follower(System.Object sender, System.EventArgs e)
+        {
+            if (ProfilVM.User.Nutzername == AllVM.User.Nutzername && ProfilVM.User.AnzahlFollower > 0)
+            {
+                this.Navigation.PushAsync(new Follower(ProfilVM.User));
+            }
         }
     }
 }

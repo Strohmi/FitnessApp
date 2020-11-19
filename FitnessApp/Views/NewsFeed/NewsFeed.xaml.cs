@@ -6,6 +6,7 @@ using Xamarin.Forms.Xaml;
 using System.Linq;
 using FitnessApp.Models;
 using FitnessApp.Models.General;
+using System.Threading.Tasks;
 
 namespace FitnessApp
 {
@@ -23,19 +24,12 @@ namespace FitnessApp
 
         private void Start()
         {
-            Title = "FitFeed";
             NavigationPage.SetIconColor(this, Color.White);
-            SetNavBar();
-        }
-
-        private void SetNavBar()
-        {
-
         }
 
         void Loaded(System.Object sender, System.EventArgs e)
         {
-
+            GetList();
         }
 
         void GoToSearch(System.Object sender, System.EventArgs e)
@@ -45,6 +39,21 @@ namespace FitnessApp
 
         void GoToChats(System.Object sender, System.EventArgs e)
         {
+        }
+
+        void Refresh(System.Object sender, System.EventArgs e)
+        {
+            GetList();
+            (sender as ListView).IsRefreshing = false;
+        }
+
+        private void GetList()
+        {
+            NewsFeedVM.ListNews = AllVM.Datenbank.Feed.Get();
+            if (NewsFeedVM.ListNews != null)
+                NewsFeedVM.ListNews = NewsFeedVM.ListNews.OrderByDescending(o => o.ErstelltAm).ToList();
+            else
+                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Abruf der Liste");
         }
     }
 }

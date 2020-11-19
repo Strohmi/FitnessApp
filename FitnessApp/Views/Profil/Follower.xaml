@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.Follower"
+             Title="{Binding Title}">
+    <Grid>
+        <ListView ItemsSource="{Binding Follows}" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.Margin>
+                                <OnPlatform x:TypeArguments="Thickness">
+                                    <On Platform="iOS" Value="10,0,0,0"/>
+                                    <On Platform="Android" Value="10,0,0,0"/>
+                                </OnPlatform>
+                            </Grid.Margin>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Text="{Binding Index, StringFormat='{0}.'}" FontSize="Large" TextColor="Black"/>
+                            <Label Grid.Column="1" Text="{Binding User.Nutzername}" FontSize="Large" TextColor="Black" LineBreakMode="TailTruncation"/>
+                            <Label Grid.Column="2" Text="{Binding GefolgtAm, StringFormat='({0:dd.MM.yyyy})'}" HorizontalOptions="EndAndExpand" TextColor="Black"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>
