@@ -204,7 +204,7 @@ namespace FitnessApp.Models
 
         internal bool Follow(User profil, User follower)
         {
-            string com = $"INSERT INTO User_Follows VALUES ('{profil.Nutzername}', '{follower.Nutzername}')";
+            string com = $"INSERT INTO User_Follows VALUES ('{profil.Nutzername}', '{follower.Nutzername}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             return StaticDatenbank.RunSQL(com);
         }
 
