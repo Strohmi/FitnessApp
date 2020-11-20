@@ -12,19 +12,15 @@ namespace FitnessApp
         {
             InitializeComponent();
             TrainingVM = new TrainingVM();
-            Uebungen = new List<string>();
-            Repetitions = new List<int>();
-            Sets = new List<int>();
-            Weights = new List<decimal>();
             Start();
             BindingContext = TrainingVM;
         }
 
-        public TrainingVM TrainingVM { get; set; } 
-        public List<string> Uebungen { get; set; }
-        public List<int> Repetitions { get; set; }
-        public List<int> Sets { get; set; }
-        public List<decimal> Weights { get; set; }
+        public TrainingVM TrainingVM { get; set; }
+        public string Uebungen { get; set; }
+        public int Repetitions { get; set; }
+        public int Sets { get; set; }
+        public decimal Weights { get; set; }
 
         private void Start()
         {
@@ -33,7 +29,18 @@ namespace FitnessApp
 
         private void Add(object sender, EventArgs e)
         {
-            
+
+        }
+
+        // Liest die Entry Zeilen aus und Fügt sie der Entsprechenden Liste hinzu
+        private void ReadEntry()
+        {
+
+              
+        }
+        private void Save(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }
