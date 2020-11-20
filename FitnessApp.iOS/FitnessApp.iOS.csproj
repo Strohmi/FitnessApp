@@ -155,7 +155,9 @@
     <ImageAsset Include="Assets.xcassets\Follower.imageset\Profil.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png" />
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace FitnessApp.Models
 {
-    public class Trainingsplan
+    public class Ernährungsplan
     {
         public int ID { get; set; }
         public string Titel { get; set; }
@@ -12,15 +12,14 @@ namespace FitnessApp.Models
         public string Bewertung { get; set; }
         public DateTime ErstelltAm { get; set; }
         public DateTime GeAendertAm { get; set; }
-        public List<Uebung> UebungList { get; set; }
+        public List<Mahlzeiten> MahlzeitenList { get; set; }
     }
-    //uebung
-    public class Uebung
+
+    public class Mahlzeiten
     {
         public int ID { get; set; }
-        public string Name { get; set; }
-        public decimal Gewicht { get; set; }
-        public int Repetition { get; set; }
-        public int Sets { get; set; } 
+        public string Nahrungsmittel { get; set; }
+        public decimal Menge { get; set; }
+        public string Einheit { get; set; }
     }
 }
