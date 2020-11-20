@@ -105,6 +105,6 @@ namespace FitnessApp.Models
         public DB_User User { get; set; } = new DB_User();
         public DB_Trainingsplan Trainingsplan { get; set; } = new DB_Trainingsplan();
         public DB_Status Status { get; set; } = new DB_Status();
-        public DB_Ern‰hrungsplan Ern‰hrungsplan { get; set; } = new DB_Ern‰hrungsplan();
+        public DB_Ern√§hrungsplan Ern√§hrungsplan { get; set; } = new DB_Ern√§hrungsplan();
     }
 }

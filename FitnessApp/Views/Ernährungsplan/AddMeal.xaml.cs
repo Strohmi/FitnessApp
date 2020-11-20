@@ -34,7 +34,7 @@ namespace FitnessApp
         {
             get
             {
-                return new string[] { "g", "kg", "ml", "l", "Stück" };
+                return new string[] { "g", "kg", "ml", "l", "StÃ¼ck" };
             }
         }
 
@@ -54,10 +54,10 @@ namespace FitnessApp
 
             //Testlebensmittel
             Meals.Add(new Meal { Food = "Kartoffeln", Amount = (decimal)2, Unit = "kg", });
-            Meals.Add(new Meal { Food = "Olivenöl", Amount = (decimal)250, Unit = "ml", });
+            Meals.Add(new Meal { Food = "OlivenÃ¶l", Amount = (decimal)250, Unit = "ml", });
             Meals.Add(new Meal { Food = "Sahne", Amount = (decimal)500, Unit = "ml", });
-            Meals.Add(new Meal { Food = "Eier, hart gekocht", Amount = (decimal)8, Unit = "Stück", });
-            Meals.Add(new Meal { Food = "Frischkäse", Amount = (decimal)300, Unit = "g", });
+            Meals.Add(new Meal { Food = "Eier, hart gekocht", Amount = (decimal)8, Unit = "StÃ¼ck", });
+            Meals.Add(new Meal { Food = "FrischkÃ¤se", Amount = (decimal)300, Unit = "g", });
             Meals.Add(new Meal { Food = "Oliven", Amount = (decimal)100, Unit = "g", });
             Meals.Add(new Meal { Food = "Bier", Amount = (decimal)1, Unit = "l", });
 
@@ -96,7 +96,7 @@ namespace FitnessApp
                         mealsView.ItemsSource = Meals;
                     }
                     else
-                        DependencyService.Get<IMessage>().ShortAlert("Einheit auswählen!");
+                        DependencyService.Get<IMessage>().ShortAlert("Einheit auswÃ¤hlen!");
                 }
                 else
                     DependencyService.Get<IMessage>().ShortAlert("Menge eingeben!");
