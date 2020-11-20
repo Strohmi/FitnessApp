@@ -4,14 +4,10 @@
              x:Class="FitnessApp.TrainingNew"
              xmlns:vm="clr-namespace:FitnessApp.ViewModels"
              Title="{Binding Title}">
-    
+
     <Grid BackgroundColor="AliceBlue">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
         <!-- Outer Traningsplan Frame -->
-        <Frame BackgroundColor="LightBlue" Margin ="10">
+        <Frame BackgroundColor="LightBlue" Padding="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -49,7 +45,7 @@
                         <ListView x:Name="Exersises_List" Grid.Row="1" Grid.ColumnSpan ="4"/>
                     </Grid>
                 </Frame>
-               
+
                 <!-- Entry Frame -->
                 <Frame BackgroundColor="Azure" Padding="10" Grid.Row="2" Grid.Column="1">
                     <Grid>
@@ -69,16 +65,5 @@
                 </Frame>
             </Grid>
         </Frame>
-        <!-- Button Row -->
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Button Text="Abbruch" BackgroundColor="Gray" Grid.Column="1"/>
-            <Button Text="Speichern" BackgroundColor="Gray" Grid.Column="2"/>
-        </Grid>
     </Grid>
 </ContentPage>
