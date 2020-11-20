@@ -60,11 +60,11 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Entry x:Name="Exersice_Entry" Placeholder="Übung" Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="End" FontSize="Small"/>
-                        <Entry x:Name="Weight_Entry" Placeholder="Kg" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="End" FontSize="Small"/>
-                        <Entry x:Name="Repetitions_Entry" Placeholder="Reps-" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="End" FontSize="Small"/>
-                        <Entry x:Name="Sets_Entry" Placeholder="Sets" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="End" FontSize="Small"/>
-                        <ImageButton Grid.Column="4" BackgroundColor="Transparent" Source="plus.png" Padding="5" Clicked="Add"   />
+                        <Entry x:Name="Exersice_Entry" Placeholder="Übung" Text="{Binding Uebung}"  Grid.Column="0" HorizontalTextAlignment="Center" VerticalTextAlignment="End" />
+                        <Entry x:Name="Weight_Entry" Placeholder="Kg" Text="{Binding Weight }" Keyboard="Numeric" Grid.Column="1" HorizontalTextAlignment="Center" VerticalTextAlignment="End"/>
+                        <Entry x:Name="Repetitions_Entry" Placeholder="Reps-" Text="{Binding Repetitions}" Keyboard="Numeric" Grid.Column="2" HorizontalTextAlignment="Center" VerticalTextAlignment="End" />
+                        <Entry x:Name="Sets_Entry" Placeholder="Sets" Text="{Binding Sets }" Keyboard="Numeric" Grid.Column="3" HorizontalTextAlignment="Center" VerticalTextAlignment="End" />
+                        <ImageButton Grid.Column="4" BackgroundColor="Transparent" Source="plus.png" Padding="5" Clicked="Add" />
                     </Grid>
                 </Frame>
             </Grid>
