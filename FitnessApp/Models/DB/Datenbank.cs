@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using FitnessApp.Models.DB;
 
 namespace FitnessApp.Models
 {
@@ -78,5 +79,6 @@ namespace FitnessApp.Models
     {
         public DB_Feed Feed { get; set; } = new DB_Feed();
         public DB_User User { get; set; } = new DB_User();
+        public DB_Trainingsplan Trainingsplan { get; set; } = new DB_Trainingsplan();
     }
 }

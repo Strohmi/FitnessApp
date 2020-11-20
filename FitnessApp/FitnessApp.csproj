@@ -20,7 +20,6 @@
     <Folder Include="Views\NewsFeed\" />
     <Folder Include="Views\Trainingsplan\" />
     <Folder Include="Views\Status\" />
-    <Folder Include="Models\DB\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\Allgemein\Help.xaml.cs">
