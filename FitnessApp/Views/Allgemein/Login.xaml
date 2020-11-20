@@ -15,14 +15,13 @@
     </ContentPage.Resources>
 
     <Grid BackgroundColor="White">
-
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Image Source="logo.png" Grid.Row="0" Margin="50"></Image>
+        <Image Source="Login_Logo" Grid.Row="0" Margin="50"></Image>
 
         <Grid Grid.Row="1" Margin="50,0" BackgroundColor="White">
             <Grid.RowDefinitions>

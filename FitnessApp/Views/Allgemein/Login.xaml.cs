@@ -20,7 +20,10 @@ namespace FitnessApp
         public Login()
         {
             InitializeComponent();
-            Nutzernamen = AllVM.Datenbank.User.GetList().Select(s => s.Nutzername).ToList();
+            var cache = AllVM.Datenbank.User.GetList();
+            if (cache != null)
+                Nutzernamen = cache.Select(s => s.Nutzername).ToList();
+
             BindingContext = this;
         }
 

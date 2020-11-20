@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -66,9 +66,6 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>SdkOnly</MtouchLink>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
-    <AppExtensionDebugBundleId />
-  </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
@@ -134,12 +131,6 @@
     <ImageAsset Include="Assets.xcassets\Inbox.imageset\Inbox.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\penguin-149971_1280.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus1.png">
       <Visible>false</Visible>
     </ImageAsset>
@@ -158,7 +149,22 @@
     <ImageAsset Include="Assets.xcassets\Follower.imageset\Profil.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png">
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png"/>
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png" />
+    <ImageAsset Include="Assets.xcassets\Home_32.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Home_32.imageset\Home_32.png" />
+    <ImageAsset Include="Assets.xcassets\Star_32.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Star_32.imageset\Star_32.png" />
+    <ImageAsset Include="Assets.xcassets\Profil_32.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Lupe_32.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Lupe_32.imageset\Lupe_32.png" />
+    <ImageAsset Include="Assets.xcassets\Plus_32.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Plus_32.imageset\Plus_32.png" />
+    <ImageAsset Include="Assets.xcassets\Profil_32.imageset\Profil_32.png" />
+    <ImageAsset Include="Assets.xcassets\Login_Logo.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Login_Logo.imageset\penguin-149971_1280.png">
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
@@ -182,12 +188,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets.xcassets\Follower.imageset\" />
     <Folder Include="Assets.xcassets\Inbox.imageset\" />
     <Folder Include="Assets.xcassets\Logo.appiconset\" />
-    <Folder Include="Assets.xcassets\Logo.imageset\" />
     <Folder Include="Assets.xcassets\Lupe.imageset\" />
+    <Folder Include="Assets.xcassets\Inbox.imageset\" />
     <Folder Include="Assets.xcassets\ProfilBildDefault.imageset\" />
+    <Folder Include="Assets.xcassets\Follower.imageset\" />
+    <Folder Include="Assets.xcassets\Plus.imageset\" />
+    <Folder Include="Assets.xcassets\Home_32.imageset\" />
+    <Folder Include="Assets.xcassets\Star_32.imageset\" />
+    <Folder Include="Assets.xcassets\Profil_32.imageset\" />
+    <Folder Include="Assets.xcassets\Lupe_32.imageset\" />
+    <Folder Include="Assets.xcassets\Plus_32.imageset\" />
+    <Folder Include="Assets.xcassets\Login_Logo.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\logo.png">

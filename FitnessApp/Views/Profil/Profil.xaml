@@ -136,17 +136,19 @@
                             </Image.GestureRecognizers>
                         </Image>
 
-                        <Grid Grid.Row="0" Grid.Column="1" VerticalOptions="Start" HorizontalOptions="End" Margin="0,0,10,0">
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="Show_Follower"/>
-                            </Grid.GestureRecognizers>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Column="0" Source="Follower" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
-                            <Label Grid.Column="1" Text="{Binding User.AnzahlFollower, StringFormat='{}{0:#,##0}'}" TextColor="Black" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
-                        </Grid>
+                        <Frame Grid.Row="0" Grid.Column="1" VerticalOptions="Start" HorizontalOptions="End" Margin="0,0,10,0" BorderColor="Black" Padding="7,2" HasShadow="False">
+                            <Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Show_Follower"/>
+                                </Grid.GestureRecognizers>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Column="0" Source="Follower" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding User.AnzahlFollower, StringFormat='{}{0:#,##0}'}" TextColor="Black" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
+                            </Grid>
+                        </Frame>
                         <Label Grid.Row="1" Grid.Column="1" Text="{Binding User.InfoText}" FontSize="Medium" TextColor="Black" LineBreakMode="WordWrap" Margin="0,0"/>
                     </Grid>
                 </StackLayout>

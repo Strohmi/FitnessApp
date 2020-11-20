@@ -67,11 +67,11 @@
     <Shell.TitleView>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center">
+            <!--<Grid Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center">
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Tapped="GoToSearch"/>
                 </Grid.GestureRecognizers>
@@ -83,9 +83,9 @@
                         </OnPlatform>
                     </Image.Margin>
                 </Image>
-            </Grid>
+            </Grid>-->
             <Label Grid.Column="1" Text="FitApp" TextColor="DarkOrange" FontSize="Title" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-            <Grid Grid.Column="2" HorizontalOptions="EndAndExpand">
+            <!--<Grid Grid.Column="2" HorizontalOptions="EndAndExpand">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
@@ -102,7 +102,7 @@
                     </Image.Margin>
                 </Image>
                 <Label Grid.Column="1" x:Name="inboxCount" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White" FontAttributes="Bold" FontSize="Medium" Margin="0,0,5,0"/>
-            </Grid>
+            </Grid>-->
         </Grid>
     </Shell.TitleView>
 
