@@ -14,12 +14,15 @@ namespace FitnessApp.Models
         public DateTime GeAendertAm { get; set; }
         public List<Uebung> UebungList { get; set; }
     }
+    //uebung
     public class Uebung
     {
         public int ID { get; set; }
         public string Name { get; set; }
         public decimal Gewicht { get; set; }
         public int Repetition { get; set; }
-        public int Sets { get; set; }
+        public int Sets { get; set; } 
+
+        
     }
 }
