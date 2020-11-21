@@ -25,8 +25,12 @@
     </Shell.Resources>
 
     <TabBar>
-        <ShellContent Title="FitFeed" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:NewsFeed}" />
-        <ShellContent Icon="Plus.png" ContentTemplate="{DataTemplate local:AddNew}" />
-        <ShellContent Title="Profil" Icon="tab_about.png" ContentTemplate="{DataTemplate local:Profil}" />
+        <!--<ShellContent Title="FitFeed" Icon="tab_feed.png" ContentTemplate="{DataTemplate local:NewsFeed}" />-->
+        <ShellContent Title="FitFeed" Icon="Home_32"  ContentTemplate="{DataTemplate local:NewsFeed}" />
+        <ShellContent Title="Suche" Icon="Lupe_32" ContentTemplate="{DataTemplate local:ProfilSearch}" />
+        <ShellContent Title="Neu" Icon="Plus_32" ContentTemplate="{DataTemplate local:AddNew}" />
+        <ShellContent Title="Favoriten" Icon="Star_32" ContentTemplate="{DataTemplate local:TrainingFavo}" />
+        <ShellContent Title="Profil" Icon="Profil_32" ContentTemplate="{DataTemplate local:Profil}" />
+        <!--<ShellContent Title="Profil" Icon="tab_about.png" ContentTemplate="{DataTemplate local:Profil}" />-->
     </TabBar>
 </Shell>

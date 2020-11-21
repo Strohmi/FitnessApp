@@ -35,7 +35,9 @@ namespace FitnessApp
             if (isOther == false)
                 user = AllVM.ConvertToUser();
             ProfilVM = new ProfilShowVM(user);
-            ProfilVM.FitFeed = AllVM.Datenbank.Feed.GetByUser(ProfilVM.User);
+            var cache = AllVM.Datenbank.Feed.GetByUser(ProfilVM.User);
+            if (cache != null)
+                ProfilVM.FitFeed = cache.OrderByDescending(o => o.ErstelltAm).ToList();
 
             //Entfernen nach Auto-Login !
             if (ProfilVM.User.ProfilBild == null)
@@ -48,25 +50,6 @@ namespace FitnessApp
 
             //SetBeispiele();
             SetButton();
-        }
-
-        private void SetBeispiele()
-        {
-            ProfilVM.FitFeed = new List<News>()
-            {
-              new News()
-              {
-                  Beschreibung = "Heute geiles Training gehabt!",
-                  ErstelltAm = new DateTime(2019,12,31),
-                  Ersteller = ProfilVM.User
-              },
-              new News()
-              {
-                  Beschreibung = "Leuties, ich hab nen neuen Trainingsplan.\nCheckt den mal aus !!!1!!!1!",
-                  ErstelltAm = new DateTime(2020,11,11),
-                  Ersteller = ProfilVM.User
-              },
-            }.OrderByDescending(o => o.ErstelltAm).ToList();
         }
 
         private void Start()
