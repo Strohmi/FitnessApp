@@ -22,5 +22,6 @@ namespace FitnessApp.Models
         public decimal Gewicht { get; set; }
         public int Repetition { get; set; }
         public int Sets { get; set; } 
+        
     }
 }
