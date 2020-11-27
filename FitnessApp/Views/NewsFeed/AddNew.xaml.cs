@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using FitnessApp.Models.General;
+using FitnessApp.Views.Chat;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -50,6 +51,12 @@ namespace FitnessApp
                         break;
                     case "Ernährungsplan":
                         await this.Navigation.PushAsync(new AddMeal());
+                        break;
+                    case "Chat":
+                        await this.Navigation.PushAsync(new ChatView());
+                        break;
+                    case "Message":
+                        await this.Navigation.PushAsync(new MessageView());
                         break;
                     default:
                         await DisplayAlert("Auswahl:", msg, "OK");

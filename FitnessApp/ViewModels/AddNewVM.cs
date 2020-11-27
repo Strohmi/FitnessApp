@@ -18,6 +18,8 @@ namespace FitnessApp
             Options.Add(0, "Status");
             Options.Add(1, "Trainingsplan");
             Options.Add(2, "Ernährungsplan");
+            Options.Add(3, "Chat");
+            Options.Add(4, "Message");
         }
     }
 }
