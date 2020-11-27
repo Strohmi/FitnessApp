@@ -7,24 +7,58 @@
 
     <ContentPage.Resources>
         <DataTemplate x:Key="textTemplate">
-            <ViewCell>
-                <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+            <ViewCell BindingContextChanged="OnBindingContextChanged">
+                <Frame ClassId="{Binding ID}" HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Like"/>
+                    </Frame.GestureRecognizers>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="1"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                        <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
-                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="1"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                            <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                            <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GoToProfil"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Frame Grid.Column="1" HorizontalOptions="Center" Padding="3" VerticalOptions="Center" Margin="0,0,10,0" HasShadow="False">
+                                    <Frame.Triggers>
+                                        <DataTrigger Binding="{Binding Liked}" Value="True" TargetType="Frame">
+                                            <Setter Property="BorderColor" Value="Green"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Liked}" Value="False" TargetType="Frame">
+                                            <Setter Property="BorderColor" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Frame.Triggers>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Aspect="AspectFit" Source="ThumbsUp" HeightRequest="17" WidthRequest="17" VerticalOptions="Center"/>
+                                        <Label Text="{Binding Likes, StringFormat='{}{0:#,##0}'}" FontSize="Small" TextColor="Black"/>
+                                    </StackLayout>
+                                </Frame>
+                                <Label Grid.Column="2" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black" HorizontalOptions="End"/>
+                            </Grid>
                         </Grid>
+                        <Image Aspect="AspectFit" Source="ThumbsUp" HeightRequest="60" WidthRequest="60" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image.Triggers>
+                                <DataTrigger Binding="{Binding LikedTimer}" Value="True" TargetType="Image">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding LikedTimer}" Value="False" TargetType="Image">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
                     </Grid>
                 </Frame>
             </ViewCell>
@@ -32,25 +66,59 @@
 
         <DataTemplate x:Key="fotoTemplate">
             <ViewCell>
-                <Frame HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                <Frame ClassId="{Binding ID}" HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Like"/>
+                    </Frame.GestureRecognizers>
                     <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
-                            <RowDefinition Height="1"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
-                        <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="250" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
-                        <Label Grid.Row="1" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
-                        <BoxView Grid.Row="2" BackgroundColor="Black"/>
-                        <Grid Grid.Row="3" VerticalOptions="End" Margin="0,2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation"/>
-                            <Label Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="1"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+                            <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="250" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
+                            <Label Grid.Row="1" Text="{Binding Beschreibung}" FontSize="Medium" LineBreakMode="WordWrap" TextColor="Black" VerticalOptions="Start" Margin="0,2,0,0"/>
+                            <BoxView Grid.Row="2" BackgroundColor="Black"/>
+                            <Grid Grid.Row="3" VerticalOptions="End" Margin="0,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Text="{Binding Ersteller.Nutzername}" FontSize="Small" TextColor="Red" FontAttributes="Bold" LineBreakMode="TailTruncation">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GoToProfil"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+                                <Frame Grid.Column="1" HorizontalOptions="Center" Padding="3" VerticalOptions="Center" Margin="0,0,10,0" HasShadow="False">
+                                    <Frame.Triggers>
+                                        <DataTrigger Binding="{Binding Liked}" Value="True" TargetType="Frame">
+                                            <Setter Property="BorderColor" Value="Green"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Liked}" Value="False" TargetType="Frame">
+                                            <Setter Property="BorderColor" Value="Transparent"/>
+                                        </DataTrigger>
+                                    </Frame.Triggers>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Aspect="AspectFit" Source="ThumbsUp" HeightRequest="17" WidthRequest="17" VerticalOptions="Center"/>
+                                        <Label Text="{Binding Likes, StringFormat='{}{0:#,##0}'}" FontSize="Small" TextColor="Black"/>
+                                    </StackLayout>
+                                </Frame>
+                                <Label Grid.Column="2" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}" FontSize="Small" TextColor="Black" HorizontalOptions="End"/>
+                            </Grid>
                         </Grid>
+                        <Image Aspect="AspectFit" Source="ThumbsUp" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image.Triggers>
+                                <DataTrigger Binding="{Binding LikedTimer}" Value="True" TargetType="Image">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding LikedTimer}" Value="False" TargetType="Image">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
                     </Grid>
                 </Frame>
             </ViewCell>
@@ -71,38 +139,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <!--<Grid Grid.Column="0" HorizontalOptions="Start" VerticalOptions="Center">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="GoToSearch"/>
-                </Grid.GestureRecognizers>
-                <Image Source="Lupe">
-                    <Image.Margin>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="10"/>
-                            <On Platform="Android" Value="17"/>
-                        </OnPlatform>
-                    </Image.Margin>
-                </Image>
-            </Grid>-->
-            <Label Grid.Column="1" Text="FitApp" TextColor="DarkOrange" FontSize="Title" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
-            <!--<Grid Grid.Column="2" HorizontalOptions="EndAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="auto"/>
-                </Grid.ColumnDefinitions>
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="GoToChats"/>
-                </Grid.GestureRecognizers>
-                <Image Grid.Column="0" x:Name="inbox" Source="Inbox" HorizontalOptions="Center" VerticalOptions="Center">
-                    <Image.Margin>
-                        <OnPlatform x:TypeArguments="Thickness">
-                            <On Platform="iOS" Value="10,10,0,10"/>
-                            <On Platform="Android" Value="17,17,0,17"/>
-                        </OnPlatform>
-                    </Image.Margin>
-                </Image>
-                <Label Grid.Column="1" x:Name="inboxCount" VerticalOptions="Center" HorizontalOptions="Center" TextColor="White" FontAttributes="Bold" FontSize="Medium" Margin="0,0,5,0"/>
-            </Grid>-->
+            <Label Grid.Column="1" Text="FitApp" TextColor="Red" FontSize="Title" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
         </Grid>
     </Shell.TitleView>
 

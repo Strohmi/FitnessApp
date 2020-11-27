@@ -7,12 +7,15 @@ using System.Linq;
 using FitnessApp.Models;
 using FitnessApp.Models.General;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace FitnessApp
 {
     public partial class NewsFeed : ContentPage
     {
         public NewsFeedVM NewsFeedVM { get; set; }
+        private Timer timer;
+        private string idCache;
 
         public NewsFeed()
         {
@@ -29,7 +32,20 @@ namespace FitnessApp
 
         void Loaded(System.Object sender, System.EventArgs e)
         {
+            timer = new Timer()
+            {
+                Interval = 1000,
+                AutoReset = false
+            };
+            timer.Elapsed += DisableLikeImage;
+
             GetList();
+        }
+
+        private void DisableLikeImage(object sender, ElapsedEventArgs e)
+        {
+            NewsFeedVM.ListNews.Find(s => s.ID.ToString() == idCache).LikedTimer = false;
+            idCache = null;
         }
 
         void GoToSearch(System.Object sender, System.EventArgs e)
@@ -49,11 +65,67 @@ namespace FitnessApp
 
         private void GetList()
         {
-            NewsFeedVM.ListNews = AllVM.Datenbank.Feed.Get();
+            NewsFeedVM.ListNews = AllVM.Datenbank.Feed.Get(AllVM.ConvertToUser());
             if (NewsFeedVM.ListNews != null)
                 NewsFeedVM.ListNews = NewsFeedVM.ListNews.OrderByDescending(o => o.ErstelltAm).ToList();
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Abruf der Liste");
+        }
+
+        void Like(System.Object sender, System.EventArgs e)
+        {
+            string id = (sender as Frame).ClassId;
+            bool? result = AllVM.Datenbank.Feed.Like(id, AllVM.ConvertToUser());
+            if (result == true)
+            {
+                idCache = id;
+                NewsFeedVM.ListNews.Find(s => s.ID.ToString() == id).LikedTimer = true;
+                NewsFeedVM.ListNews.Find(s => s.ID.ToString() == id).Liked = true;
+                NewsFeedVM.ListNews.Find(s => s.ID.ToString() == id).Likes += 1;
+                timer.Start();
+            }
+            else if (result == false)
+            {
+                NewsFeedVM.ListNews.Find(s => s.ID.ToString() == id).Liked = false;
+                NewsFeedVM.ListNews.Find(s => s.ID.ToString() == id).Likes -= 1;
+            }
+            else
+                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Liken");
+        }
+
+        void GoToProfil(System.Object sender, System.EventArgs e)
+        {
+            Label label = (sender as Label);
+
+            if (label.Text == AllVM.User.Nutzername)
+                this.Navigation.PushAsync(new Profil());
+            else
+                this.Navigation.PushAsync(new Profil(label.Text));
+        }
+
+        async void OnBindingContextChanged(System.Object sender, System.EventArgs e)
+        {
+            MenuItem menuItem = new MenuItem();
+            base.OnBindingContextChanged();
+
+            if (BindingContext == null)
+                return;
+
+            ViewCell theViewCell = ((ViewCell)sender);
+            News item = theViewCell.BindingContext as News;
+            theViewCell.ContextActions.Clear();
+
+            if (item != null)
+            {
+                if (item.Ersteller.Nutzername == AllVM.User.Nutzername)
+                {
+                    if (await DisplayAlert("Löschen?", "Willst du den Post wirklich löschen?", "Ja", "Nein"))
+                        if (AllVM.Datenbank.Feed.Delete(item))
+                            DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
+                        else
+                            DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
+                }
+            }
         }
     }
 }

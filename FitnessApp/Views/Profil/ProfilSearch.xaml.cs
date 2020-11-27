@@ -42,7 +42,7 @@ namespace FitnessApp
 
         void UserTapped(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
-            this.Navigation.PushAsync(new Profil(e.Item as User));
+            this.Navigation.PushAsync(new Profil((e.Item as User).Nutzername));
         }
     }
 }

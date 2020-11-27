@@ -4,7 +4,7 @@
              x:Class="FitnessApp.AddNew"
              Title="{Binding Title}">
 
-    <Grid BackgroundColor="Black">
+    <Grid BackgroundColor="Red">
         <ListView x:Name="listOptions" HasUnevenRows="True" ItemsSource="{Binding Options}" BackgroundColor="Transparent" SeparatorVisibility="None" ItemSelected="Selection" Margin="20">
             <ListView.ItemTemplate>
                 <DataTemplate>
