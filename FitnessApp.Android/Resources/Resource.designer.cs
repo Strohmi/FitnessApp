@@ -9243,13 +9243,16 @@ namespace FitnessApp.Droid
 			public const int tab_feed = 2131165323;
 			
 			// aapt resource value: 0x7F07008C
-			public const int tooltip_frame_dark = 2131165324;
+			public const int ThumbsUp = 2131165324;
 			
 			// aapt resource value: 0x7F07008D
-			public const int tooltip_frame_light = 2131165325;
+			public const int tooltip_frame_dark = 2131165325;
 			
 			// aapt resource value: 0x7F07008E
-			public const int xamarin_logo = 2131165326;
+			public const int tooltip_frame_light = 2131165326;
+			
+			// aapt resource value: 0x7F07008F
+			public const int xamarin_logo = 2131165327;
 			
 			static Drawable()
 			{

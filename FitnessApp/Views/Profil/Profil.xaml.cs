@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net;
+using System.Timers;
 using FitnessApp.Models.General;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,6 +15,8 @@ namespace FitnessApp
         public ProfilShowVM ProfilVM { get; set; }
         private User user;
         private bool isOther;
+        private Timer timer;
+        private string idCache;
 
         public Profil()
         {
@@ -22,10 +25,10 @@ namespace FitnessApp
             Start();
         }
 
-        public Profil(User _user, bool _isOther = true)
+        public Profil(string _nutzername, bool _isOther = true)
         {
             InitializeComponent();
-            user = AllVM.Datenbank.User.GetByName(_user.Nutzername);
+            user = AllVM.Datenbank.User.GetByName(_nutzername);
             isOther = _isOther;
             Start();
         }
@@ -55,6 +58,13 @@ namespace FitnessApp
         private void Start()
         {
             Title = "Profil";
+
+            timer = new Timer()
+            {
+                Interval = 1000,
+                AutoReset = false
+            };
+            timer.Elapsed += DisableLikeImage;
         }
 
         private void SetButton()
@@ -152,6 +162,29 @@ namespace FitnessApp
             {
                 this.Navigation.PushAsync(new Follower(ProfilVM.User));
             }
+        }
+
+        void Like(System.Object sender, System.EventArgs e)
+        {
+            string id = (sender as Frame).ClassId;
+            bool? result = AllVM.Datenbank.Feed.Like(id, AllVM.ConvertToUser());
+            if (result == true)
+            {
+                idCache = id;
+                ProfilVM.FitFeed.Find(s => s.ID.ToString() == id).Liked = true;
+                ProfilVM.FitFeed.Find(s => s.ID.ToString() == id).Likes += 1;
+                timer.Start();
+            }
+            else if (result == false)
+                ProfilVM.FitFeed.Find(s => s.ID.ToString() == id).Likes -= 1;
+            else
+                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Liken");
+        }
+
+        private void DisableLikeImage(object sender, ElapsedEventArgs e)
+        {
+            ProfilVM.FitFeed.Find(s => s.ID.ToString() == idCache).Liked = false;
+            idCache = null;
         }
     }
 }

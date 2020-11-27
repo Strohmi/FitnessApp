@@ -104,7 +104,7 @@ namespace FitnessApp.Models.DB
 
                 foreach (var mahlzeit in ernährungsplan.MahlzeitenList)
                 {
-                    string checkEx = $"SELECT * FROM EP_Mahlzeiten WHERE Nahrungsmittel='{mahlzeit.Nahrungsmittel}' AND Menge={mahlzeit.Menge} AND Einheit={mahlzeit.Einheit}";
+                    string checkEx = $"SELECT * FROM EP_Mahlzeiten WHERE Nahrungsmittel='{mahlzeit.Nahrungsmittel}' AND Menge={mahlzeit.Menge} AND Einheit='{mahlzeit.Einheit}'";
                     if (StaticDatenbank.CheckExistenz(checkEx) == true)
                     {
                         int mahlID = StaticDatenbank.GetID(checkEx);
@@ -113,7 +113,7 @@ namespace FitnessApp.Models.DB
                     }
                     else
                     {
-                        com = $"INSERT INTO EP_Mahlzeiten (Nahrungsmittel, Menge, Einheit) VALUES ('{mahlzeit.Nahrungsmittel}', {mahlzeit.Menge}, {mahlzeit.Einheit}); " +
+                        com = $"INSERT INTO EP_Mahlzeiten (Nahrungsmittel, Menge, Einheit) VALUES ('{mahlzeit.Nahrungsmittel}', {mahlzeit.Menge}, '{mahlzeit.Einheit}'); " +
                                "SELECT CAST(SCOPE_IDENTITY() AS INT)";
                         SqlCommand insertMahl = new SqlCommand(com, StaticDatenbank.Connection);
                         StaticDatenbank.Connection.Open();
