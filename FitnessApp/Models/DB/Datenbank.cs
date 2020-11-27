@@ -6,7 +6,7 @@ using FitnessApp.Models.DB;
 
 namespace FitnessApp.Models
 {
-    public static class StaticDatenbank
+    public static class StaticDB
     {
         public static SqlConnection Connection { get; set; }
 

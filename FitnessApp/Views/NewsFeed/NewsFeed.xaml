@@ -7,10 +7,11 @@
 
     <ContentPage.Resources>
         <DataTemplate x:Key="textTemplate">
-            <ViewCell BindingContextChanged="OnBindingContextChanged">
+            <ViewCell>
                 <Frame ClassId="{Binding ID}" HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Like"/>
+                        <SwipeGestureRecognizer Direction="Left" Swiped="Swiped"/>
                     </Frame.GestureRecognizers>
                     <Grid>
                         <Grid>

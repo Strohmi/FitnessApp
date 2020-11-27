@@ -15,15 +15,15 @@ namespace FitnessApp.Models.DB
             {
                 Trainingsplan trainingsplan = null;
                 List<Trainingsplan> trainingsplaene = new List<Trainingsplan>();
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
                 string com = "SELECT TP_Base.ID, TP_Base.Titel, TP_Info.ErstelltAM, TP_Info.ErstelltVon, TP_Info.GeaendertAm " +
                              "FROM TP_Base " +
                              "INNER JOIN TP_Info " +
                              "ON TP_Base.ID = TP_Info.ID " +
                              $"WHERE TP_Info.ErstelltVon = '{Nutzername}'";
 
-                SqlCommand sqlCommand = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 IDataReader r = sqlCommand.ExecuteReader();
                 while (r.Read())
                 {
@@ -40,7 +40,7 @@ namespace FitnessApp.Models.DB
                     trainingsplaene.Add(trainingsplan);
 
                 }
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return trainingsplaene;
             }
             catch (Exception)
@@ -63,8 +63,8 @@ namespace FitnessApp.Models.DB
                                     "INNER JOIN TP_Uebungen as ueb " +
                                     "ON ueb.ID = link.ID_Uebung " +
                                    $"WHERE base.ID = {ID}";
-                SqlCommand command = new SqlCommand(sqlCommand, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand command = new SqlCommand(sqlCommand, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 IDataReader r = command.ExecuteReader();
                 while (r.Read())
                 {
@@ -78,12 +78,12 @@ namespace FitnessApp.Models.DB
                     };
                     uebungen.Add(uebung);
                 }
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return uebungen;
             }
             catch (Exception)
             {
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 throw;
             }
         }
@@ -91,46 +91,46 @@ namespace FitnessApp.Models.DB
         {
             try
             {
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
                 string com = $"INSERT INTO TP_Base (Titel) values ('{trainingsplan.Titel}'); " +
                              "SELECT CAST(SCOPE_IDENTITY() AS INT)";
 
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
 
-                StaticDatenbank.Connection.Open();
+                StaticDB.Connection.Open();
 
                 int lastID = (int)command.ExecuteScalar();
 
                 com = $"INSERT INTO TP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm) VALUES ({lastID}, '{trainingsplan.ErstelltAm}', '{trainingsplan.User.Nutzername}', '{trainingsplan.GeAendertAm}');";
-                StaticDatenbank.RunSQL(com);
+                StaticDB.RunSQL(com);
 
                 foreach (var uebung in trainingsplan.UebungList)
                 {
                     string checkEx = $"SELECT * FROM TP_Uebungen WHERE Name='{uebung.Name}' AND Gewicht={uebung.Gewicht} AND Repetition={uebung.Repetition} AND Sets={uebung.Sets}";
-                    if (StaticDatenbank.CheckExistenz(checkEx) == true)
+                    if (StaticDB.CheckExistenz(checkEx) == true)
                     {
-                        int uebID = StaticDatenbank.GetID(checkEx);
+                        int uebID = StaticDB.GetID(checkEx);
                         string comTpLink = $"INSERT INTO TP_Link_BaseUebung (ID_Base, ID_Uebung) VALUES({lastID}, {uebID})";
-                        StaticDatenbank.RunSQL(comTpLink);
+                        StaticDB.RunSQL(comTpLink);
                     }
                     else
                     {
                         com = $"INSERT INTO TP_Uebungen (Name, Gewicht, Repetition, Sets) VALUES ('{uebung.Name}', {uebung.Gewicht}, {uebung.Repetition}, {uebung.Sets}); " +
                                "SELECT CAST(SCOPE_IDENTITY() AS INT)";
-                        SqlCommand insertUeb = new SqlCommand(com, StaticDatenbank.Connection);
-                        StaticDatenbank.Connection.Open();
+                        SqlCommand insertUeb = new SqlCommand(com, StaticDB.Connection);
+                        StaticDB.Connection.Open();
                         int lastUebID = (int)insertUeb.ExecuteScalar();
                         string comTpLink = $"INSERT INTO TP_Link_BaseUebung (ID_Base, ID_Uebung) VALUES({lastID}, {lastUebID})";
-                        StaticDatenbank.RunSQL(comTpLink);
+                        StaticDB.RunSQL(comTpLink);
                     }
                 }
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 throw;
             }
         }
@@ -138,7 +138,7 @@ namespace FitnessApp.Models.DB
         public bool Edit(Trainingsplan trainingsplan)
         {
             string editTP_Base = $"UPDATE TP_Base SET Titel = '{trainingsplan.Titel}' WHERE ID={trainingsplan.ID}";
-            StaticDatenbank.RunSQL(editTP_Base);
+            StaticDB.RunSQL(editTP_Base);
             string editTP_Bewertung;
 
             return true;
@@ -149,18 +149,18 @@ namespace FitnessApp.Models.DB
             {
                 string insertBew = $"INSERT INTO TP_Bewertung ([User], Bewertung) VALUES ('{bewertung.Bewerter.Nutzername}', '{bewertung.Bewertung}');" +
                                     "SELECT CAST(SCOPE IDENTITY() AS INT)";
-                SqlCommand command = new SqlCommand(insertBew, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand command = new SqlCommand(insertBew, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 int lastID = (int)command.ExecuteScalar();
                 string insertLink = $"INSERT INTO TP_Link_BaseBewertung (ID_TP_Base, ID_TP_Bewertung) VALUES ({trainingsplan.ID}, {lastID})";
-                StaticDatenbank.RunSQL(insertLink);
+                StaticDB.RunSQL(insertLink);
 
                 trainingsplan.Bewertungen.Add(bewertung);
                 return true;
             }
             catch (Exception ex)
             {
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 throw;
             }
 
@@ -175,8 +175,8 @@ namespace FitnessApp.Models.DB
                          "INNER JOIN TP_Bewertung as bew " +
                          "ON bew.ID = link.ID_TP_Bewertung " +
                          $"WHERE base.ID = {ID}";
-            SqlCommand sqlCommand = new SqlCommand(com, StaticDatenbank.Connection);
-            StaticDatenbank.Connection.Open();
+            SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+            StaticDB.Connection.Open();
             var r = sqlCommand.ExecuteReader();
             while (r.Read())
             {
@@ -198,15 +198,15 @@ namespace FitnessApp.Models.DB
                 foreach (var item in trainingsplan.Bewertungen)
                 {
                     string command = $"DELETE FROM TP_Bewertung WHERE ID={item.ID}";
-                    StaticDatenbank.RunSQL(command);
+                    StaticDB.RunSQL(command);
                 }
                 string com = $"DELETE FROM TP_Base WHERE ID={trainingsplan.ID}";
-                StaticDatenbank.RunSQL(com);
+                StaticDB.RunSQL(com);
                 return true;
             }
             catch (Exception ex)
             {
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return false;
             }
         }

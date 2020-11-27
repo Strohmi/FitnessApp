@@ -11,12 +11,12 @@ namespace FitnessApp.Models
             try
             {
                 List<User> list = new List<User>();
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
 
                 string com = "SELECT Nutzername " +
                              "FROM User_Base";
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
 
                 while (r.Read())
@@ -28,15 +28,15 @@ namespace FitnessApp.Models
                     list.Add(user);
                 }
 
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return list;
             }
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return null;
             }
         }
@@ -44,7 +44,7 @@ namespace FitnessApp.Models
         internal bool Insert(User user)
         {
             string com = $"";
-            return StaticDatenbank.RunSQL(com);
+            return StaticDB.RunSQL(com);
         }
 
         public User GetByName(string nutzername)
@@ -52,7 +52,7 @@ namespace FitnessApp.Models
             try
             {
                 User user = null;
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
 
                 string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, bild.Bild " +
                              "FROM User_Base AS base " +
@@ -61,8 +61,8 @@ namespace FitnessApp.Models
                              "LEFT JOIN User_Bild AS bild " +
                              "ON bild.Nutzername = base.Nutzername " +
                              $"WHERE base.Nutzername = '{nutzername}';";
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
 
                 while (r.Read())
@@ -78,7 +78,7 @@ namespace FitnessApp.Models
                         user.ProfilBild = (byte[])r[3];
                 }
 
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
 
                 user.AnzahlFollower = GetAnzahlFollower(user.Nutzername);
                 //user.AnzahlFollower = 999999;
@@ -88,9 +88,9 @@ namespace FitnessApp.Models
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return null;
             }
         }
@@ -100,11 +100,11 @@ namespace FitnessApp.Models
             try
             {
                 string com = $"SELECT COUNT(*) FROM User_Follows WHERE User_ID = '{nutzername}'";
-                StaticDatenbank.Connect();
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                StaticDB.Connect();
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 object result = command.ExecuteScalar();
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
 
                 if (result != null)
                     return (int)result;
@@ -114,9 +114,9 @@ namespace FitnessApp.Models
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return -1;
             }
         }
@@ -128,7 +128,7 @@ namespace FitnessApp.Models
                          $"Infotext = '{user.InfoText}' " +
                          $"WHERE Nutzername = '{user.Nutzername}';";
 
-            bool result = StaticDatenbank.RunSQL(com);
+            bool result = StaticDB.RunSQL(com);
 
             if (result == false)
                 return result;
@@ -139,20 +139,20 @@ namespace FitnessApp.Models
                       $"Bild = @bild " +
                       $"WHERE Nutzername = '{user.Nutzername}';";
 
-                StaticDatenbank.Connect();
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                StaticDB.Connect();
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 command.Parameters.Add("@bild", System.Data.SqlDbType.VarBinary).Value = user.ProfilBild;
                 command.ExecuteNonQuery();
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return true;
             }
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return false;
             }
         }
@@ -162,13 +162,13 @@ namespace FitnessApp.Models
             try
             {
                 List<Follower> list = new List<Follower>();
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
 
                 string com = "SELECT Follow_ID, GefolgtAm " +
                              "FROM User_Follows " +
                              $"WHERE User_ID = '{profil}';";
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
 
                 int counter = 1;
@@ -184,15 +184,15 @@ namespace FitnessApp.Models
                     counter += 1;
                 }
 
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return list;
             }
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return null;
             }
         }
@@ -205,22 +205,22 @@ namespace FitnessApp.Models
         internal bool Follow(User profil, User follower)
         {
             string com = $"INSERT INTO User_Follows VALUES ('{profil.Nutzername}', '{follower.Nutzername}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
-            return StaticDatenbank.RunSQL(com);
+            return StaticDB.RunSQL(com);
         }
 
         internal bool UnFollow(User profil, User follower)
         {
             string com = $"DELETE FROM User_Follows WHERE User_ID = '{profil.Nutzername}' AND Follow_ID = '{follower.Nutzername}'";
-            return StaticDatenbank.RunSQL(com);
+            return StaticDB.RunSQL(com);
         }
 
         internal bool UploadProfilBild(User user, byte[] bild)
         {
             try
             {
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
                 string com = $"SELECT * FROM User_Bild WHERE Nutzername = '{user.Nutzername}'";
-                bool? existenz = StaticDatenbank.CheckExistenz(com);
+                bool? existenz = StaticDB.CheckExistenz(com);
 
                 if (existenz == null)
                 {
@@ -233,20 +233,20 @@ namespace FitnessApp.Models
                     else if (existenz == false)
                         com = $"INSERT INTO User_Bild VALUES('{user.Nutzername}', @bildBytes)";
 
-                    SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                    StaticDatenbank.Connection.Open();
+                    SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                    StaticDB.Connection.Open();
                     command.Parameters.Add("@bildBytes", System.Data.SqlDbType.VarBinary).Value = bild;
                     command.ExecuteNonQuery();
-                    StaticDatenbank.Connection.Close();
+                    StaticDB.Connection.Close();
                     return true;
                 }
             }
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return false;
             }
         }

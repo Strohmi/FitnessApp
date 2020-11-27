@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using FitnessApp.Models.General;
 
 namespace FitnessApp.Models
 {
@@ -11,12 +12,11 @@ namespace FitnessApp.Models
             try
             {
                 List<News> list = new List<News>();
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
 
                 string com = $"SELECT base.ID, base.Beschreibung, " +
                              $"info.ErstelltAm, info.ErstelltVon, " +
                              $"fotos.Bild, " +
-                             $"(CASE WHEN likes.Feed_ID = base.ID AND likes.[User] = '{user.Nutzername}' THEN 'true' ELSE 'false' END), " +
                              $"COUNT(likes.[User]) " +
                              "FROM Feed_Base AS base " +
                              "INNER JOIN Feed_Info AS info " +
@@ -25,61 +25,9 @@ namespace FitnessApp.Models
                              "ON fotos.ID = info.ID " +
                              "LEFT JOIN Feed_Likes as likes " +
                              "ON likes.Feed_ID = base.ID " +
-                             "GROUP BY base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild, likes.Feed_ID, likes.[User]";
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
-                var r = command.ExecuteReader();
-
-                while (r.Read())
-                {
-                    News news = new News()
-                    {
-                        ID = r.GetInt32(0),
-                        Beschreibung = r.GetString(1),
-                        ErstelltAm = r.GetDateTime(2),
-                        Ersteller = new User() { Nutzername = r.GetString(3) },
-                        Liked = bool.Parse(r.GetString(5)),
-                        Likes = r.GetInt32(6)
-                    };
-
-                    if (!r.IsDBNull(4))
-                        news.Foto = (byte[])r[4];
-
-                    list.Add(news);
-                }
-
-                StaticDatenbank.Connection.Close();
-                return list;
-            }
-            catch (Exception ex)
-            {
-                _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
-                return null;
-            }
-        }
-
-        public List<News> GetByUser(User user)
-        {
-            try
-            {
-                List<News> list = new List<News>();
-                StaticDatenbank.Connect();
-
-                string com = "SELECT base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild, COUNT(likes.[User]) " +
-                             "FROM Feed_Base AS base " +
-                             "INNER JOIN Feed_Info AS info " +
-                             "ON info.ID = base.ID " +
-                             "LEFT JOIN Feed_Fotos AS fotos " +
-                             "ON fotos.ID = info.ID " +
-                             "LEFT JOIN Feed_Likes as likes " +
-                             "ON likes.Feed_ID = base.ID " +
-                            $"WHERE info.ErstelltVon = '{user.Nutzername}' " +
                              "GROUP BY base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild";
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
 
                 while (r.Read())
@@ -99,15 +47,99 @@ namespace FitnessApp.Models
                     list.Add(news);
                 }
 
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
+
+                foreach (var item in list)
+                {
+                    item.Liked = CheckIfLiked(item.ID);
+                }
+
                 return list;
             }
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
+        }
+
+        public bool CheckIfLiked(int id)
+        {
+            User user = AllVM.ConvertToUser();
+
+            try
+            {
+                string com = $"SELECT Feed_ID FROM Feed_Likes WHERE Feed_ID = '{id}' AND [User] = '{user.Nutzername}'";
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                object r = command.ExecuteScalar();
+                StaticDB.Connection.Close();
+
+                if (r != null)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return false;
+            }
+        }
+
+        public List<News> GetByUser(User user)
+        {
+            try
+            {
+                List<News> list = new List<News>();
+                StaticDB.Connect();
+
+                string com = "SELECT base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild, COUNT(likes.[User]) " +
+                             "FROM Feed_Base AS base " +
+                             "INNER JOIN Feed_Info AS info " +
+                             "ON info.ID = base.ID " +
+                             "LEFT JOIN Feed_Fotos AS fotos " +
+                             "ON fotos.ID = info.ID " +
+                             "LEFT JOIN Feed_Likes as likes " +
+                             "ON likes.Feed_ID = base.ID " +
+                            $"WHERE info.ErstelltVon = '{user.Nutzername}' " +
+                             "GROUP BY base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild";
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                var r = command.ExecuteReader();
+
+                while (r.Read())
+                {
+                    News news = new News()
+                    {
+                        ID = r.GetInt32(0),
+                        Beschreibung = r.GetString(1),
+                        ErstelltAm = r.GetDateTime(2),
+                        Ersteller = new User() { Nutzername = r.GetString(3) },
+                        Likes = r.GetInt32(5)
+                    };
+
+                    if (!r.IsDBNull(4))
+                        news.Foto = (byte[])r[4];
+
+                    list.Add(news);
+                }
+
+                StaticDB.Connection.Close();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return null;
             }
         }
@@ -120,7 +152,7 @@ namespace FitnessApp.Models
             if (news.IsFoto)
             {
                 com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                result = StaticDatenbank.RunSQL(com);
+                result = StaticDB.RunSQL(com);
 
                 if (!result)
                     return false;
@@ -128,26 +160,26 @@ namespace FitnessApp.Models
             else if (news.IsPlan)
             {
                 //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                //result = StaticDatenbank.RunSQL(com);
+                //result = StaticDB.RunSQL(com);
 
                 //if (!result)
                 //    return false;
             }
 
             com = $"DELETE FROM Feed_Info WHERE ID = '{news.ID}'";
-            result = StaticDatenbank.RunSQL(com);
+            result = StaticDB.RunSQL(com);
 
             if (!result)
             {
                 if (news.IsFoto)
                 {
                     com = $"INSERT INTO Feed_Fotos VALUES('{news.ID}', @bild);";
-                    StaticDatenbank.Connect();
-                    SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
+                    StaticDB.Connect();
+                    SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                     command.Parameters.Add("@bild", System.Data.SqlDbType.VarBinary).Value = news.Foto;
-                    StaticDatenbank.Connection.Open();
+                    StaticDB.Connection.Open();
                     int count = command.ExecuteNonQuery();
-                    StaticDatenbank.Connection.Close();
+                    StaticDB.Connection.Close();
 
                     if (count > 0)
                         return true;
@@ -157,7 +189,7 @@ namespace FitnessApp.Models
                 else if (news.IsPlan)
                 {
                     //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                    //result = StaticDatenbank.RunSQL(com);
+                    //result = StaticDB.RunSQL(com);
 
                     //if (!result)
                     //    return false;
@@ -165,24 +197,24 @@ namespace FitnessApp.Models
             }
 
             com = $"DELETE FROM Feed_Base WHERE ID = '{news.ID}'";
-            result = StaticDatenbank.RunSQL(com);
+            result = StaticDB.RunSQL(com);
 
             if (!result)
             {
                 com = $"INSERT INTO Feed_Info VALUES('{news.ID}', '{news.ErstelltAm:yyyy-MM-dd HH:mm:ss}', '{news.Ersteller.Nutzername}')";
-                result = StaticDatenbank.RunSQL(com);
+                result = StaticDB.RunSQL(com);
                 if (result == false)
                     return false;
 
                 if (news.IsFoto)
                 {
                     com = $"INSERT INTO Feed_Fotos VALUES('{news.ID}', @bild);";
-                    StaticDatenbank.Connect();
-                    SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
+                    StaticDB.Connect();
+                    SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                     command.Parameters.Add("@bild", System.Data.SqlDbType.VarBinary).Value = news.Foto;
-                    StaticDatenbank.Connection.Open();
+                    StaticDB.Connection.Open();
                     int count = command.ExecuteNonQuery();
-                    StaticDatenbank.Connection.Close();
+                    StaticDB.Connection.Close();
 
                     if (count > 0)
                         return true;
@@ -192,7 +224,7 @@ namespace FitnessApp.Models
                 else if (news.IsPlan)
                 {
                     //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                    //result = StaticDatenbank.RunSQL(com);
+                    //result = StaticDB.RunSQL(com);
 
                     //if (!result)
                     //    return false;
@@ -206,12 +238,12 @@ namespace FitnessApp.Models
         {
             bool isdone = false;
             string com = $"SELECT Feed_ID FROM Feed_Likes WHERE Feed_ID = '{id}' AND [User] = '{user.Nutzername}'";
-            int result = StaticDatenbank.GetID(com);
+            int result = StaticDB.GetID(com);
 
             if (result == -1)
             {
                 com = $"INSERT INTO Feed_Likes VALUES('{id}', '{user.Nutzername}')";
-                isdone = StaticDatenbank.RunSQL(com);
+                isdone = StaticDB.RunSQL(com);
                 if (isdone == true)
                     return true;
                 else
@@ -220,7 +252,7 @@ namespace FitnessApp.Models
             else if (result > 0)
             {
                 com = $"DELETE FROM Feed_Likes WHERE Feed_ID = '{id}' AND [User] = '{user.Nutzername}'";
-                isdone = StaticDatenbank.RunSQL(com);
+                isdone = StaticDB.RunSQL(com);
                 if (isdone == true)
                     return false;
                 else
@@ -235,14 +267,14 @@ namespace FitnessApp.Models
             try
             {
                 int count = 0;
-                StaticDatenbank.Connect();
+                StaticDB.Connect();
 
                 string com = "SELECT COUNT(*)" +
                              "FROM Feed_Likes " +
                             $"WHERE Feed_ID = '{id}'";
 
-                SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
-                StaticDatenbank.Connection.Open();
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
                 object r = command.ExecuteScalar();
 
                 if (r != null)
@@ -250,15 +282,15 @@ namespace FitnessApp.Models
                 else
                     count = -1;
 
-                StaticDatenbank.Connection.Close();
+                StaticDB.Connection.Close();
                 return count;
             }
             catch (Exception ex)
             {
                 _ = ex.Message;
-                if (StaticDatenbank.Connection != null)
-                    if (StaticDatenbank.Connection.State != System.Data.ConnectionState.Closed)
-                        StaticDatenbank.Connection.Close();
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return -1;
             }
         }
