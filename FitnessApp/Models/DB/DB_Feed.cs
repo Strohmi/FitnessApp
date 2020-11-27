@@ -16,7 +16,6 @@ namespace FitnessApp.Models
                 string com = $"SELECT base.ID, base.Beschreibung, " +
                              $"info.ErstelltAm, info.ErstelltVon, " +
                              $"fotos.Bild, " +
-                             $"(CASE WHEN likes.Feed_ID = base.ID AND likes.[User] = '{user.Nutzername}' THEN 'true' ELSE 'false' END), " +
                              $"COUNT(likes.[User]) " +
                              "FROM Feed_Base AS base " +
                              "INNER JOIN Feed_Info AS info " +
@@ -25,7 +24,7 @@ namespace FitnessApp.Models
                              "ON fotos.ID = info.ID " +
                              "LEFT JOIN Feed_Likes as likes " +
                              "ON likes.Feed_ID = base.ID " +
-                             "GROUP BY base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild, likes.Feed_ID, likes.[User]";
+                             "GROUP BY base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild";
                 SqlCommand command = new SqlCommand(com, StaticDatenbank.Connection);
                 StaticDatenbank.Connection.Open();
                 var r = command.ExecuteReader();
@@ -38,8 +37,7 @@ namespace FitnessApp.Models
                         Beschreibung = r.GetString(1),
                         ErstelltAm = r.GetDateTime(2),
                         Ersteller = new User() { Nutzername = r.GetString(3) },
-                        Liked = bool.Parse(r.GetString(5)),
-                        Likes = r.GetInt32(6)
+                        Likes = r.GetInt32(5)
                     };
 
                     if (!r.IsDBNull(4))

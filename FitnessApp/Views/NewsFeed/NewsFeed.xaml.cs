@@ -103,28 +103,24 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new Profil(label.Text));
         }
 
-        async void OnBindingContextChanged(System.Object sender, System.EventArgs e)
+        async void Swiped(System.Object sender, Xamarin.Forms.SwipedEventArgs e)
         {
-            MenuItem menuItem = new MenuItem();
-            base.OnBindingContextChanged();
+            News news = NewsFeedVM.ListNews.Find(s => s.ID.ToString() == (sender as Frame).ClassId);
 
-            if (BindingContext == null)
-                return;
-
-            ViewCell theViewCell = ((ViewCell)sender);
-            News item = theViewCell.BindingContext as News;
-            theViewCell.ContextActions.Clear();
-
-            if (item != null)
+            switch (e.Direction)
             {
-                if (item.Ersteller.Nutzername == AllVM.User.Nutzername)
-                {
-                    if (await DisplayAlert("Löschen?", "Willst du den Post wirklich löschen?", "Ja", "Nein"))
-                        if (AllVM.Datenbank.Feed.Delete(item))
-                            DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
-                        else
-                            DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
-                }
+                case SwipeDirection.Left:
+                    if (news.Ersteller.Nutzername == AllVM.User.Nutzername)
+                    {
+                        if (await DisplayAlert("Löschen?", "Willst du den Post wirklich löschen?", "Ja", "Nein"))
+                            if (AllVM.Datenbank.Feed.Delete(news))
+                                DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
+                            else
+                                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }
