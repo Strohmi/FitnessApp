@@ -28,6 +28,7 @@ namespace FitnessApp
         private void Start()
         {
             NavigationPage.SetIconColor(this, Color.White);
+            GetList();
         }
 
         void Loaded(System.Object sender, System.EventArgs e)
@@ -39,7 +40,7 @@ namespace FitnessApp
             };
             timer.Elapsed += DisableLikeImage;
 
-            GetList();
+            //GetList();
         }
 
         private void DisableLikeImage(object sender, ElapsedEventArgs e)
@@ -114,7 +115,10 @@ namespace FitnessApp
                     {
                         if (await DisplayAlert("Löschen?", "Willst du den Post wirklich löschen?", "Ja", "Nein"))
                             if (AllVM.Datenbank.Feed.Delete(news))
+                            {
+                                GetList();
                                 DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
+                            }
                             else
                                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
                     }

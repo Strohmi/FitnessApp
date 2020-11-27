@@ -149,6 +149,8 @@ namespace FitnessApp.Models
             string com = null;
             bool result = false;
 
+            List<string> listLikes = GetLikesWithNames(news.ID.ToString());
+
             if (news.IsFoto)
             {
                 com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
@@ -166,7 +168,7 @@ namespace FitnessApp.Models
                 //    return false;
             }
 
-            com = $"DELETE FROM Feed_Info WHERE ID = '{news.ID}'";
+            com = $"DELETE FROM Feed_Likes WHERE Feed_ID = '{news.ID}'";
             result = StaticDB.RunSQL(com);
 
             if (!result)
@@ -180,11 +182,6 @@ namespace FitnessApp.Models
                     StaticDB.Connection.Open();
                     int count = command.ExecuteNonQuery();
                     StaticDB.Connection.Close();
-
-                    if (count > 0)
-                        return true;
-                    else
-                        return false;
                 }
                 else if (news.IsPlan)
                 {
@@ -194,6 +191,39 @@ namespace FitnessApp.Models
                     //if (!result)
                     //    return false;
                 }
+                return false;
+            }
+
+            com = $"DELETE FROM Feed_Info WHERE ID = '{news.ID}'";
+            result = StaticDB.RunSQL(com);
+
+            if (!result)
+            {
+                foreach (var item in listLikes)
+                {
+                    com = $"INSERT INTO Feed_Likes VALUES('{news.ID}', '{item}')";
+                    StaticDB.RunSQL(com);
+                }
+
+                if (news.IsFoto)
+                {
+                    com = $"INSERT INTO Feed_Fotos VALUES('{news.ID}', @bild);";
+                    StaticDB.Connect();
+                    SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                    command.Parameters.Add("@bild", System.Data.SqlDbType.VarBinary).Value = news.Foto;
+                    StaticDB.Connection.Open();
+                    int count = command.ExecuteNonQuery();
+                    StaticDB.Connection.Close();
+                }
+                else if (news.IsPlan)
+                {
+                    //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
+                    //result = StaticDB.RunSQL(com);
+
+                    //if (!result)
+                    //    return false;
+                }
+                return false;
             }
 
             com = $"DELETE FROM Feed_Base WHERE ID = '{news.ID}'";
@@ -203,8 +233,6 @@ namespace FitnessApp.Models
             {
                 com = $"INSERT INTO Feed_Info VALUES('{news.ID}', '{news.ErstelltAm:yyyy-MM-dd HH:mm:ss}', '{news.Ersteller.Nutzername}')";
                 result = StaticDB.RunSQL(com);
-                if (result == false)
-                    return false;
 
                 if (news.IsFoto)
                 {
@@ -215,11 +243,6 @@ namespace FitnessApp.Models
                     StaticDB.Connection.Open();
                     int count = command.ExecuteNonQuery();
                     StaticDB.Connection.Close();
-
-                    if (count > 0)
-                        return true;
-                    else
-                        return false;
                 }
                 else if (news.IsPlan)
                 {
@@ -229,6 +252,7 @@ namespace FitnessApp.Models
                     //if (!result)
                     //    return false;
                 }
+                return false;
             }
 
             return true;
@@ -292,6 +316,39 @@ namespace FitnessApp.Models
                     if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
                         StaticDB.Connection.Close();
                 return -1;
+            }
+        }
+
+        public List<string> GetLikesWithNames(string id)
+        {
+            try
+            {
+                List<string> list = new List<string>();
+                StaticDB.Connect();
+
+                string com = "SELECT [User]" +
+                             "FROM Feed_Likes " +
+                            $"WHERE Feed_ID = '{id}'";
+
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                var r = command.ExecuteReader();
+
+                while (r.Read())
+                {
+                    list.Add(r.GetString(0));
+                }
+
+                StaticDB.Connection.Close();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
             }
         }
     }

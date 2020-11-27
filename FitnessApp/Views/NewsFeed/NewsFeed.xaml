@@ -8,7 +8,7 @@
     <ContentPage.Resources>
         <DataTemplate x:Key="textTemplate">
             <ViewCell>
-                <Frame ClassId="{Binding ID}" HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                <Frame ClassId="{Binding ID}" HasShadow="False" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,10">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Like"/>
                         <SwipeGestureRecognizer Direction="Left" Swiped="Swiped"/>
@@ -67,9 +67,10 @@
 
         <DataTemplate x:Key="fotoTemplate">
             <ViewCell>
-                <Frame ClassId="{Binding ID}" HasShadow="True" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,0,5,10">
+                <Frame ClassId="{Binding ID}" HasShadow="False" BorderColor="Black" BackgroundColor="White" Padding="5" Margin="5,10">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Like"/>
+                        <SwipeGestureRecognizer Direction="Left" Swiped="Swiped"/>
                     </Frame.GestureRecognizers>
                     <Grid>
                         <Grid>
@@ -140,7 +141,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="1" Text="FitApp" TextColor="Red" FontSize="Title" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+            <Label Grid.Column="1" Text="FitApp" CharacterSpacing="3" FontAttributes="Bold" TextColor="DarkOrange" FontSize="Title" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
         </Grid>
     </Shell.TitleView>
 
