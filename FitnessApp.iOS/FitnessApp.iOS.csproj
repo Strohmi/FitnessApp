@@ -185,26 +185,54 @@
     <ImageAsset Include="Assets.xcassets\Profil_32.imageset\Profil_32.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png" />
-    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png" />
-    <ImageAsset Include="Assets.xcassets\Home_32.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Home_32.imageset\Home_32.png" />
-    <ImageAsset Include="Assets.xcassets\Star_32.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Star_32.imageset\Star_32.png" />
-    <ImageAsset Include="Assets.xcassets\Profil_32.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Lupe_32.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Lupe_32.imageset\Lupe_32.png" />
-    <ImageAsset Include="Assets.xcassets\Plus_32.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Plus_32.imageset\Plus_32.png" />
-    <ImageAsset Include="Assets.xcassets\Profil_32.imageset\Profil_32.png" />
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Home_32.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Home_32.imageset\Home_32.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_32.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_32.imageset\Star_32.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Profil_32.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Lupe_32.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Lupe_32.imageset\Lupe_32.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Plus_32.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Plus_32.imageset\Plus_32.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Profil_32.imageset\Profil_32.png">
+      <Visible>false</Visible>
+    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Login_Logo.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Login_Logo.imageset\penguin-149971_1280.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\ThumbsUp.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\ThumbsUp.imageset\ThumbsUp.png" />
+    <ImageAsset Include="Assets.xcassets\ThumbsUp.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\ThumbsUp.imageset\ThumbsUp.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
