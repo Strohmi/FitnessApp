@@ -43,13 +43,60 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 return trainingsplaene;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
             }
 
         }
+
+        internal Trainingsplan GetByID(int iD)
+        {
+            try
+            {
+                Trainingsplan trainingsplan = null;
+                StaticDB.Connect();
+                string com = "SELECT TP_Base.ID, TP_Base.Titel, TP_Info.ErstelltAM, TP_Info.ErstelltVon, TP_Info.GeaendertAm " +
+                             "FROM TP_Base " +
+                             "INNER JOIN TP_Info " +
+                             "ON TP_Base.ID = TP_Info.ID " +
+                             $"WHERE TP_Base.ID = '{iD}'";
+
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                IDataReader r = sqlCommand.ExecuteReader();
+                while (r.Read())
+                {
+                    trainingsplan = new Trainingsplan()
+                    {
+                        ID = r.GetInt32(0),
+                        Titel = r.GetString(1),
+                        ErstelltAm = r.GetDateTime(2),
+                        User = AllVM.Datenbank.User.GetByName(r.GetString(3))
+                        //UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(r.GetInt32(0)),
+                        //Bewertungen = AllVM.Datenbank.Trainingsplan.GetBewertungen(r.GetInt32(0))
+                    };
+
+                    if (!r.IsDBNull(4))
+                        trainingsplan.GeAendertAm = r.GetDateTime(4);
+                }
+                StaticDB.Connection.Close();
+                return trainingsplan;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
+        }
+
         //anpassen 
         public List<Uebung> GetUebungen(int ID)
         {
@@ -81,12 +128,16 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 return uebungen;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                StaticDB.Connection.Close();
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
             }
         }
+
         public bool AddTrainingsplan(Trainingsplan trainingsplan)
         {
             try
@@ -130,10 +181,14 @@ namespace FitnessApp.Models.DB
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                StaticDB.Connection.Close();
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return false;
             }
         }
+
         //noch nich fertig
         public bool Edit(Trainingsplan trainingsplan)
         {
@@ -143,6 +198,7 @@ namespace FitnessApp.Models.DB
 
             return true;
         }
+
         public bool AddBewertung(BewertungTrainingpsplan bewertung, Trainingsplan trainingsplan)
         {
             try
@@ -160,11 +216,15 @@ namespace FitnessApp.Models.DB
             }
             catch (Exception ex)
             {
-                StaticDB.Connection.Close();
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return false;
             }
 
         }
+
         public List<BewertungTrainingpsplan> GetBewertungen(int ID)
         {
             List<BewertungTrainingpsplan> bewertungsList = new List<BewertungTrainingpsplan>();
@@ -206,7 +266,10 @@ namespace FitnessApp.Models.DB
             }
             catch (Exception ex)
             {
-                StaticDB.Connection.Close();
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return false;
             }
         }

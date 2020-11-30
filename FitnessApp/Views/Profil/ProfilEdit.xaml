@@ -36,6 +36,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="10,0">
             <Grid.ColumnDefinitions>
@@ -87,6 +88,7 @@
             <Button Grid.Row="3" Grid.ColumnSpan="2" Margin="0,0,0,0" Text="Passwort ändern..." FontSize="Medium" TextColor="Black" BorderColor="Black" BorderWidth="1" Clicked="ChangePWD"/>
         </Grid>
 
-        <Button Grid.Row="3" VerticalOptions="End" Text="Account löschen" TextColor="White" FontSize="Large" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0,30,5" CornerRadius="20" Clicked="DeleteUser"/>
+        <Button Grid.Row="3" VerticalOptions="End" Text="Abmelden" TextColor="White" FontSize="Large" FontAttributes="Bold" BackgroundColor="LightSkyBlue" Margin="30,0,30,10" CornerRadius="20" Clicked="Logoff"/>
+        <Button Grid.Row="4" VerticalOptions="End" Text="Account löschen" TextColor="White" FontSize="Large" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0,30,5" CornerRadius="20" Clicked="DeleteUser"/>
     </Grid>
 </ContentPage>

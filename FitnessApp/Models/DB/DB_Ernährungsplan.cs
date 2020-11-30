@@ -37,6 +37,12 @@ namespace FitnessApp.Models.DB
             StaticDB.Connection.Close();
             return ernährungsplaene;
         }
+
+        internal Ernährungsplan GetByID(int iD)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Mahlzeiten> GetMahlzeiten(int ID)
         {
             List<Mahlzeiten> mahlzeitenList = new List<Mahlzeiten>();

@@ -10,7 +10,7 @@ namespace FitnessApp
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(Profil), typeof(Profil));
-            Routing.RegisterRoute(nameof(NewsFeed), typeof(NewsFeed));
+            Routing.RegisterRoute(nameof(FitFeed), typeof(FitFeed));
         }
     }
 }

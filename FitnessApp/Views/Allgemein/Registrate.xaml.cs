@@ -26,7 +26,15 @@ namespace FitnessApp
         public Registrate()
         {
             InitializeComponent();
+            OnStart();
             BindingContext = this;
+        }
+
+        private void OnStart()
+        {
+            Title = "Registrieren";
+            NavigationPage.SetBackButtonTitle(this, "Zurück");
+            NavigationPage.SetHasBackButton(this, true);
         }
 
         private async void NewUser(object sender, EventArgs e)

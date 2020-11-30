@@ -7,25 +7,34 @@ namespace FitnessApp.Models
 {
     public class DB_Feed
     {
-        public List<News> Get(User user)
+        public List<News> Get(User user, DateTime vonDatum = default, DateTime bisDatum = default)
         {
             try
             {
+                if (bisDatum == default)
+                    bisDatum = DateTime.Now;
+
                 List<News> list = new List<News>();
                 StaticDB.Connect();
 
-                string com = $"SELECT base.ID, base.Beschreibung, " +
-                             $"info.ErstelltAm, info.ErstelltVon, " +
-                             $"fotos.Bild, " +
-                             $"COUNT(likes.[User]) " +
-                             "FROM Feed_Base AS base " +
-                             "INNER JOIN Feed_Info AS info " +
-                             "ON info.ID = base.ID " +
-                             "LEFT JOIN Feed_Fotos AS fotos " +
-                             "ON fotos.ID = info.ID " +
-                             "LEFT JOIN Feed_Likes as likes " +
-                             "ON likes.Feed_ID = base.ID " +
-                             "GROUP BY base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild";
+                string com = $"SELECT ID, Beschreibung, ErstelltAm, ErstelltVon, Bild, Count(*) " +
+                             $"FROM ( " +
+                             $"SELECT DISTINCT base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, likes.[User], fotos.Bild " +
+                             $"FROM Feed_Base AS base " +
+                             $"INNER JOIN Feed_Info AS info " +
+                             $"ON info.ID = base.ID " +
+                             $"INNER JOIN User_Follows AS follows " +
+                             $"ON follows.Follow_ID = '{user.Nutzername}' " +
+                             $"LEFT JOIN Feed_Fotos AS fotos " +
+                             $"ON fotos.ID = info.ID " +
+                             $"LEFT JOIN Feed_Likes AS likes " +
+                             $"ON likes.Feed_ID = base.ID " +
+                             $"WHERE(info.ErstelltVon = follows.User_ID OR info.ErstelltVon = '{user.Nutzername}') " +
+                             $"AND info.ErstelltAm >= '{vonDatum:yyyy-MM-dd}' " +
+                             $"AND info.ErstelltAm <= '{bisDatum:yyyy-MM-dd}' " +
+                             $") AS subquery " +
+                             $"GROUP BY ID, Beschreibung, ErstelltAm, ErstelltVon, Bild";
+
                 SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
@@ -50,9 +59,7 @@ namespace FitnessApp.Models
                 StaticDB.Connection.Close();
 
                 foreach (var item in list)
-                {
                     item.Liked = CheckIfLiked(item.ID);
-                }
 
                 return list;
             }
@@ -132,6 +139,10 @@ namespace FitnessApp.Models
                 }
 
                 StaticDB.Connection.Close();
+
+                foreach (var item in list)
+                    item.Liked = CheckIfLiked(item.ID);
+
                 return list;
             }
             catch (Exception ex)

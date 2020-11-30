@@ -30,6 +30,77 @@
                 <Setter Property="BackgroundColor" Value="White"/>
                 <Setter Property="FontSize" Value="Medium"/>
             </Style>
+
+            <!--CUSTOM-->
+            <Style x:Key="ShellFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="20"/>
+                <Setter Property="BackgroundColor" Value="White"/>
+                <Setter Property="Margin" Value="5,10"/>
+                <Setter Property="Padding" Value="10,5"/>
+                <Setter Property="BorderColor" Value="Black"/>
+                <Setter Property="HasShadow" Value="False"/>
+            </Style>
+
+            <Style x:Key="LikeFrameStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="Margin" Value="0,0,10,0"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="HasShadow" Value="False"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+            </Style>
+
+            <Style x:Key="BeschreibungStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium"/>
+                <Setter Property="LineBreakMode" Value="WordWrap"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="Margin" Value="0,2,0,0"/>
+                <Setter Property="Text" Value="{Binding Beschreibung}"/>
+            </Style>
+
+            <Style x:Key="LikesThumbsUpStyle" TargetType="Image">
+                <Setter Property="HeightRequest" Value="17"/>
+                <Setter Property="WidthRequest" Value="17"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Source" Value="ThumbsUp"/>
+            </Style>
+
+            <Style x:Key="LikesTextStyle" TargetType="Label">
+                <Setter Property="Text" Value="{Binding Likes, StringFormat='{}{0:#,##0}'}"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+
+            <Style x:Key="ErstellerStyle" TargetType="Label">
+                <Setter Property="Text" Value="{Binding Ersteller.Nutzername}"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="TextColor" Value="DarkOrange"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="LineBreakMode" Value="TailTruncation"/>
+            </Style>
+
+            <Style x:Key="ErstelltAmStyle" TargetType="Label">
+                <Setter Property="Text" Value="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="TextColor" Value="Black"/>
+            </Style>
+
+            <Style x:Key="ThumbsUpStyle" TargetType="Image">
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="WidthRequest" Value="60"/>
+                <Setter Property="Aspect" Value="AspectFit"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="Source" Value="ThumbsUp"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

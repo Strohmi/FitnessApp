@@ -218,5 +218,10 @@ namespace FitnessApp
             this.Navigation.PopAsync();
             return true;
         }
+
+        void Logoff(System.Object sender, System.EventArgs e)
+        {
+            App.Current.MainPage = new NavigationPage(new Login());
+        }
     }
 }

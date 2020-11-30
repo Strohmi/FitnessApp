@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using FitnessApp.Models.General;
+using FitnessApp.ViewModels;
 
 namespace FitnessApp.Models
 {
@@ -26,6 +28,42 @@ namespace FitnessApp.Models
                         Nutzername = r.GetString(0)
                     };
                     list.Add(user);
+                }
+
+                StaticDB.Connection.Close();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
+        }
+
+        internal List<FavoPlan> GetFavoPlans()
+        {
+            try
+            {
+                List<FavoPlan> list = new List<FavoPlan>();
+                StaticDB.Connect();
+
+                string com = $"SELECT Plan_ID, Typ FROM User_Favo WHERE Nutzername = '{AllVM.User.Nutzername}'";
+
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                var r = command.ExecuteReader();
+
+                while (r.Read())
+                {
+                    FavoPlan favo = new FavoPlan()
+                    {
+                        ID = r.GetInt32(0),
+                        Typ = r.GetString(1)
+                    };
+                    list.Add(favo);
                 }
 
                 StaticDB.Connection.Close();

@@ -14,11 +14,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Views\AboutPage %28Kopie%29.xaml.cs" />
+    <Compile Remove="Views\Pläne\Trainingsplan\TrainingFavo.xaml.cs" />
+    <Compile Remove="Views\Pläne\Trainingsplan\TrainingNew.xaml.cs" />
+    <Compile Remove="Views\Pläne\Allgemein\NewsFeed.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Profil\" />
-    <Folder Include="Views\NewsFeed\" />
+    <Folder Include="Views\FitFeed\" />
     <Folder Include="Views\Status\" />
+    <Folder Include="Views\Pläne\" />
+    <Folder Include="Views\Pläne\Trainingsplan\" />
+    <Folder Include="Views\Pläne\Ernährungsplan\" />
+    <Folder Include="Views\Pläne\Allgemein\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Views\Allgemein\Help.xaml.cs">
@@ -33,13 +40,6 @@
     <Compile Update="Views\Chat\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Ernährungsplan\AddMeal.xaml.cs">
-      <DependentUpon>AddMeal.xaml</DependentUpon>
-    </Compile>
-    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Trainingsplan\TrainingNew.xaml.cs">
-      <DependentUpon>TrainingNew.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Profil\Profil %28Kopie%29.xaml.cs">
       <DependentUpon>Profil %28Kopie%29.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -52,6 +52,9 @@
       <DependentUpon>ProfilEdit.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Pläne\Trainingsplan\TrainingNew.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\Chat\ChatView.xaml">

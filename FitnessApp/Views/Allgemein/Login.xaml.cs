@@ -20,6 +20,8 @@ namespace FitnessApp
         public Login()
         {
             InitializeComponent();
+            NavigationPage.SetHasNavigationBar(this, false);
+
             var cache = AllVM.Datenbank.User.GetList();
             if (cache != null)
                 Nutzernamen = cache.Select(s => s.Nutzername).ToList();
@@ -51,13 +53,6 @@ namespace FitnessApp
         private void Help(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new Help());
-        }
-
-        private void Loading()
-        {
-            anmelden.IsEnabled = false;
-            //loading.IsVisible = true;
-            //loading.IsRunning = true;
         }
     }
 }
