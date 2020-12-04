@@ -21,8 +21,6 @@
     <Folder Include="Views\Profil\" />
     <Folder Include="Views\FitFeed\" />
     <Folder Include="Views\Status\" />
-    <Folder Include="Views\Pläne\" />
-    <Folder Include="Views\Pläne\Trainingsplan\" />
     <Folder Include="Views\Pläne\Ernährungsplan\" />
     <Folder Include="Views\Pläne\Allgemein\" />
   </ItemGroup>
