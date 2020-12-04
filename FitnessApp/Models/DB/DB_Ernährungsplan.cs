@@ -46,6 +46,12 @@ namespace FitnessApp.Models.DB
                 throw;
             }
         }
+
+        internal List<string> GetUnits()
+        {
+            throw new NotImplementedException();
+        }
+
         internal Ernährungsplan GetByID(int iD)
         {
             var ePlan = new Ernährungsplan();

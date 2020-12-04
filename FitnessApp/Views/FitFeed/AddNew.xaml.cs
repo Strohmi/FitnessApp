@@ -47,7 +47,7 @@ namespace FitnessApp
                         await this.Navigation.PushAsync(new StatusNew());
                         break;
                     case "Trainingsplan":
-                        //await this.Navigation.PushAsync(new TrainingNew());
+                        await this.Navigation.PushAsync(new TrainingNew());
                         break;
                     case "Ernährungsplan":
                         await this.Navigation.PushAsync(new AddMeal());

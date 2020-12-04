@@ -10,12 +10,12 @@ using System.Linq;
 
 namespace FitnessApp
 {
-    public partial class ErnährungList : ContentPage
+    public partial class MealList : ContentPage
     {
         public List<Ernährungsplan> EPlaene { get; set; }
         private User user;
 
-        public ErnährungList(User _user)
+        public MealList(User _user)
         {
             InitializeComponent();
             user = _user;

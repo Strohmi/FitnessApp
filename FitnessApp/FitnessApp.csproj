@@ -22,7 +22,6 @@
     <Folder Include="Views\Profil\" />
     <Folder Include="Views\FitFeed\" />
     <Folder Include="Views\Status\" />
-    <Folder Include="Views\Pläne\Ernährungsplan\" />
     <Folder Include="Views\Pläne\Allgemein\" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +36,9 @@
     </Compile>
     <Compile Update="Views\Chat\ChatView.xaml.cs">
       <DependentUpon>ChatView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pläne\Ernährungsplan\MealList.xaml.cs">
+      <DependentUpon>MealList.xaml</DependentUpon>
     </Compile>
     <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Views\Profil\Profil %28Kopie%29.xaml.cs">
       <DependentUpon>Profil %28Kopie%29.xaml</DependentUpon>

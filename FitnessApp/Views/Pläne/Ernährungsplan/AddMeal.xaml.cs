@@ -36,7 +36,7 @@ namespace FitnessApp
             Title = "Mahlzeit erstellen";
             SetNavBar();
 
-            Units = AllVM.Datenbank.Ernährungsplan.GetUnits();
+            //Units = AllVM.Datenbank.Ernährungsplan.GetUnits();
         }
 
         private void SetNavBar()
