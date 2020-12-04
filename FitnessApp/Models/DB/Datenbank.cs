@@ -10,6 +10,9 @@ namespace FitnessApp.Models
     {
         public static SqlConnection Connection { get; set; }
 
+        /// <summary>
+        /// Statische Methode zum Verbinden mit der Datenbank
+        /// </summary>
         public static void Connect()
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
@@ -24,6 +27,11 @@ namespace FitnessApp.Models
             Connection = new SqlConnection(builder.ConnectionString);
         }
 
+        /// <summary>
+        /// Statische Methode zum Ausführen einer einfachen SQL-Anweisung mit einem boolschen Rückgabewert
+        /// </summary>
+        /// <param name="com">SQL-Answeisung</param>
+        /// <returns></returns>
         internal static bool RunSQL(string com)
         {
             try
@@ -45,6 +53,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Prüfen, ob Element in der Datenbank existiert
+        /// </summary>
+        /// <param name="com">SQL-Anweisung - wichtig: SELECT *...</param>
+        /// <returns></returns>
         internal static bool? CheckExistenz(string com)
         {
             try
@@ -74,6 +87,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// ID zu einem Element aus der Datenbank erhalten
+        /// </summary>
+        /// <param name="com">SQL-Answeisung - wichtig: SELECT ID...</param>
+        /// <returns></returns>
         public static int GetID(string com)
         {
             try
@@ -100,6 +118,9 @@ namespace FitnessApp.Models
         }
     }
 
+    /// <summary>
+    /// Zusammenfassung aller Datenbank-Kategorien zur besseren Übersicht
+    /// </summary>
     public class Datenbank
     {
         public DB_Feed Feed { get; set; } = new DB_Feed();

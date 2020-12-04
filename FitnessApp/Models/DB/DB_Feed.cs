@@ -7,6 +7,13 @@ namespace FitnessApp.Models
 {
     public class DB_Feed
     {
+        /// <summary>
+        /// Ausgabe der Feed-Einträge nach einem bestimmten Nutzer und optional in einem bestimmten Zeitraum
+        /// </summary>
+        /// <param name="user">Benutzer</param>
+        /// <param name="vonDatum">Ab wann soll selektiert werden</param>
+        /// <param name="bisDatum">Bis wann soll selektiert werden</param>
+        /// <returns></returns>
         public List<News> Get(User user, DateTime vonDatum = default, DateTime bisDatum = default)
         {
             try
@@ -73,6 +80,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Überprüfen, ob der aktuelle Nutzer den Beitrag geliked hat.
+        /// </summary>
+        /// <param name="id">ID des Beitrages</param>
+        /// <returns></returns>
         public bool CheckIfLiked(int id)
         {
             User user = AllVM.ConvertToUser();
@@ -100,6 +112,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Feed-Beiträge zu einem bestimmten Nutzer ausgeben
+        /// </summary>
+        /// <param name="user">Zu suchender Benutzer</param>
+        /// <returns></returns>
         public List<News> GetByUser(User user)
         {
             try
@@ -155,6 +172,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Löschen eines Feed-Beitrages
+        /// </summary>
+        /// <param name="news">Der zulöschende Beitrag</param>
+        /// <returns></returns>
         internal bool Delete(News news)
         {
             string com = null;
@@ -269,6 +291,12 @@ namespace FitnessApp.Models
             return true;
         }
 
+        /// <summary>
+        /// Einen Beitrag liken
+        /// </summary>
+        /// <param name="id">ID des Beitrages</param>
+        /// <param name="user">Benutzer, der den Beitrag geliked hat</param>
+        /// <returns></returns>
         public bool? Like(string id, User user)
         {
             bool isdone = false;
@@ -297,6 +325,11 @@ namespace FitnessApp.Models
                 return null;
         }
 
+        /// <summary>
+        /// Aktuellen Like-Anzahl zu einem Beitrag ausgeben
+        /// </summary>
+        /// <param name="id">ID des Beitrages</param>
+        /// <returns></returns>
         public int GetLikes(string id)
         {
             try
@@ -330,6 +363,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Likes und Nutzernamen zu einem Beitrag erhalten
+        /// </summary>
+        /// <param name="id">ID des Beitrages</param>
+        /// <returns></returns>
         public List<string> GetLikesWithNames(string id)
         {
             try

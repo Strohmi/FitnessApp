@@ -144,7 +144,7 @@ namespace FitnessApp
             }
             else if (button.ClassId == "EP")
             {
-                DisplayAlert("Plan", "Hier sehen Sie die Ernährungspläne", "OK");
+                this.Navigation.PushAsync(new ErnährungList(ProfilVM.User));
             }
         }
 

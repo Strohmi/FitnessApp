@@ -8,6 +8,10 @@ namespace FitnessApp.Models
 {
     public class DB_User
     {
+        /// <summary>
+        /// Alle Benutzer als Liste ausgeben
+        /// </summary>
+        /// <returns></returns>
         internal List<User> GetList()
         {
             try
@@ -43,6 +47,10 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Favorisierte Pläne (Training und Ernährung) aus der Datenbank ermitteln
+        /// </summary>
+        /// <returns></returns>
         internal List<FavoPlan> GetFavoPlans()
         {
             try
@@ -79,12 +87,22 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Einen neuen Benutzer hinzufügen
+        /// </summary>
+        /// <param name="user">einzufügender Benutzer</param>
+        /// <returns></returns>
         internal bool Insert(User user)
         {
             string com = $"";
             return StaticDB.RunSQL(com);
         }
 
+        /// <summary>
+        /// Zusätzliche Informationen zu einem Benutzer aufgrund eines Nutzernames erhalten
+        /// </summary>
+        /// <param name="nutzername">Nutzername des zu suchenden Benutzers</param>
+        /// <returns></returns>
         public User GetByName(string nutzername)
         {
             try
@@ -133,6 +151,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Anzahl der Follower ermitteln
+        /// </summary>
+        /// <param name="nutzername">Zu suchender Benutzer</param>
+        /// <returns></returns>
         private int GetAnzahlFollower(string nutzername)
         {
             try
@@ -159,13 +182,24 @@ namespace FitnessApp.Models
             }
         }
 
-        internal bool DeleteFavo(string id, User user)
+        /// <summary>
+        /// Plan aus Favoritenliste löschen
+        /// </summary>
+        /// <param name="classid">Bezeichner aus MenuItem.ClassID (Typ;Id)</param>
+        /// <param name="user">Benutzer</param>
+        /// <returns></returns>
+        internal bool DeleteFavo(string classid, User user)
         {
-            string[] keys = id.Split(';');
+            string[] keys = classid.Split(';');
             string com = $"DELETE FROM User_Favo WHERE Nutzername = '{user.Nutzername}' AND Typ = '{keys[0]}' AND Plan_ID = '{keys[1]}'";
             return StaticDB.RunSQL(com);
         }
 
+        /// <summary>
+        /// Aktualisieren der neuen Werte für einen Benutzer
+        /// </summary>
+        /// <param name="user">zu aktualisierender Benutzer</param>
+        /// <returns></returns>
         internal bool Update(User user)
         {
             string com = $"UPDATE User_Info SET " +
@@ -202,6 +236,11 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Liste der Follower zu einem Benutzer ausgeben
+        /// </summary>
+        /// <param name="profil">Benutzername</param>
+        /// <returns></returns>
         internal List<Follower> GetFollows(string profil)
         {
             try
@@ -242,23 +281,46 @@ namespace FitnessApp.Models
             }
         }
 
+        /// <summary>
+        /// Löschen des Benutzers
+        /// </summary>
+        /// <param name="user">Benutzer</param>
+        /// <returns></returns>
         internal bool Delete(User user)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Benutzer verfolgen
+        /// </summary>
+        /// <param name="profil">Benutzer, dem zu folgen ist</param>
+        /// <param name="follower">Benutzer, der folgen möchte</param>
+        /// <returns></returns>
         internal bool Follow(User profil, User follower)
         {
             string com = $"INSERT INTO User_Follows VALUES ('{profil.Nutzername}', '{follower.Nutzername}', '{DateTime.Now:yyyy-MM-dd HH:mm:ss}')";
             return StaticDB.RunSQL(com);
         }
 
+        /// <summary>
+        /// Entfolgen
+        /// </summary>
+        /// <param name="profil">Benutzer, dem zu entfolgen ist</param>
+        /// <param name="follower">Benutzer, der entfolgen möchte</param>
+        /// <returns></returns>
         internal bool UnFollow(User profil, User follower)
         {
             string com = $"DELETE FROM User_Follows WHERE User_ID = '{profil.Nutzername}' AND Follow_ID = '{follower.Nutzername}'";
             return StaticDB.RunSQL(com);
         }
 
+        /// <summary>
+        /// Profilbild hochladen
+        /// </summary>
+        /// <param name="user">Benutzer</param>
+        /// <param name="bild">Profilbild</param>
+        /// <returns></returns>
         internal bool UploadProfilBild(User user, byte[] bild)
         {
             try

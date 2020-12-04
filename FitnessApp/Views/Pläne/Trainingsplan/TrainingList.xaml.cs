@@ -41,6 +41,9 @@ namespace FitnessApp
                 TPlaene = TPlaene.OrderByDescending(o => o.ErstelltAm).ToList();
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Laden");
+
+            listView.ItemsSource = null;
+            listView.ItemsSource = TPlaene;
         }
 
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)

@@ -17,7 +17,24 @@ namespace FitnessApp.Models
         public string Kategorie { get; set; }
 
         public decimal DurchBewertung { get; set; }
-        public string DurchBewertAnzeige { get { return $"{DurchBewertung:0.00} / 5"; } }
+        public string DurchBewertAnzeige
+        {
+            get
+            {
+                if (DurchBewertung == -1)
+                {
+                    return "???";
+                }
+                else if (DurchBewertung == -2)
+                {
+                    return $"FEHLER";
+                }
+                else
+                {
+                    return $"{DurchBewertung:0.00} / 5";
+                }
+            }
+        }
     }
 
     //uebung
@@ -35,6 +52,6 @@ namespace FitnessApp.Models
     {
         public int ID { get; set; }
         public User Bewerter { get; set; }
-        public string Bewertung { get; set; }
+        public int Bewertung { get; set; }
     }
 }

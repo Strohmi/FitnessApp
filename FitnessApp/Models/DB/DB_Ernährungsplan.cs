@@ -82,6 +82,7 @@ namespace FitnessApp.Models.DB
             StaticDB.Connection.Close();
             return ePlan;
         }
+
         public List<Mahlzeiten> GetMahlzeiten(int ID)
         {
             try
@@ -118,6 +119,7 @@ namespace FitnessApp.Models.DB
             }
 
         }
+
         public bool AddErnährungsplan(Ernährungsplan ernährungsplan)
         {
             try
@@ -158,7 +160,6 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 return false;
             }
-
         }
 
         public bool Delete(Ernährungsplan ernährungsplan)

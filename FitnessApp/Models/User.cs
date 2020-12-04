@@ -3,6 +3,9 @@ using FitnessApp.Models;
 
 namespace FitnessApp
 {
+    /// <summary>
+    /// Benutzerklasse
+    /// </summary>
     public class User : NotifyPropertyBase
     {
         private string _nutzername;

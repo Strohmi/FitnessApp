@@ -6,6 +6,11 @@ namespace FitnessApp.Models
 {
     public class DB_Status
     {
+        /// <summary>
+        /// Einfügen eines Status
+        /// </summary>
+        /// <param name="status">Der einzufügende Status</param>
+        /// <returns></returns>
         public bool Insert(Status status)
         {
             string com = $"INSERT INTO Feed_Base VALUES('{status.Beschreibung}');";

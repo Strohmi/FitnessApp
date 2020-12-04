@@ -6,12 +6,12 @@
              Appearing="Loaded">
 
     <Grid BackgroundColor="White">
-        <ListView ItemsSource="{Binding TPlaene}" HasUnevenRows="True" Margin="10" BackgroundColor="Transparent" SeparatorVisibility="None">
+        <ListView x:Name="listView" HasUnevenRows="True" Margin="10" BackgroundColor="Transparent" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell BindingContextChanged="OnBindingContextChanged">
                         <Frame Padding="0" Margin="5" HasShadow="False" BorderColor="Black">
-                            <Grid>
+                            <Grid Margin="5">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
@@ -21,9 +21,12 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Titel}" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
-                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding DurchBewertAnzeige}"/>
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Titel}" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
+                                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                                    <Image Source="Star_Filled" Margin="0,0,0,0" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
+                                    <Label Text="{Binding DurchBewertAnzeige}" FontSize="Medium" TextColor="Black" VerticalOptions="End"/>
+                                </StackLayout>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" HorizontalOptions="End"/>
                             </Grid>
                         </Frame>
                     </ViewCell>
