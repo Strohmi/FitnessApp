@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -15,6 +15,9 @@ namespace FitnessApp.Models
         public List<BewertungTrainingpsplan> Bewertungen { get; set; }
         public BewertungTrainingpsplan Bewertung { get; set; }
         public string Kategorie { get; set; }
+
+        public decimal DurchBewertung { get; set; }
+        public string DurchBewertAnzeige { get { return $"{DurchBewertung:0.00} / 5"; } }
     }
 
     //uebung

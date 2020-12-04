@@ -33,7 +33,7 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Titel}" FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation"/>
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titel}" FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation"/>
                                 <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Start">
                                     <Label Text="{Binding User.Nutzername}" FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation"/>
                                     <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black"/>

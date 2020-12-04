@@ -1,4 +1,4 @@
-﻿using FitnessApp.Models.General;
+using FitnessApp.Models.General;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -42,9 +42,37 @@ namespace FitnessApp.Models.DB
             }
             catch (Exception)
             {
-
-                throw;
+throw;
             }
+
+        internal Ernährungsplan GetByID(int iD)
+        {
+            var ePlan = new Ernährungsplan();
+            StaticDB.Connect();
+            string com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm " +
+                         "FROM EP_Base as base " +
+                         "INNER JOIN EP_Info as info " +
+                         "ON base.ID = info.ID " +
+                         $"WHERE base.ID = '{iD}'";
+            SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+            StaticDB.Connection.Open();
+            var r = sqlCommand.ExecuteReader();
+            while (r.Read())
+            {
+                ePlan = new Ernährungsplan()
+                {
+                    ID = r.GetInt32(0),
+                    Titel = r.GetString(1),
+                    User = AllVM.Datenbank.User.GetByName(r.GetString(2)),
+                    ErstelltAm = r.GetDateTime(3),
+                    GeAendertAm = r.GetDateTime(4),
+                    //Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(r.GetInt32(0)),
+                    //MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(r.GetInt32(0))
+                };
+            }
+            StaticDB.Connection.Close();
+            return ePlan;
+        }
 
         }
         public List<Mahlzeiten> GetMahlzeiten(int ID)

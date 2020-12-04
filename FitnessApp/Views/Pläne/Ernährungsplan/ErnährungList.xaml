@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.ErnährungList"
+             Title="{Binding Title}"
+             Appearing="Loaded">
+
+    <Grid BackgroundColor="White">
+        <ListView ItemsSource="{Binding EPlaene}" HasUnevenRows="True" Margin="10" BackgroundColor="Transparent" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell BindingContextChanged="OnBindingContextChanged">
+                        <Frame Padding="0" Margin="5" HasShadow="False" BorderColor="Black">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Titel}" FontSize="Medium" FontAttributes="Bold" TextColor="Black"/>
+                                <Label Grid.Row="1" Grid.Column="0" Text="{Binding DurchBewertAnzeige}"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}"/>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

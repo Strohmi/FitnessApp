@@ -16,6 +16,7 @@
     <Compile Remove="Views\AboutPage %28Kopie%29.xaml.cs" />
     <Compile Remove="Views\Pläne\Trainingsplan\TrainingFavo.xaml.cs" />
     <Compile Remove="Views\Pläne\Allgemein\NewsFeed.xaml.cs" />
+    <Compile Remove="Views\Pläne\Ernährungsplan\TrainingList.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Profil\" />

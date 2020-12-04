@@ -252,7 +252,6 @@ namespace FitnessApp.Models.DB
                         StaticDB.Connection.Close();
                 return false;
             }
-
         }
         /// <summary>
         /// Lädt eine Liste der Bewertungen zu einem Trainingsplan aus der Datenbank.

@@ -159,6 +159,13 @@ namespace FitnessApp.Models
             }
         }
 
+        internal bool DeleteFavo(string id, User user)
+        {
+            string[] keys = id.Split(';');
+            string com = $"DELETE FROM User_Favo WHERE Nutzername = '{user.Nutzername}' AND Typ = '{keys[0]}' AND Plan_ID = '{keys[1]}'";
+            return StaticDB.RunSQL(com);
+        }
+
         internal bool Update(User user)
         {
             string com = $"UPDATE User_Info SET " +
