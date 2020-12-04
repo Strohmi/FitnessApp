@@ -15,7 +15,6 @@
   <ItemGroup>
     <Compile Remove="Views\AboutPage %28Kopie%29.xaml.cs" />
     <Compile Remove="Views\Pläne\Trainingsplan\TrainingFavo.xaml.cs" />
-    <Compile Remove="Views\Pläne\Trainingsplan\TrainingNew.xaml.cs" />
     <Compile Remove="Views\Pläne\Allgemein\NewsFeed.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -52,9 +51,6 @@
       <DependentUpon>ProfilEdit.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="Views\Pläne\Trainingsplan\TrainingNew.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\Chat\ChatView.xaml">
