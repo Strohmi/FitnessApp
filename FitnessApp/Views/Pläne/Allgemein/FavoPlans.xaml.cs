@@ -26,6 +26,9 @@ namespace FitnessApp
 
         private void Start()
         {
+            Title = "Favoriten";
+            NavigationPage.SetIconColor(this, Color.Black);
+
             FavoPlansVM.ListTrPlan = new List<Trainingsplan>();
             FavoPlansVM.ListErPlan = new List<Ernährungsplan>();
             GetList();

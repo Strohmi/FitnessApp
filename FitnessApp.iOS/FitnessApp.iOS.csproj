@@ -233,6 +233,10 @@
     <ImageAsset Include="Assets.xcassets\ThumbsUp.imageset\ThumbsUp.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_Filled.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Star_Filled.imageset\Star_Filled.png" />
+    <ImageAsset Include="Assets.xcassets\Star_Unfilled.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Star_Unfilled.imageset\Star_Unfilled.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -268,6 +272,8 @@
     <Folder Include="Assets.xcassets\Plus_32.imageset\" />
     <Folder Include="Assets.xcassets\Login_Logo.imageset\" />
     <Folder Include="Assets.xcassets\ThumbsUp.imageset\" />
+    <Folder Include="Assets.xcassets\Star_Filled.imageset\" />
+    <Folder Include="Assets.xcassets\Star_Unfilled.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\logo.png">
