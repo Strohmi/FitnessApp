@@ -41,7 +41,8 @@ namespace FitnessApp.Models.DB
                         GeAendertAm = r.GetDateTime(4),
                         UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(r.GetInt32(0)),
                         Bewertungen = AllVM.Datenbank.Trainingsplan.GetBewertungen(r.GetInt32(0)),
-                        Kategorie = r.GetString(5)
+                        Kategorie = r.GetString(5),
+                        DurchBewertung = AllVM.Datenbank.Trainingsplan.GetAvgBewertung(r.GetInt32(0))
                     };
                     trainingsplaene.Add(trainingsplan);
 
@@ -270,8 +271,11 @@ namespace FitnessApp.Models.DB
                              "INNER JOIN TP_Bewertung as bew " +
                              "ON bew.ID = link.ID_TP_Bewertung " +
                              $"WHERE base.ID = {ID}";
+                
+                
                 SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
+                
                 var r = sqlCommand.ExecuteReader();
                 while (r.Read())
                 {
@@ -290,6 +294,29 @@ namespace FitnessApp.Models.DB
                 throw;
             }
 
+        }
+        public decimal GetAvgBewertung(int ID)
+        {
+            try
+            {
+                string durcchBew = "SELECT AVG(bew.Bewertung) " +
+                                   "FROM TP_Base as base " +
+                                   "INNER JOIN TP_Link_BaseBewertung as link " +
+                                   "ON base.ID = link.ID_TP_Base " +
+                                   "INNER JOIN TP_Bewertung as bew " +
+                                   "ON bew.ID = link.ID_TP_Bewertung " +
+                                   $"WHERE base.ID = {ID}";
+                SqlCommand command = new SqlCommand(durcchBew, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                decimal durchschnitt = (decimal)command.ExecuteScalar();
+                StaticDB.Connection.Close();
+                return durchschnitt;
+            }
+            catch (Exception)
+            {
+                StaticDB.Connection.Close();
+                throw;
+            }
         }
         /// <summary>
         /// Löscht einen Trainingsplan, inklusive der Bewertungen, aus der Datenbank.
@@ -313,6 +340,45 @@ namespace FitnessApp.Models.DB
             {
                 StaticDB.Connection.Close();
                 return false;
+            }
+        }
+        public Trainingsplan GetByID(int ID)
+        {
+            try
+            {
+                Trainingsplan trainingsplan = new Trainingsplan();
+                StaticDB.Connect();
+                string com = "SELECT TP_Base.ID, TP_Base.Titel, TP_Info.ErstelltAM, TP_Info.ErstelltVon, TP_Info.GeaendertAm, TP_Info.Kategorie " +
+                             "FROM TP_Base " +
+                             "INNER JOIN TP_Info " +
+                             "ON TP_Base.ID = TP_Info.ID " +
+                             $"WHERE TP_Info.ID = '{ID}'";
+
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                IDataReader r = sqlCommand.ExecuteReader();
+                while (r.Read())
+                {
+                    trainingsplan = new Trainingsplan()
+                    {
+                        ID = r.GetInt32(0),
+                        Titel = r.GetString(1),
+                        ErstelltAm = r.GetDateTime(2),
+                        User = AllVM.Datenbank.User.GetByName(r.GetString(3)),
+                        GeAendertAm = r.GetDateTime(4),
+                        UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(r.GetInt32(0)),
+                        Bewertungen = AllVM.Datenbank.Trainingsplan.GetBewertungen(r.GetInt32(0)),
+                        Kategorie = r.GetString(5),
+                        DurchBewertung = AllVM.Datenbank.Trainingsplan.GetAvgBewertung(r.GetInt32(0))
+                    };
+                }
+                StaticDB.Connection.Close();
+                return trainingsplan;
+            }
+            catch (Exception)
+            {
+                StaticDB.Connection.Close();
+                return null;
             }
         }
     }

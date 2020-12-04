@@ -33,7 +33,8 @@ namespace FitnessApp.Models.DB
                         GeAendertAm = r.GetDateTime(4),
                         Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(r.GetInt32(0)),
                         MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(r.GetInt32(0)),
-                        Kategorie = r.GetString(5)
+                        Kategorie = r.GetString(5),
+                        DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(r.GetInt32(0))
                     };
                     ernährungsplaene.Add(ernährungsplan);
                 }
@@ -42,14 +43,14 @@ namespace FitnessApp.Models.DB
             }
             catch (Exception)
             {
-throw;
+                throw;
             }
-
+        }
         internal Ernährungsplan GetByID(int iD)
         {
             var ePlan = new Ernährungsplan();
             StaticDB.Connect();
-            string com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm " +
+            string com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm, info.Kategorie " +
                          "FROM EP_Base as base " +
                          "INNER JOIN EP_Info as info " +
                          "ON base.ID = info.ID " +
@@ -66,14 +67,14 @@ throw;
                     User = AllVM.Datenbank.User.GetByName(r.GetString(2)),
                     ErstelltAm = r.GetDateTime(3),
                     GeAendertAm = r.GetDateTime(4),
-                    //Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(r.GetInt32(0)),
-                    //MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(r.GetInt32(0))
+                    Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(r.GetInt32(0)),
+                    MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(r.GetInt32(0)),
+                    Kategorie = r.GetString(5),
+                    DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(r.GetInt32(0))
                 };
             }
             StaticDB.Connection.Close();
             return ePlan;
-        }
-
         }
         public List<Mahlzeiten> GetMahlzeiten(int ID)
         {
@@ -247,6 +248,29 @@ throw;
             catch (Exception)
             {
 
+                throw;
+            }
+        }
+        public decimal GetAvgBewertung(int ID)
+        {
+            try
+            {
+                string durcchBew = "SELECT AVG(bew.Bewertung) " +
+                                   "FROM EP_Base as base " +
+                                   "INNER JOIN EP_Link_BaseBewertung as link " +
+                                   "ON base.ID = link.ID_EP_Base " +
+                                   "INNER JOIN EP_Bewertung as bew " +
+                                   "ON bew.ID = link.ID_EP_Bewertung " +
+                                   $"WHERE base.ID = {ID}";
+                SqlCommand command = new SqlCommand(durcchBew, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                decimal durchschnitt = (decimal)command.ExecuteScalar();
+                StaticDB.Connection.Close();
+                return durchschnitt;
+            }
+            catch (Exception)
+            {
+                StaticDB.Connection.Close();
                 throw;
             }
         }
