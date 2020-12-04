@@ -38,6 +38,24 @@ namespace FitnessApp.Models.DB
             return ernährungsplaene;
         }
 
+        internal List<string> GetUnits()
+        {
+            List<string> units = new List<string>();
+            StaticDB.Connect();
+            string com = "SELECT * " +
+                         "FROM EP_Einheiten";
+
+            SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+            StaticDB.Connection.Open();
+            var r = sqlCommand.ExecuteReader();
+            while (r.Read())
+            {
+                units.Add(r.GetString(0));
+            }
+            StaticDB.Connection.Close();
+            return units;
+        }
+
         internal Ernährungsplan GetByID(int iD)
         {
             throw new NotImplementedException();

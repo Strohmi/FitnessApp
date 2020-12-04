@@ -11,7 +11,7 @@ namespace FitnessApp.Models
         public User User { get; set; }
         public DateTime ErstelltAm { get; set; }
         public DateTime GeAendertAm { get; set; }
-        public List<Mahlzeiten> MahlzeitenList { get; set; }
+        public List<Mahlzeiten> MahlzeitenList { get; set; } = new List<Mahlzeiten>();
         public List<BewertungErnährungsplan> Bewertungen { get; set; }
     }
 
