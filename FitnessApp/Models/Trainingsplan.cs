@@ -14,6 +14,7 @@ namespace FitnessApp.Models
         public List<Uebung> UebungList { get; set; }
         public List<BewertungTrainingpsplan> Bewertungen { get; set; }
         public BewertungTrainingpsplan Bewertung { get; set; }
+        public string Kategorie { get; set; }
     }
 
     //uebung

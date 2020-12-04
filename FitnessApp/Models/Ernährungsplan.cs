@@ -13,6 +13,7 @@ namespace FitnessApp.Models
         public DateTime GeAendertAm { get; set; }
         public List<Mahlzeiten> MahlzeitenList { get; set; }
         public List<BewertungErnährungsplan> Bewertungen { get; set; }
+        public string Kategorie { get; set; }
     }
 
     public class Mahlzeiten

@@ -116,6 +116,5 @@ namespace FitnessApp
             DependencyService.Get<IMessage>().ShortAlert("Funktion noch nicht implementiert!");
         }
 
-
     }
 }
