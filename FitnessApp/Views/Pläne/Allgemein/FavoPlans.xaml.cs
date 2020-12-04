@@ -100,7 +100,57 @@ namespace FitnessApp
 
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)
         {
+            MenuItem menuItem = new MenuItem();
+            base.OnBindingContextChanged();
 
+            if (BindingContext == null)
+                return;
+
+            ViewCell theViewCell = ((ViewCell)sender);
+            var item = theViewCell.BindingContext;
+            theViewCell.ContextActions.Clear();
+
+            if (item != null)
+            {
+                if (item.GetType() == typeof(Trainingsplan))
+                {
+                    menuItem = new MenuItem()
+                    {
+                        Text = "Entfernen",
+                        ClassId = $"T;{(item as Trainingsplan).ID}",
+                        IsDestructive = true
+                    };
+                    menuItem.Clicked += Delete;
+                    theViewCell.ContextActions.Add(menuItem);
+                }
+                else if (item.GetType() == typeof(Ernährungsplan))
+                {
+                    menuItem = new MenuItem()
+                    {
+                        Text = "Entfernen",
+                        ClassId = $"E;{(item as Ernährungsplan).ID}",
+                        IsDestructive = true
+                    };
+                    menuItem.Clicked += Delete;
+                    theViewCell.ContextActions.Add(menuItem);
+                }
+            }
+        }
+
+        private void Delete(object sender, EventArgs e)
+        {
+            var menuitem = (sender as MenuItem);
+
+            if (AllVM.Datenbank.User.DeleteFavo(menuitem.ClassId, AllVM.ConvertToUser()))
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Erfolgreich entfernt");
+                GetList();
+                FavoPlansVM.AnzeigeListe = FavoPlansVM.ListTrPlan.ToList<object>();
+            }
+            else
+            {
+                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Entfernen");
+            }
         }
     }
 }

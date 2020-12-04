@@ -134,12 +134,6 @@
     <ImageAsset Include="Assets.xcassets\Plus.imageset\Plus1.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\Contents.json">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\ProfilBildDefault.imageset\white-male-1816195_1280.jpg">
-      <Visible>false</Visible>
-    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Follower.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
@@ -245,6 +239,24 @@
     <ImageAsset Include="Assets.xcassets\Star_Unfilled.imageset\Star_Unfilled.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_Filled.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_Filled.imageset\Star_Filled.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_Unfilled.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_Unfilled.imageset\Star_Unfilled.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Trash.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Trash.imageset\Trash.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -282,6 +294,7 @@
     <Folder Include="Assets.xcassets\ThumbsUp.imageset\" />
     <Folder Include="Assets.xcassets\Star_Filled.imageset\" />
     <Folder Include="Assets.xcassets\Star_Unfilled.imageset\" />
+    <Folder Include="Assets.xcassets\Trash.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\logo.png">

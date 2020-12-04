@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -13,7 +13,11 @@ namespace FitnessApp.Models
         public DateTime GeAendertAm { get; set; }
         public List<Mahlzeiten> MahlzeitenList { get; set; } = new List<Mahlzeiten>();
         public List<BewertungErnährungsplan> Bewertungen { get; set; }
-    }
+        public string Kategorie { get; set; }
+
+        public decimal DurchBewertung { get; set; }
+        public string DurchBewertAnzeige { get { return $"{DurchBewertung:0.00} / 5"; } }
+}
 
     public class Mahlzeiten
     {

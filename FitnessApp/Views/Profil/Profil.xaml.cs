@@ -140,7 +140,7 @@ namespace FitnessApp
 
             if (button.ClassId == "TP")
             {
-                DisplayAlert("Plan", "Hier sehen Sie die Trainingspläne", "OK");
+                this.Navigation.PushAsync(new TrainingList(ProfilVM.User));
             }
             else if (button.ClassId == "EP")
             {
