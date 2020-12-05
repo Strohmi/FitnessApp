@@ -22,10 +22,19 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Titel}" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
-                                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
+                                <Grid Grid.Row="1" Grid.Column="0" x:Name="bewGrid">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+                                <!--<StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
                                     <Image Source="Star_Filled" Margin="0,0,0,0" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
                                     <Label Text="{Binding DurchBewertAnzeige}" FontSize="Medium" TextColor="Black" VerticalOptions="End"/>
-                                </StackLayout>
+                                </StackLayout>-->
                                 <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" HorizontalOptions="End"/>
                             </Grid>
                         </Frame>
