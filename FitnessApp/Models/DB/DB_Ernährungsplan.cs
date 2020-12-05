@@ -51,6 +51,11 @@ namespace FitnessApp.Models.DB
         {
             throw new NotImplementedException();
         }
+        
+        internal List<string> GetCategories()
+        {
+            throw new NotImplementedException();
+        }
 
         internal Ernährungsplan GetByID(int iD)
         {

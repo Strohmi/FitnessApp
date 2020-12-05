@@ -13,6 +13,7 @@ namespace FitnessApp
     {
         //Bindings im XAML-Code übergeben an diese Eigenschaften
         public string MealName { get; set; }
+        public string MealCategorie { get; set; }
 
         public string NewFood { get; set; }
         public string NewAmount { get; set; }
@@ -23,6 +24,8 @@ namespace FitnessApp
 
         //Die Eigenschaft wird erstellt, um die Einheiten aus der Datenbank abzurufen und im Picker beim hinufügen von Nahrungen darzustellen
         public List<string> Units { get; set; }
+
+        public List<string> Cateogries { get; set; }
 
         public MahlzeitNew()
         {
@@ -36,7 +39,9 @@ namespace FitnessApp
             Title = "Mahlzeit erstellen";
             SetNavBar();
 
+            //Diese Methoden müssen noch geschrieben werden!
             //Units = AllVM.Datenbank.Ernährungsplan.GetUnits();
+            //Cateogries = AllVM.Datenbank.Ernährungsplan.GetCategories();
         }
 
         private void SetNavBar()
@@ -54,34 +59,41 @@ namespace FitnessApp
         //Diese Methode fügt einen neuen Eintrag mit Namen, Menge und Einheit zur Liste "plan.MahlzeitenList" hinzu
         private void Add(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(NewFood))
+            try
             {
-                if (Convert.ToDecimal(NewAmount) > 0)
+                if (!string.IsNullOrEmpty(NewFood))
                 {
-                    if (!string.IsNullOrEmpty(NewUnit))
+                    if (Convert.ToDecimal(NewAmount) > 0)
                     {
-                        plan.MahlzeitenList.Add(new Mahlzeiten
+                        if (!string.IsNullOrEmpty(NewUnit))
                         {
-                            Nahrungsmittel = NewFood,
-                            Menge = Convert.ToDecimal(NewAmount),
-                            Einheit = NewUnit
-                        });
+                            plan.MahlzeitenList.Add(new Mahlzeiten
+                            {
+                                Nahrungsmittel = NewFood,
+                                Menge = Convert.ToDecimal(NewAmount),
+                                Einheit = NewUnit
+                            });
 
-                        foodEntry.Text = null;
-                        amountEntry.Text = null;
+                            foodEntry.Text = null;
+                            amountEntry.Text = null;
 
-                        mealsView.ItemsSource = null;
-                        mealsView.ItemsSource = plan.MahlzeitenList;
+                            mealsView.ItemsSource = null;
+                            mealsView.ItemsSource = plan.MahlzeitenList;
+                        }
+                        else
+                            DependencyService.Get<IMessage>().ShortAlert("Einheit auswählen!");
                     }
                     else
-                        DependencyService.Get<IMessage>().ShortAlert("Einheit auswählen!");
+                        DependencyService.Get<IMessage>().ShortAlert("Menge eingeben!");
                 }
                 else
-                    DependencyService.Get<IMessage>().ShortAlert("Menge eingeben!");
+                    DependencyService.Get<IMessage>().ShortAlert("Lebensmittel benennen!");
             }
-            else
-                DependencyService.Get<IMessage>().ShortAlert("Lebensmittel benennen!");
-
+            catch
+            {
+                //Anzeige einer Meldung eine fehlgeschlagene Speicherung
+                DependencyService.Get<IMessage>().ShortAlert("Ein unbekannter Fehler ist aufgetreten!");
+            }
         }
 
         //Diese Methode speichert alle Eingaben in der Datenbank
@@ -89,19 +101,30 @@ namespace FitnessApp
         {
             //Übergabe von User, Mahlzeittitel und aktuellen Datum an Instanz "plan" von der Klasse Ernährungsplan
             plan.User = AllVM.ConvertToUser();
-            plan.Titel = MealName;
             plan.ErstelltAm = DateTime.Now;
+            plan.Titel = MealName;
+            plan.Kategorie = MealCategorie;
 
             try
             {
-                //Die Instanz "plan" von Ernährungsplan wird zur Speicherung in der Datenbank an die Methode "AddErnährungsplan" übergeben
-                AllVM.Datenbank.Ernährungsplan.AddErnährungsplan(plan);
+                if (!string.IsNullOrEmpty(MealName))
+                {
+                    if (!string.IsNullOrEmpty(MealCategorie))
+                    {
+                        //Die Instanz "plan" von Ernährungsplan wird zur Speicherung in der Datenbank an die Methode "AddErnährungsplan" übergeben
+                        AllVM.Datenbank.Ernährungsplan.AddErnährungsplan(plan);
 
-                //Anzeige einer Meldung für die erfolgreiche Speicherung
-                DependencyService.Get<IMessage>().ShortAlert("Mahlzeit wurde gespeichert!");
+                        //Anzeige einer Meldung für die erfolgreiche Speicherung
+                        DependencyService.Get<IMessage>().ShortAlert("Mahlzeit wurde gespeichert!");
 
-                //Rückkehr zur Ansicht "AddNew"
-                OnBackButtonPressed();
+                        //Rückkehr zur Ansicht "AddNew"
+                        OnBackButtonPressed();
+                    }
+                    else
+                        DependencyService.Get<IMessage>().ShortAlert("Kateogrie auswählen!");
+                }
+                else
+                    DependencyService.Get<IMessage>().ShortAlert("Namen eingeben!");
             }
             catch
             {
