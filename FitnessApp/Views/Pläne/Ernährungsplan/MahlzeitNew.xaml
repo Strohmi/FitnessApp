@@ -53,7 +53,6 @@
                 <ListView x:Name="mealsView" Grid.Row="1" Grid.ColumnSpan ="4" BackgroundColor="White">
                     <ListView.Header>
                         <Grid>
-
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="50"/>
