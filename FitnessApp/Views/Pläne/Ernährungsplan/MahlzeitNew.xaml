@@ -8,11 +8,13 @@
         <Style TargetType="Entry" x:Key="EntryStyle">
             <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="Black"/>
             <Setter Property="PlaceholderColor" Value="Gray"/>
         </Style>
         <Style TargetType="Picker" x:Key="PickerStyle">
             <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="Black"/>
             <Setter Property="TitleColor" Value="Gray"/>
         </Style>
         <Style TargetType="Label" x:Key="HeadingStyle">
@@ -39,7 +41,7 @@
                     <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <Entry  Grid.Column="0" Margin="10,0,0,0" Style="{StaticResource Key=EntryStyle}" Placeholder="Titel" Text="{Binding MealName}" HorizontalTextAlignment="Start" ReturnType="Next"/>
-                <Picker Grid.Column="1" Margin="0,0,10,0" Style="{StaticResource Key=PickerStyle}"  Title="Kategorie" ItemsSource="{Binding Categories}" SelectedItem="{Binding MealCategorie}"   />
+                <Picker Grid.Column="1" Margin="0,0,10,0" Style="{StaticResource Key=PickerStyle}" Title="Kategorie" ItemsSource="{Binding Categories}" SelectedItem="{Binding MealCategorie}"   />
             </Grid>
 
             <Grid Grid.Row="1" Margin="10,0,10,0" BackgroundColor="White">
@@ -50,7 +52,8 @@
 
                 <ListView x:Name="mealsView" Grid.Row="1" Grid.ColumnSpan ="4" BackgroundColor="White">
                     <ListView.Header>
-                        <Grid >
+                        <Grid>
+
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="50"/>
