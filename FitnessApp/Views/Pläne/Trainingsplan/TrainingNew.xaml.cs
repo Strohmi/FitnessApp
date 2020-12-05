@@ -55,10 +55,18 @@ namespace FitnessApp
             ToolbarItems.Add(item);
         }
 
-        //Diese Methode fügt einen neuen Eintrag mit Namen, Menge und Einheit zur Liste "plan.MahlzeitenList" hinzu
+        //Diese Methode fügt einen neuen Eintrag mit Namen, Menge und Einheit zur Liste "plan.TrainingList" hinzu
         private void Add(object sender, EventArgs e)
         {
+            try
+            {
 
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         //Diese Methode speichert alle Eingaben in der Datenbank
