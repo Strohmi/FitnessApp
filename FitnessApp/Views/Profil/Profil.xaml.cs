@@ -144,7 +144,7 @@ namespace FitnessApp
             }
             else if (button.ClassId == "EP")
             {
-                this.Navigation.PushAsync(new ErnährungList(ProfilVM.User));
+                this.Navigation.PushAsync(new MahlzeitList(ProfilVM.User));
             }
         }
 

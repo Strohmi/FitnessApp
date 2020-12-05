@@ -50,7 +50,7 @@ namespace FitnessApp
                         await this.Navigation.PushAsync(new TrainingNew());
                         break;
                     case "Ernährungsplan":
-                        await this.Navigation.PushAsync(new AddMeal());
+                        await this.Navigation.PushAsync(new MahlzeitNew());
                         break;
                     case "Chat":
                         await this.Navigation.PushAsync(new ChatView());

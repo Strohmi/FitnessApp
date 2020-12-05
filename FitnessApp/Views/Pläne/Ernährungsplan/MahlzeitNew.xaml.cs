@@ -9,7 +9,7 @@ using FitnessApp.Models.General;
 
 namespace FitnessApp
 {
-    public partial class AddMeal : ContentPage
+    public partial class MahlzeitNew : ContentPage
     {
         //Bindings im XAML-Code übergeben an diese Eigenschaften
         public string MealName { get; set; }
@@ -24,7 +24,7 @@ namespace FitnessApp
         //Die Eigenschaft wird erstellt, um die Einheiten aus der Datenbank abzurufen und im Picker beim hinufügen von Nahrungen darzustellen
         public List<string> Units { get; set; }
 
-        public AddMeal()
+        public MahlzeitNew()
         {
             InitializeComponent();
             Start();
