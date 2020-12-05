@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using System.Linq;
 using FitnessApp.Models;
 using FitnessApp.Models.General;
 
@@ -15,17 +12,17 @@ namespace FitnessApp
         public string MealName { get; set; }
         public string MealCategorie { get; set; }
 
-        public string NewFood { get; set; }
+        public string NewName { get; set; }
         public string NewAmount { get; set; }
         public string NewUnit { get; set; }
-
-        //Eine neue Instanz "plan" von Ernährungsplan wird erstellt
-        Ernährungsplan plan = new Ernährungsplan();
 
         //Die Eigenschaft wird erstellt, um die Einheiten aus der Datenbank abzurufen und im Picker beim hinufügen von Nahrungen darzustellen
         public List<string> Units { get; set; }
 
         public List<string> Cateogries { get; set; }
+
+        //Eine neue Instanz "plan" von Ernährungsplan wird erstellt
+        Ernährungsplan plan = new Ernährungsplan();
 
         public MahlzeitNew()
         {
@@ -36,12 +33,12 @@ namespace FitnessApp
 
         public void Start()
         {
-            Title = "Mahlzeit erstellen";
             SetNavBar();
+            Title = "Mahlzeit erstellen";
 
             //Diese Methoden müssen noch geschrieben werden!
             //Units = AllVM.Datenbank.Ernährungsplan.GetUnits();
-            //Cateogries = AllVM.Datenbank.Ernährungsplan.GetCategories();
+            //Categories = AllVM.Datenbank.Ernährungsplan.GetCategories();
         }
 
         private void SetNavBar()
@@ -61,7 +58,7 @@ namespace FitnessApp
         {
             try
             {
-                if (!string.IsNullOrEmpty(NewFood))
+                if (!string.IsNullOrEmpty(NewName))
                 {
                     if (Convert.ToDecimal(NewAmount) > 0)
                     {
@@ -69,7 +66,7 @@ namespace FitnessApp
                         {
                             plan.MahlzeitenList.Add(new Mahlzeiten
                             {
-                                Nahrungsmittel = NewFood,
+                                Nahrungsmittel = NewName,
                                 Menge = Convert.ToDecimal(NewAmount),
                                 Einheit = NewUnit
                             });
@@ -77,8 +74,8 @@ namespace FitnessApp
                             foodEntry.Text = null;
                             amountEntry.Text = null;
 
-                            mealsView.ItemsSource = null;
-                            mealsView.ItemsSource = plan.MahlzeitenList;
+                            listView.ItemsSource = null;
+                            listView.ItemsSource = plan.MahlzeitenList;
                         }
                         else
                             DependencyService.Get<IMessage>().ShortAlert("Einheit auswählen!");

@@ -2,113 +2,110 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitnessApp.TrainingNew"
-             xmlns:vm="clr-namespace:FitnessApp.ViewModels"
              Title="{Binding Title}">
 
     <ContentPage.Resources>
         <Style TargetType="Entry" x:Key="EntryStyle">
-            <Setter Property="FontSize" Value="Small"/>
-            <Setter Property="HorizontalTextAlignment" Value="Start"/>
-            <Setter Property="VerticalTextAlignment" Value="End"/>
-
-        </Style>
-        <Style TargetType="Label" x:Key="TextStyle" >
             <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="VerticalTextAlignment" Value="Center"/>
-
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="PlaceholderColor" Value="Gray"/>
+        </Style>
+        <Style TargetType="Picker" x:Key="PickerStyle">
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="TitleColor" Value="Gray"/>
+        </Style>
+        <Style TargetType="Label" x:Key="HeadingStyle">
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="Black"/>
         </Style>
     </ContentPage.Resources>
 
-    <Grid>
-        <Frame BackgroundColor="White" Padding="10" CornerRadius="20">
+    <Grid BackgroundColor="LightBlue">
 
-            <Grid BackgroundColor="LightBlue">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Margin="10,10,10,0" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Entry  Grid.Column="0" Margin="10,0,0,0" Style="{StaticResource Key=EntryStyle}" Placeholder="Titel" Text="{Binding TrainingName}" HorizontalTextAlignment="Start" ReturnType="Next"/>
+            <Picker Grid.Column="1" Margin="0,0,10,0" Style="{StaticResource Key=PickerStyle}" Title="Kategorie" ItemsSource="{Binding Categories}" SelectedItem="{Binding TrainingCategorie}"   />
+        </Grid>
 
+        <Grid Grid.Row="1" Margin="10,0,10,0" BackgroundColor="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
-                <!--Trainingbennenen-->
-                <Grid Grid.Column="0" Margin="10,10,10,0" BackgroundColor="White">
-                    <Entry x:Name="Trainingtitel" Placeholder="Trainingseinheit..." BackgroundColor="White"/>
-                </Grid>
-
-
-                <!--<ListView>-->
-                <Grid Grid.Row="1"  BackgroundColor="White"  Margin="10,0,10,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <ListView x:Name="trainingview" Grid.Row="1" Grid.ColumnSpan ="4" BackgroundColor="White" ItemsSource="{Binding Uebungen}" SelectedItem="{Binding SelectedItem}">
-                        <ListView.Header>
-                            <Frame Grid.Column="0" BackgroundColor="Black" Padding="0.5" Margin="5,0,0,0">
-                                <Grid BackgroundColor="White">
+            <ListView x:Name="listView" Grid.Row="1" Grid.ColumnSpan ="4" BackgroundColor="White">
+                <ListView.Header>
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Label  Grid.Column="0" Margin="10,10,0,10" Style="{StaticResource Key=HeadingStyle}" Text="Name" HorizontalTextAlignment="Start"/>
+                        <Label  Grid.Column="1" Margin="0,10,0,10"  Style="{StaticResource Key=HeadingStyle}" Text="Stz."/>
+                        <Label  Grid.Column="2" Margin="0,10,0,10"  Style="{StaticResource Key=HeadingStyle}" Text="Wdh."/>
+                        <Label  Grid.Column="3" Margin="0,10,0,10"  Style="{StaticResource Key=HeadingStyle}" Text="Mg."/>
+                        <Label  Grid.Column="4" Margin="0,10,0,10"  Style="{StaticResource Key=HeadingStyle}" Text="Einh."/>
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Grid Grid.Row="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition Width="50"/>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="40"/>
+                                        <ColumnDefinition Width="40"/>
                                     </Grid.ColumnDefinitions>
-
-                                    <Label Text="Übung" Grid.Column="0" FontAttributes="Bold" VerticalTextAlignment="Center" />
-                                    <Label Text="Kg" Grid.Column="1" FontAttributes="Bold" VerticalTextAlignment="Center" />
-                                    <Label Text="Rep." Grid.Column="2" FontAttributes="Bold" VerticalTextAlignment="Center" />
-                                    <Label Text="Sets" Grid.Column="3" FontAttributes="Bold" VerticalTextAlignment="Center" />
-
+                                    <Label  Grid.Column="0" Margin="10,10,0,10" Style="{StaticResource Key=LabelStyle}" Text="{Binding Nahrungsmittel}" HorizontalTextAlignment="Start"/>
+                                    <Label  Grid.Column="1" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" Text="{Binding Menge}"/>
+                                    <Label  Grid.Column="2" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" Text="{Binding Einheit}"/>
                                 </Grid>
-                            </Frame>
-                        </ListView.Header>
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="50"/>
-                                                <ColumnDefinition Width="50"/>
-                                                <ColumnDefinition Width="50"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0" Text="{Binding Name}" BackgroundColor="White" FontAttributes="Bold" VerticalTextAlignment="Center" />
-                                            <Label Grid.Column="1" Text="{Binding Gewicht}" BackgroundColor="White" FontAttributes="Bold" VerticalTextAlignment="Center" />
-                                            <Label Grid.Column="2" Text="{Binding Repetition}" BackgroundColor="White" FontAttributes="Bold" VerticalTextAlignment="Center" />
-                                            <Label Grid.Column="3" Text="{Binding Sets}" BackgroundColor="White" FontAttributes="Bold" VerticalTextAlignment="Center" />
-                                           
-                                        </Grid>
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                </Grid>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
 
+        <Grid Grid.Row="2" Margin="10,0,10,10" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
 
-                <!--Neue Übung Hinzufügen-->
-                <Grid Grid.Row="2" Margin="10,0,10,10" BackgroundColor="White">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+            <Entry  x:Name="nameEntry"   Grid.Column="0" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewName}"      Placeholder="Name" ReturnType="Next" Margin="10,0,0,0" HorizontalTextAlignment="Start"/>
+            <Entry  x:Name="sätzeEntry" Grid.Column="1" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewSätze}"    Placeholder="Stz." Keyboard="Numeric" ReturnType="Next"  />
+            <Entry  x:Name="wiederholungenEntry" Grid.Column="2" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewWiederholungen}"    Placeholder="Wdh." Keyboard="Numeric" ReturnType="Next"  />
+            <Entry  x:Name="mengeEntry" Grid.Column="3" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewMenge}"    Placeholder="Mg." Keyboard="Numeric" ReturnType="Next"  />
+            <Picker x:Name="unitPicker"  Grid.Column="4" Style="{StaticResource Key=PickerStyle}" ItemsSource="{Binding Units}" Title="Einh." SelectedItem="{Binding NewEinheit}"/>
+            <ImageButton Grid.Column="5" Margin="0,0,10,0" Source="Add.png" Clicked="Add" BackgroundColor="Transparent" />
+        </Grid>
 
-                    <Entry x:Name="UebungEntry" Grid.Column="0" Placeholder="Übung"  />
-                    <Entry x:Name="WeightEntry" Grid.Column="1" Keyboard="Numeric" Placeholder="Kg"/>
-                    <Entry x:Name="RepetitionEntry" Grid.Column="2" Keyboard="Numeric" Placeholder="Reps"/>
-                    <Entry x:Name="SetsEntry" Grid.Column="3" Keyboard="Numeric" Placeholder="Sets"/>
-                    <ImageButton Grid.Column="4" Source="Add.png" Clicked="Add" BackgroundColor="Transparent" />
-                </Grid>
-
-            </Grid>
-
-        </Frame>
     </Grid>
 
 </ContentPage>
