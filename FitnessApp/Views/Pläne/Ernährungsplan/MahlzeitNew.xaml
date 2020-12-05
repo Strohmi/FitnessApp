@@ -25,6 +25,8 @@
         </Style>
     </ContentPage.Resources>
 
+    <Frame BackgroundColor="White" Padding="10" CornerRadius="20">
+
         <Grid BackgroundColor="LightBlue">
 
             <Grid.RowDefinitions>
@@ -97,5 +99,7 @@
             </Grid>
 
         </Grid>
+
+    </Frame>
 
 </ContentPage>
