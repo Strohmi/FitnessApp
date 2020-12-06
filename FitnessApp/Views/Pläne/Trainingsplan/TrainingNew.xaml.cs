@@ -18,7 +18,7 @@ namespace FitnessApp
         public string NewMenge { get; set; }
         public string NewEinheit { get; set; }
 
-        //Die Eigenschaft wird erstellt, um die Einheiten aus der Datenbank abzurufen und im Picker beim hinzufügen von Trainings darzustellen
+        //Eigenschaft wird erstellt, um die Einheiten aus der Datenbank abzurufen und im Picker beim hinzufügen von Trainings darzustellen
         public List<string> Units { get; set; }
 
         public List<string> Categories { get; set; }
