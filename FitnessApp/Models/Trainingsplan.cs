@@ -37,13 +37,13 @@ namespace FitnessApp.Models
         }
     }
 
-    //uebung
+    //Uebung
     public class Uebung
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public int Sätze { get; set; }
-        public int Wiederholungen { get; set; }
+        public decimal Sätze { get; set; }
+        public decimal Wiederholungen { get; set; }
         public decimal Menge { get; set; }
         public string Einheit { get; set; }
 

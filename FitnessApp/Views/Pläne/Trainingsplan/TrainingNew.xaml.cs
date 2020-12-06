@@ -60,13 +60,50 @@ namespace FitnessApp
         {
             try
             {
+                if (!string.IsNullOrEmpty(NewName))
+                {
+                    if (Convert.ToDecimal(NewMenge) > 0)
+                    {
+                        if (!string.IsNullOrEmpty(NewEinheit))
+                        {
+                            plan.UebungList.Add(new Uebung
+                            {
+                                Name = NewName,
+                                Sätze = Convert.ToDecimal(NewSätze),
+                                Wiederholungen = Convert.ToDecimal(NewWiederholungen),
+                                Menge = Convert.ToDecimal(NewMenge),
+                                Einheit = NewEinheit
+                            });
+                            //Hinweis: Wenn Sätze und/oder Wiederholungen null sind, wird 0 übergeben
 
+                            ClearRefresh();
+                        }
+                        else
+                            DependencyService.Get<IMessage>().ShortAlert("Einheit auswählen!");
+                    }
+                    else
+                        DependencyService.Get<IMessage>().ShortAlert("Menge auswählen!");
+                }
+                else
+                    DependencyService.Get<IMessage>().ShortAlert("Namen eingeben!");
             }
-            catch (Exception)
+            catch
             {
-
-                throw;
+                //Anzeige einer Meldung eine fehlgeschlagene Speicherung
+                DependencyService.Get<IMessage>().ShortAlert("Ein unbekannter Fehler ist aufgetreten!");
             }
+        }
+
+        //Leert die Entrys und aktualisiert die Liste
+        private void ClearRefresh()
+        {
+            nameEntry.Text = null;
+            sätzeEntry.Text = null;
+            wiederholungenEntry.Text = null;
+            mengeEntry.Text = null;
+
+            listView.ItemsSource = null;
+            listView.ItemsSource = plan.UebungList;
         }
 
         //Diese Methode speichert alle Eingaben in der Datenbank

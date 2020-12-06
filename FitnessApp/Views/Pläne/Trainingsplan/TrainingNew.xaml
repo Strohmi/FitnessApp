@@ -102,7 +102,7 @@
             <Entry  x:Name="sätzeEntry" Grid.Column="1" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewSätze}"    Placeholder="Stz." Keyboard="Numeric" ReturnType="Next"  />
             <Entry  x:Name="wiederholungenEntry" Grid.Column="2" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewWiederholungen}"    Placeholder="Wdh." Keyboard="Numeric" ReturnType="Next"  />
             <Entry  x:Name="mengeEntry" Grid.Column="3" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewMenge}"    Placeholder="Mg." Keyboard="Numeric" ReturnType="Next"  />
-            <Picker x:Name="unitPicker"  Grid.Column="4" Style="{StaticResource Key=PickerStyle}" ItemsSource="{Binding Units}" Title="Einh." SelectedItem="{Binding NewEinheit}"/>
+            <Picker x:Name="unitPicker"  Grid.Column="4" Style="{StaticResource Key=PickerStyle}" SelectedItem="{Binding NewEinheit}"  ItemsSource="{Binding Units}" Title="Einh." />
             <ImageButton Grid.Column="5" Margin="0,0,10,0" Source="Add.png" Clicked="Add" BackgroundColor="Transparent" />
         </Grid>
 
