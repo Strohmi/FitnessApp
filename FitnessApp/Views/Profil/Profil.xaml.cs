@@ -144,104 +144,105 @@ namespace FitnessApp
             }
             else if (button.ClassId == "EP")
             {
-                this.Navigation.PushAsync(new MealList(ProfilVM.User));
-        }
-
-        void ProfilBildTapped(System.Object sender, System.EventArgs e)
-        {
-            profilBildBig.IsVisible = true;
-            grid.IsVisible = false;
-        }
-
-        void BigProfilBildTapped(System.Object sender, System.EventArgs e)
-        {
-            profilBildBig.IsVisible = false;
-            grid.IsVisible = true;
-        }
-
-        void Show_Follower(System.Object sender, System.EventArgs e)
-        {
-            if (ProfilVM.User.Nutzername == AllVM.User.Nutzername && ProfilVM.User.AnzahlFollower > 0)
-            {
-                this.Navigation.PushAsync(new Follower(ProfilVM.User));
+                this.Navigation.PushAsync(new MahlzeitList(ProfilVM.User));
             }
-        }
 
-        void Like(System.Object sender, System.EventArgs e)
-        {
-            string id = (sender as Frame).ClassId;
-            bool? result = AllVM.Datenbank.Feed.Like(id, AllVM.ConvertToUser());
-            if (result == true)
+            void ProfilBildTapped(System.Object sender, System.EventArgs e)
             {
-                idCache = id;
-                ProfilVM.FitFeed.First(s => s.ID.ToString() == id).LikedTimer = true;
-                ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Liked = true;
-                ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Likes += 1;
-                timer.Start();
+                profilBildBig.IsVisible = true;
+                grid.IsVisible = false;
             }
-            else if (result == false)
+
+            void BigProfilBildTapped(System.Object sender, System.EventArgs e)
             {
-                ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Liked = false;
-                ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Likes -= 1;
+                profilBildBig.IsVisible = false;
+                grid.IsVisible = true;
             }
-            else
-                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Liken");
-        }
 
-        private void DisableLikeImage(object sender, ElapsedEventArgs e)
-        {
-            ProfilVM.FitFeed.Find(s => s.ID.ToString() == idCache).LikedTimer = false;
-            idCache = null;
-        }
-
-        void DirectChat(System.Object sender, System.EventArgs e)
-        {
-            DisplayAlert("Baustelle", "Das ausgewählte Feature steht noch nicht zur Verfügung", "OK");
-        }
-
-        void OnBindingContextChanged(object sender, EventArgs e)
-        {
-            MenuItem menuItem = new MenuItem();
-            base.OnBindingContextChanged();
-
-            if (BindingContext == null)
-                return;
-
-            ViewCell theViewCell = ((ViewCell)sender);
-            News item = theViewCell.BindingContext as News;
-            theViewCell.ContextActions.Clear();
-
-            if (item != null)
+            void Show_Follower(System.Object sender, System.EventArgs e)
             {
-                if (item.Ersteller.Nutzername == AllVM.User.Nutzername)
+                if (ProfilVM.User.Nutzername == AllVM.User.Nutzername && ProfilVM.User.AnzahlFollower > 0)
                 {
-                    menuItem = new MenuItem()
-                    {
-                        Text = "Löschen",
-                        ClassId = $"{item.ID}",
-                        IsDestructive = true
-                    };
-                    menuItem.Clicked += Delete;
-                    theViewCell.ContextActions.Add(menuItem);
+                    this.Navigation.PushAsync(new Follower(ProfilVM.User));
                 }
             }
-        }
 
-        async void Delete(object sender, EventArgs e)
-        {
-            MenuItem item = (sender as MenuItem);
-            News news = ProfilVM.FitFeed.First(s => s.ID.ToString() == item.ClassId);
-
-            if (await DisplayAlert("Löschen?", "Willst du den Post wirklich löschen?", "Ja", "Nein"))
+            void Like(System.Object sender, System.EventArgs e)
             {
-                if (AllVM.Datenbank.Feed.Delete(news))
+                string id = (sender as Frame).ClassId;
+                bool? result = AllVM.Datenbank.Feed.Like(id, AllVM.ConvertToUser());
+                if (result == true)
                 {
-                    GetFitFeed();
-                    DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
+                    idCache = id;
+                    ProfilVM.FitFeed.First(s => s.ID.ToString() == id).LikedTimer = true;
+                    ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Liked = true;
+                    ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Likes += 1;
+                    timer.Start();
+                }
+                else if (result == false)
+                {
+                    ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Liked = false;
+                    ProfilVM.FitFeed.First(s => s.ID.ToString() == id).Likes -= 1;
                 }
                 else
+                    DependencyService.Get<IMessage>().ShortAlert("Fehler beim Liken");
+            }
+
+            private void DisableLikeImage(object sender, ElapsedEventArgs e)
+            {
+                ProfilVM.FitFeed.Find(s => s.ID.ToString() == idCache).LikedTimer = false;
+                idCache = null;
+            }
+
+            void DirectChat(System.Object sender, System.EventArgs e)
+            {
+                DisplayAlert("Baustelle", "Das ausgewählte Feature steht noch nicht zur Verfügung", "OK");
+            }
+
+            void OnBindingContextChanged(object sender, EventArgs e)
+            {
+                MenuItem menuItem = new MenuItem();
+                base.OnBindingContextChanged();
+
+                if (BindingContext == null)
+                    return;
+
+                ViewCell theViewCell = ((ViewCell)sender);
+                News item = theViewCell.BindingContext as News;
+                theViewCell.ContextActions.Clear();
+
+                if (item != null)
                 {
-                    DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
+                    if (item.Ersteller.Nutzername == AllVM.User.Nutzername)
+                    {
+                        menuItem = new MenuItem()
+                        {
+                            Text = "Löschen",
+                            ClassId = $"{item.ID}",
+                            IsDestructive = true
+                        };
+                        menuItem.Clicked += Delete;
+                        theViewCell.ContextActions.Add(menuItem);
+                    }
+                }
+            }
+
+            async void Delete(object sender, EventArgs e)
+            {
+                MenuItem item = (sender as MenuItem);
+                News news = ProfilVM.FitFeed.First(s => s.ID.ToString() == item.ClassId);
+
+                if (await DisplayAlert("Löschen?", "Willst du den Post wirklich löschen?", "Ja", "Nein"))
+                {
+                    if (AllVM.Datenbank.Feed.Delete(news))
+                    {
+                        GetFitFeed();
+                        DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
+                    }
+                    else
+                    {
+                        DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
+                    }
                 }
             }
         }
