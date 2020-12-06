@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -144,8 +144,7 @@ namespace FitnessApp
             }
             else if (button.ClassId == "EP")
             {
-                this.Navigation.PushAsync(new MahlzeitList(ProfilVM.User));
-            }
+                this.Navigation.PushAsync(new MealList(ProfilVM.User));
         }
 
         void ProfilBildTapped(System.Object sender, System.EventArgs e)
