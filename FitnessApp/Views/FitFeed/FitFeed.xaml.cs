@@ -189,5 +189,12 @@ namespace FitnessApp
                 loadMoreBtn.IsVisible = false;
             }
         }
+
+        void ShowLikes(System.Object sender, System.EventArgs e)
+        {
+            StackLayout stack = (sender as StackLayout);
+
+            this.Navigation.PushAsync(new Likes(stack.ClassId));
+        }
     }
 }

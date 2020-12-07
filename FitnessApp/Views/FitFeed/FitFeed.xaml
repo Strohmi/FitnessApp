@@ -36,7 +36,10 @@
                                             <Setter Property="BorderColor" Value="Transparent"/>
                                         </DataTrigger>
                                     </Frame.Triggers>
-                                    <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Horizontal" ClassId="{Binding ID}">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ShowLikes"/>
+                                        </StackLayout.GestureRecognizers>
                                         <Image Style="{StaticResource Key=LikesThumbsUpStyle}"/>
                                         <Label Style="{StaticResource Key=LikesTextStyle}"/>
                                     </StackLayout>
@@ -96,7 +99,10 @@
                                             <Setter Property="BorderColor" Value="Transparent"/>
                                         </DataTrigger>
                                     </Frame.Triggers>
-                                    <StackLayout Orientation="Horizontal">
+                                    <StackLayout Orientation="Horizontal" ClassId="{Binding ID}">
+                                        <StackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer Tapped="ShowLikes"/>
+                                        </StackLayout.GestureRecognizers>
                                         <Image Style="{StaticResource Key=LikesThumbsUpStyle}"/>
                                         <Label Style="{StaticResource Key=LikesTextStyle}"/>
                                     </StackLayout>

@@ -38,7 +38,7 @@ namespace FitnessApp.Models
                              $"ON likes.Feed_ID = base.ID " +
                              $"WHERE(info.ErstelltVon = follows.User_ID OR info.ErstelltVon = '{user.Nutzername}') " +
                              $"AND info.ErstelltAm >= '{vonDatum:yyyy-MM-dd}' " +
-                             $"AND info.ErstelltAm <= '{bisDatum:yyyy-MM-dd}' " +
+                             $"AND info.ErstelltAm <= '{bisDatum:yyyy-MM-dd HH:mm:ss}' " +
                              $") AS subquery " +
                              $"GROUP BY ID, Beschreibung, ErstelltAm, ErstelltVon, Bild";
 
@@ -182,7 +182,7 @@ namespace FitnessApp.Models
             string com = null;
             bool result = false;
 
-            List<string> listLikes = GetLikesWithNames(news.ID.ToString());
+            List<Like> listLikes = GetLikesWithNames(news.ID.ToString());
 
             if (news.IsFoto)
             {
@@ -234,7 +234,7 @@ namespace FitnessApp.Models
             {
                 foreach (var item in listLikes)
                 {
-                    com = $"INSERT INTO Feed_Likes VALUES('{news.ID}', '{item}')";
+                    com = $"INSERT INTO Feed_Likes VALUES('{news.ID}', '{item.User.Nutzername}')";
                     StaticDB.RunSQL(com);
                 }
 
@@ -368,24 +368,30 @@ namespace FitnessApp.Models
         /// </summary>
         /// <param name="id">ID des Beitrages</param>
         /// <returns></returns>
-        public List<string> GetLikesWithNames(string id)
+        public List<Like> GetLikesWithNames(string id)
         {
             try
             {
-                List<string> list = new List<string>();
+                List<Like> list = new List<Like>();
                 StaticDB.Connect();
 
                 string com = "SELECT [User]" +
                              "FROM Feed_Likes " +
                             $"WHERE Feed_ID = '{id}'";
-
                 SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
 
+                int counter = 1;
                 while (r.Read())
                 {
-                    list.Add(r.GetString(0));
+                    Like like = new Like()
+                    {
+                        Index = counter,
+                        User = new User() { Nutzername = r.GetString(0) }
+                    };
+                    list.Add(like);
+                    counter += 1;
                 }
 
                 StaticDB.Connection.Close();
