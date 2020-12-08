@@ -21,37 +21,42 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Image Source="Login_Logo" Grid.Row="0" Margin="50"></Image>
+        <Image Source="Login_Logo" Grid.Row="0" Margin="50"/>
 
-        <Grid Grid.Row="1" Margin="50,0" BackgroundColor="White">
+        <Grid Grid.Row="1" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.25*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <!--<Entry Grid.Row="0" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}" ReturnType="Next"/>-->
-            <Picker Grid.Row="0" Title="Nutzername..." FontSize="Large" HorizontalTextAlignment="Center" ItemsSource="{Binding Nutzernamen}" SelectedItem="{Binding Nutzername}"/>
-            <Entry Grid.Row="1" Margin="0,10" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True" ReturnType="Go" Completed="Save"/>
+            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}" ReturnType="Next" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"/>
+            <!--<Picker Grid.Row="0" Title="Nutzername..." FontSize="Large" HorizontalTextAlignment="Center" ItemsSource="{Binding Nutzernamen}" SelectedItem="{Binding Nutzername}"/>-->
+            <Entry Grid.Row="1" Grid.Column="1" Margin="0,10" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True" ReturnType="Go" Completed="Save"/>
 
-            <Grid Grid.Row="2" >
-                <Button Text="Anmelden" x:Name="anmelden" BackgroundColor="Green" Clicked="Save"/>
-                <!--<ActivityIndicator x:Name="loading" Color="Red" Scale="2" IsVisible="False"/>-->
+            <Grid Grid.Row="2" Grid.Column="1">
+                <Button Text="Anmelden" FontSize="Large" CharacterSpacing="2" TextColor="White" BackgroundColor="Green" Clicked="Save"/>
+                <ActivityIndicator x:Name="loading" Color="Red" IsVisible="False"/>
             </Grid>
-
-
         </Grid>
 
-        <Grid Grid.Row="2" VerticalOptions="End" Margin="50,0,50,20">
+        <Grid Grid.Row="2" VerticalOptions="End" Margin="0,0,0,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="0.25*"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-            <Button Grid.Row="0" Text="Registrieren" BackgroundColor="LightGreen" Clicked="Registrate"/>
-            <Button Grid.Row="1" Text="Hilfe" BackgroundColor="LightBlue" Clicked="Help"/>
-
+            <Button Grid.Row="0" Grid.Column="1" Text="Registrieren" BackgroundColor="LightGreen" TextColor="Black" FontSize="Large" Clicked="Registrate"/>
+            <Button Grid.Row="1" Grid.Column="1" Text="Hilfe" BackgroundColor="LightBlue" TextColor="Black" FontSize="Large" Clicked="Help"/>
         </Grid>
-
-
     </Grid>
 </ContentPage>

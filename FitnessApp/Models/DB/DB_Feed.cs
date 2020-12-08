@@ -24,9 +24,7 @@ namespace FitnessApp.Models
                 List<News> list = new List<News>();
                 StaticDB.Connect();
 
-                string com = $"SELECT ID, Beschreibung, ErstelltAm, ErstelltVon, Bild, Count(*) " +
-                             $"FROM ( " +
-                             $"SELECT DISTINCT base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, likes.[User], fotos.Bild " +
+                string com = $"SELECT DISTINCT base.ID, base.Beschreibung, info.ErstelltAm, info.ErstelltVon, fotos.Bild " +
                              $"FROM Feed_Base AS base " +
                              $"INNER JOIN Feed_Info AS info " +
                              $"ON info.ID = base.ID " +
@@ -34,13 +32,9 @@ namespace FitnessApp.Models
                              $"ON follows.Follow_ID = '{user.Nutzername}' " +
                              $"LEFT JOIN Feed_Fotos AS fotos " +
                              $"ON fotos.ID = info.ID " +
-                             $"LEFT JOIN Feed_Likes AS likes " +
-                             $"ON likes.Feed_ID = base.ID " +
                              $"WHERE(info.ErstelltVon = follows.User_ID OR info.ErstelltVon = '{user.Nutzername}') " +
                              $"AND info.ErstelltAm >= '{vonDatum:yyyy-MM-dd}' " +
-                             $"AND info.ErstelltAm <= '{bisDatum:yyyy-MM-dd HH:mm:ss}' " +
-                             $") AS subquery " +
-                             $"GROUP BY ID, Beschreibung, ErstelltAm, ErstelltVon, Bild";
+                             $"AND info.ErstelltAm <= '{bisDatum:yyyy-MM-dd HH:mm:ss}';";
 
                 SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
@@ -54,7 +48,6 @@ namespace FitnessApp.Models
                         Beschreibung = r.GetString(1),
                         ErstelltAm = r.GetDateTime(2),
                         Ersteller = new User() { Nutzername = r.GetString(3) },
-                        Likes = r.GetInt32(5)
                     };
 
                     if (!r.IsDBNull(4))
@@ -66,7 +59,10 @@ namespace FitnessApp.Models
                 StaticDB.Connection.Close();
 
                 foreach (var item in list)
+                {
                     item.Liked = CheckIfLiked(item.ID);
+                    item.Likes = GetLikes(item.ID);
+                }
 
                 return list;
             }
@@ -330,7 +326,7 @@ namespace FitnessApp.Models
         /// </summary>
         /// <param name="id">ID des Beitrages</param>
         /// <returns></returns>
-        public int GetLikes(string id)
+        public int GetLikes(int id)
         {
             try
             {

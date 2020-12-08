@@ -80,6 +80,7 @@ namespace FitnessApp.Models
             }
             catch (Exception ex)
             {
+                _ = ex.Message;
                 if (Connection != null)
                     if (Connection.State != System.Data.ConnectionState.Closed)
                         Connection.Close();

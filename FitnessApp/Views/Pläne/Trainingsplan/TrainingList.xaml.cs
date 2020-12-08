@@ -26,7 +26,6 @@ namespace FitnessApp
         void Loaded(System.Object sender, System.EventArgs e)
         {
             GetList();
-            //SetDataTemplate();
         }
 
         void Start()
@@ -47,79 +46,6 @@ namespace FitnessApp
             listView.ItemsSource = TPlaene;
         }
 
-        void SetDataTemplate()
-        {
-            listView.ItemTemplate = new DataTemplate(() =>
-            {
-                Frame frame = new Frame()
-                {
-                    Padding = new Thickness(0),
-                    Margin = new Thickness(5),
-                    HasShadow = false,
-                    BorderColor = Color.Black
-                };
-
-                var grid = new Grid()
-                {
-                    RowDefinitions = new RowDefinitionCollection()
-                    {
-                        new RowDefinition(){Height = GridLength.Star},
-                        new RowDefinition(){Height = GridLength.Star}
-                    },
-                    ColumnDefinitions = new ColumnDefinitionCollection()
-                    {
-                        new ColumnDefinition(){Width = GridLength.Star},
-                        new ColumnDefinition(){Width = GridLength.Star}
-                    },
-                    Margin = new Thickness(5)
-                };
-
-                Label title = new Label()
-                {
-                    FontSize = Device.GetNamedSize(NamedSize.Large, typeof(Label)),
-                    FontAttributes = FontAttributes.Bold,
-                    TextColor = Color.Green
-                };
-                title.SetBinding(Label.TextProperty, "Titel");
-                Grid.SetRow(title, 0);
-                Grid.SetColumnSpan(title, 2);
-                grid.Children.Add(title);
-
-                Label datum = new Label()
-                {
-                    FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-                    TextColor = Color.Black,
-                    HorizontalOptions = LayoutOptions.End
-                };
-                datum.SetBinding(Label.TextProperty, "ErstelltAm", BindingMode.Default, null, "{}{0:dd.MM.yyyy}");
-                Grid.SetRow(datum, 1);
-                Grid.SetColumn(datum, 1);
-                grid.Children.Add(datum);
-
-                Grid bewGrid = new Grid()
-                {
-                    ColumnDefinitions = new ColumnDefinitionCollection()
-                    {
-                        new ColumnDefinition(){Width = GridLength.Star},
-                        new ColumnDefinition(){Width = GridLength.Star},
-                        new ColumnDefinition(){Width = GridLength.Star},
-                        new ColumnDefinition(){Width = GridLength.Star},
-                        new ColumnDefinition(){Width = GridLength.Star}
-                    },
-                    BackgroundColor = Color.White
-                };
-
-                Grid.SetColumn(bewGrid, 0);
-                Grid.SetRow(bewGrid, 1);
-                grid.Children.Add(bewGrid);
-
-                frame.Content = grid;
-                var vc = new ViewCell { View = frame };
-                vc.BindingContextChanged += OnBindingContextChanged;
-                return vc;
-            });
-        }
-
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)
         {
             MenuItem menuItem = new MenuItem();
@@ -134,20 +60,26 @@ namespace FitnessApp
 
             if (item != null)
             {
+                int count_bew = 5;
                 Grid bewGrid = ((theViewCell.View as Frame).Content as Grid).FindByName<Grid>("bewGrid");
                 double bewertung = -1;
+                item.DurchBewertung = (decimal)3.47;
                 if (item.DurchBewertung != -1 && item.DurchBewertung != -2)
                 {
                     bewertung = Math.Round((double)item.DurchBewertung * 2, MidpointRounding.AwayFromZero) / 2;
                     int count_filled = (int)Math.Floor(bewertung);
+                    double count_half = bewertung - count_filled;
 
-                    for (int i = 0; i < 5; i++)
+                    if (count_half > 0)
+                        count_half = 1;
+
+                    for (int i = 0; i < count_bew; i++)
                     {
                         Image star = new Image()
                         {
                             Aspect = Aspect.AspectFit,
-                            HeightRequest = 20,
-                            WidthRequest = 20
+                            HeightRequest = 30,
+                            WidthRequest = 30
                         };
 
                         if (i <= count_filled - 1)
@@ -155,7 +87,15 @@ namespace FitnessApp
                             star.Source = ImageSource.FromFile("Star_Filled");
                         }
                         else
-                            star.Source = ImageSource.FromFile("Star_Unfilled");
+                        {
+                            if (count_half == 1)
+                            {
+                                star.Source = ImageSource.FromFile("Star_HalfFilled");
+                                count_half = 0;
+                            }
+                            else
+                                star.Source = ImageSource.FromFile("Star_Unfilled");
+                        }
 
                         Grid.SetColumn(star, i);
                         bewGrid.Children.Add(star);

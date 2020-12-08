@@ -47,6 +47,40 @@ namespace FitnessApp.Models
             }
         }
 
+        internal bool? Exists(string user)
+        {
+            string com = $"SELECT Nutzername FROM User_Base WHERE Nutzername = '{user}'";
+            return StaticDB.CheckExistenz(com);
+        }
+
+        internal string GetPasswort(string nutzername)
+        {
+            try
+            {
+                StaticDB.Connect();
+
+                string com = $"SELECT Password FROM User_Password WHERE Nutzername = '{nutzername}'";
+
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                object r = command.ExecuteScalar();
+                StaticDB.Connection.Close();
+
+                if (r != null)
+                    return r.ToString();
+                else
+                    return null;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
+        }
+
         /// <summary>
         /// Favorisierte Pläne (Training und Ernährung) aus der Datenbank ermitteln
         /// </summary>
@@ -94,8 +128,30 @@ namespace FitnessApp.Models
         /// <returns></returns>
         internal bool Insert(User user)
         {
-            string com = $"";
-            return StaticDB.RunSQL(com);
+            string com = $"INSERT INTO User_Base VALUES('{user.Nutzername}');";
+            bool result = StaticDB.RunSQL(com);
+
+            if (result == false)
+                return false;
+
+            com = $"INSERT INTO User_Info (Nutzername, ErstelltAm, Infotext) VALUES('{user.Nutzername}', '{user.ErstelltAm:yyyy-MM-dd HH:mm:ss}', '{user.InfoText}')";
+            result = StaticDB.RunSQL(com);
+
+            if (result == false)
+                return false;
+
+            com = $"INSERT INTO User_Password VALUES('{user.Nutzername}', '{user.Passwort}')";
+            result = StaticDB.RunSQL(com);
+
+            if (result == false)
+                return false;
+
+
+            result = UploadProfilBild(user, user.ProfilBild);
+            if (result == false)
+                return false;
+
+            return true;
         }
 
         /// <summary>

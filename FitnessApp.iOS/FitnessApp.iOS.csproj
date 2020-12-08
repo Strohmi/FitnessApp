@@ -257,6 +257,8 @@
     <ImageAsset Include="Assets.xcassets\Trash.imageset\Trash.png">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_HalfFilled.imageset\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\Star_HalfFilled.imageset\Star_HalfFilled-1.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -295,6 +297,7 @@
     <Folder Include="Assets.xcassets\Star_Filled.imageset\" />
     <Folder Include="Assets.xcassets\Star_Unfilled.imageset\" />
     <Folder Include="Assets.xcassets\Trash.imageset\" />
+    <Folder Include="Assets.xcassets\Star_HalfFilled.imageset\" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\logo.png">

@@ -13,6 +13,11 @@ namespace FitnessApp.Models.General
         public static User2 User { get; set; } = new User2();
         public static Datenbank Datenbank { get; set; } = new Datenbank();
 
+        /// <summary>
+        /// Umwandlung von User mit automatischer BindingFunktion zu User ohne BindingFunktion
+        /// </summary>
+        /// <param name="_user">Benutzer</param>
+        /// <returns></returns>
         public static User2 ConvertFromUser(User _user)
         {
             return new User2()
@@ -26,6 +31,10 @@ namespace FitnessApp.Models.General
             };
         }
 
+        /// <summary>
+        /// Umwandlung von User ohne automatische BindingFunktion zu User fürs Binding
+        /// </summary>
+        /// <returns></returns>
         public static User ConvertToUser()
         {
             return new User()
@@ -39,6 +48,11 @@ namespace FitnessApp.Models.General
             };
         }
 
+        /// <summary>
+        /// Verschlüsseln des Passwortes mit MD5
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string HashPassword(string input)
         {
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
@@ -53,6 +67,15 @@ namespace FitnessApp.Models.General
                 }
                 return sb.ToString();
             }
+        }
+
+        /// <summary>
+        /// Speicherung des Benutzers zum seitenübergreifenden Verwenden
+        /// </summary>
+        /// <param name="user"></param>
+        internal static void Initial(string user)
+        {
+            User = ConvertFromUser(Datenbank.User.GetByName(user));
         }
     }
 }

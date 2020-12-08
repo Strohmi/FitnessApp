@@ -4,15 +4,15 @@
              x:Class="FitnessApp.Likes"
              Title="{Binding Title}">
     <Grid>
-        <ListView ItemsSource="{Binding ListLikes}" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never">
+        <ListView ItemsSource="{Binding ListLikes}" HasUnevenRows="True" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid>
                             <Grid.Margin>
                                 <OnPlatform x:TypeArguments="Thickness">
-                                    <On Platform="iOS" Value="10,0,0,0"/>
-                                    <On Platform="Android" Value="10,0,0,0"/>
+                                    <On Platform="iOS" Value="10,0,0,5"/>
+                                    <On Platform="Android" Value="10,0,0,5"/>
                                 </OnPlatform>
                             </Grid.Margin>
                             <Grid.ColumnDefinitions>

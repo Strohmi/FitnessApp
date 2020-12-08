@@ -11,31 +11,46 @@ namespace FitnessApp
 {
     public partial class Login : ContentPage
     {
-        public List<string> Nutzernamen { get; set; }
         public string Nutzername { get; set; }
         public string Passwort { get; set; }
-
-        private string hashedpw;
 
         public Login()
         {
             InitializeComponent();
             NavigationPage.SetHasNavigationBar(this, false);
-
-            var cache = AllVM.Datenbank.User.GetList();
-            if (cache != null)
-                Nutzernamen = cache.Select(s => s.Nutzername).ToList();
-
             BindingContext = this;
         }
 
-        private void Save(object sender, EventArgs e)
+        async void Save(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(Nutzername))
             {
-                User user = AllVM.Datenbank.User.GetByName(Nutzername);
-                AllVM.User = AllVM.ConvertFromUser(user);
-                App.Current.MainPage = new AppShell();
+                Nutzername = Nutzername.ToLower();
+                bool? exists = AllVM.Datenbank.User.Exists(Nutzername);
+
+                if (exists == true)
+                {
+                    string pw = AllVM.Datenbank.User.GetPasswort(Nutzername);
+                    string hpw = AllVM.HashPassword(Passwort);
+                    if (hpw == pw)
+                    {
+                        AllVM.Initial(Nutzername);
+                        Application.Current.Properties.Add("userid", Nutzername);
+                        Application.Current.Properties.Add("userpw", pw);
+                        await Application.Current.SavePropertiesAsync();
+                        App.Current.MainPage = new AppShell();
+                    }
+                    else
+                        DependencyService.Get<IMessage>().ShortAlert("Passwort stimmt nicht!");
+                }
+                else if (exists == false)
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("Nutzername unbekannt");
+                }
+                else
+                {
+                    DependencyService.Get<IMessage>().ShortAlert("Fehler beim Prüfen");
+                }
             }
             else
             {
@@ -45,14 +60,47 @@ namespace FitnessApp
 
         private void Registrate(object sender, EventArgs e)
         {
-            this.Navigation.PushAsync(new Registrate()); //Öffnet die neue Seite Registrate
-
-            //this.Navigation.PopAsync(); Terminiert die aktuelle Seite
+            this.Navigation.PushAsync(new Registrate());
         }
 
         private void Help(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new Help());
+        }
+
+        private void StartLoading(object sender)
+        {
+            if (sender != null)
+            {
+                if (sender.GetType() == typeof(Entry))
+                {
+                    (sender as Entry).IsEnabled = false;
+                    loading.IsVisible = true;
+                    loading.IsRunning = true;
+                }
+                else if (sender.GetType() == typeof(Button))
+                {
+                    (sender as Button).IsEnabled = false;
+                    loading.IsVisible = true;
+                    loading.IsRunning = true;
+                }
+            }
+        }
+
+        private void StopLoading(object sender)
+        {
+            if (sender.GetType() == typeof(Entry))
+            {
+                (sender as Entry).IsEnabled = false;
+                loading.IsVisible = true;
+                loading.IsRunning = true;
+            }
+            else if (sender != null && sender.GetType() == typeof(Button))
+            {
+                (sender as Button).IsEnabled = true;
+                loading.IsVisible = false;
+                loading.IsRunning = false;
+            }
         }
     }
 }

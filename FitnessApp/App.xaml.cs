@@ -16,14 +16,14 @@ namespace FitnessApp
         public App()
         {
             InitializeComponent();
-            //MainPage = new AppShell();
-            MainPage = new NavigationPage(new Login());
         }
 
         protected override void OnStart()
         {
             if (DeviceInfo.Platform.ToString() == "iOS")
                 CheckPermissions();
+
+            AutoLogin();
         }
 
         protected override void OnSleep()
@@ -34,6 +34,64 @@ namespace FitnessApp
         protected override void OnResume()
         {
 
+        }
+
+        private void AutoLogin()
+        {
+            string user = null, passwort = null;
+            try
+            {
+                var current = Connectivity.NetworkAccess;
+                if (current == NetworkAccess.Internet)
+                {
+                    if (Current.Properties.ContainsKey("userid"))
+                        if (Current.Properties["userid"] != null)
+                            user = Current.Properties["userid"].ToString();
+
+                    if (Current.Properties.ContainsKey("userpw"))
+                        if (Current.Properties["userpw"] != null)
+                            passwort = Current.Properties["userpw"].ToString();
+
+                    if (!string.IsNullOrWhiteSpace(user) && !string.IsNullOrWhiteSpace(passwort))
+                    {
+                        bool? exists = AllVM.Datenbank.User.Exists(user);
+                        if (exists == true)
+                        {
+                            string pw = AllVM.Datenbank.User.GetPasswort(user);
+
+                            if (user != null && (passwort == pw))
+                            {
+                                AllVM.Initial(user);
+                                MainPage = new AppShell();
+                            }
+                            else
+                            {
+                                DependencyService.Get<IMessage>().ShortAlert("Passwort stimmt nicht");
+                                MainPage = new NavigationPage(new Login());
+                            }
+                        }
+                        else if (exists == false)
+                        {
+                            DependencyService.Get<IMessage>().ShortAlert("Nutzer existiert nicht");
+                            MainPage = new NavigationPage(new Login());
+                        }
+                        else
+                        {
+                            DependencyService.Get<IMessage>().ShortAlert("Fehler beim Prüfen");
+                            MainPage = new NavigationPage(new Login());
+                        }
+                    }
+                    else
+                    {
+                        MainPage = new NavigationPage(new Login());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                MainPage = new NavigationPage(new Login());
+            }
         }
 
         private async void CheckPermissions()

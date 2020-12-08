@@ -17,12 +17,13 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Titel}" FontSize="Large" FontAttributes="Bold" TextColor="Black"/>
-                                <Grid Grid.Row="1" Grid.Column="0" x:Name="bewGrid">
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titel}" FontSize="Large" FontAttributes="Bold" TextColor="Black" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Kategorie}" FontSize="Medium" TextColor="Black" HorizontalOptions="End" VerticalOptions="Center"/>
+                                <Grid Grid.Row="1" Grid.Column="0" x:Name="bewGrid" VerticalOptions="End">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition Width="auto"/>
@@ -31,11 +32,7 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                 </Grid>
-                                <!--<StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal">
-                                    <Image Source="Star_Filled" Margin="0,0,0,0" HeightRequest="20" WidthRequest="20" VerticalOptions="Center"/>
-                                    <Label Text="{Binding DurchBewertAnzeige}" FontSize="Medium" TextColor="Black" VerticalOptions="End"/>
-                                </StackLayout>-->
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" HorizontalOptions="End"/>
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" HorizontalOptions="End" VerticalOptions="End" />
                             </Grid>
                         </Frame>
                     </ViewCell>

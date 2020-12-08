@@ -42,7 +42,7 @@ namespace FitnessApp.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        public decimal Sätze { get; set; }
+        public decimal SÃ¤tze { get; set; }
         public decimal Wiederholungen { get; set; }
         public decimal Menge { get; set; }
         public string Einheit { get; set; }

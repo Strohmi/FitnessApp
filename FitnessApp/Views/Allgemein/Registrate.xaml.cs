@@ -7,27 +7,20 @@ using System.Linq;
 using FitnessApp.Models;
 using FitnessApp.Models.General;
 using System.Text;
+using FitnessApp.ViewModels;
+using System.Net;
 
 namespace FitnessApp
 {
     public partial class Registrate : ContentPage
     {
-        public string[] Nutzernamen
-        {
-            get
-            {
-                return new string[] { "nikeri", "tuneke", "timbru", "nicmis", "lasstr" };
-            }
-        }
-        public string NewNutzername { get; set; }
-        public string NewPasswort { get; set; }
-        public string NewPasswort2 { get; set; }
+        public RegisterVM RegVM { get; set; } = new RegisterVM();
 
         public Registrate()
         {
             InitializeComponent();
             OnStart();
-            BindingContext = this;
+            BindingContext = RegVM;
         }
 
         private void OnStart()
@@ -37,40 +30,43 @@ namespace FitnessApp
             NavigationPage.SetHasBackButton(this, true);
         }
 
-        private async void NewUser(object sender, EventArgs e)
+        async void Registrieren(System.Object sender, System.EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(NewNutzername))
+            if (!string.IsNullOrWhiteSpace(RegVM.User.Nutzername))
             {
-                if (!string.IsNullOrWhiteSpace(NewPasswort))
+                RegVM.User.Nutzername = RegVM.User.Nutzername.ToLower();
+                if (!string.IsNullOrWhiteSpace(RegVM.PW))
                 {
-                    if (!string.IsNullOrWhiteSpace(NewPasswort2))
+                    if (!string.IsNullOrWhiteSpace(RegVM.PW2))
                     {
-                        if (NewPasswort == NewPasswort2)
+                        if (RegVM.PW == RegVM.PW2)
                         {
-                            string hashedpw = AllVM.HashPassword(NewPasswort);
+                            string hashedpw = AllVM.HashPassword(RegVM.PW);
 
-                            User user = new User()
-                            {
-                                Nutzername = NewNutzername,
-                                Passwort = hashedpw,
-                                ErstelltAm = DateTime.Now
-                            };
+                            RegVM.User.ErstelltAm = DateTime.Now;
+                            RegVM.User.Passwort = hashedpw;
+                            RegVM.User.InfoText = "Hi, ich bin neu hier!";
 
-                            if (AllVM.Datenbank.User.Insert(user))
+                            using (var webClient = new WebClient())
+                                RegVM.User.ProfilBild = webClient.DownloadData("https://cdn.pixabay.com/photo/2016/11/11/09/59/white-male-1816195_1280.jpg");
+
+                            if (AllVM.Datenbank.User.Insert(RegVM.User))
                             {
-                                AllVM.User = AllVM.ConvertFromUser(user);
-                                Application.Current.Properties.Add("userid", user.Nutzername);
+                                AllVM.User = AllVM.ConvertFromUser(RegVM.User);
+                                Application.Current.Properties.Add("userid", RegVM.User.Nutzername);
+                                Application.Current.Properties.Add("userpw", RegVM.User.Passwort);
                                 await Application.Current.SavePropertiesAsync();
-                            }
 
+                                App.Current.MainPage = new AppShell();
+                            }
                             else
-                                DependencyService.Get<IMessage>().ShortAlert("Fehler junge!");
+                                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Speichern!");
                         }
                         else
                             DependencyService.Get<IMessage>().ShortAlert("Passwörter stimmen nicht überein");
                     }
                     else
-                        DependencyService.Get<IMessage>().ShortAlert("Bitte Passwort eingeben");
+                        DependencyService.Get<IMessage>().ShortAlert("Bitte Bestätigung eingeben");
                 }
                 else
                     DependencyService.Get<IMessage>().ShortAlert("Bitte Passwort eingeben");
@@ -78,7 +74,5 @@ namespace FitnessApp
             else
                 DependencyService.Get<IMessage>().ShortAlert("Nutzername eingeben!");
         }
-
-
     }
 }
