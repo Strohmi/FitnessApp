@@ -35,7 +35,7 @@ namespace FitnessApp
 
         void GetList()
         {
-            TPlaene = AllVM.Datenbank.Trainingsplan.GetTrainingsplaene(user.Nutzername);
+            TPlaene = AllVM.Datenbank.Trainingsplan.GetList(user.Nutzername);
 
             if (TPlaene != null)
                 TPlaene = TPlaene.OrderByDescending(o => o.ErstelltAm).ToList();

@@ -42,13 +42,14 @@ namespace FitnessApp
             {
                 FitFeedVM.ListNews.Add(new News()
                 {
+                    ID = -1,
                     Beschreibung = "Hey neuer Fitness-User!\n" +
                     "Ich finde es super, dass du die App ausprobierst!\n\n" +
                     "Wenn du Fragen hast, kannst du mich jederzeit gerne anschreiben!\n" +
                     "Bis dahin, wünsche ich dir viel Spaß beim Teilen deiner Fitnessaktivitäten, deinen leckeren Ernährungsplänen oder deinen anstregenden aber guten Trainingsplänen!\n\n" +
                     "Falls du neue Leute kennen lernen willst, die das gleiche Interesse wie du haben, geh einfach auf die Suche und finde neue Leute!\n\n" +
-                    "Achja, und wenn du ein paar Fehler findest, schreib mir einfach. Ich leite die Nachricht ans Entwicklerteam weiter ;)\n" +
-                    "Tschüssikowski dein Fitness_Bot",
+                    "Achja, und wenn du ein paar Fehler findest, schreib mir einfach. Ich leite die Nachricht ans Entwicklerteam weiter ;)\n\n" +
+                    "Tschüssikowski und bis denne dein Fitness_Bot",
                     Ersteller = AllVM.Datenbank.User.GetByName("fitness_bot"),
                     ErstelltAm = DateTime.Now
                 });

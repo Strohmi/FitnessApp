@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.Search"
+             Title="{Binding Title}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <RadioButton Grid.Column="0" x:Name="RBtrain" Text="Trainingspläne" FontSize="Small" VerticalOptions="Center" CheckedChanged="CheckedChanged" HorizontalOptions="Center"/>
+            <RadioButton Grid.Column="1" x:Name="RBnutzer" Text="Nutzer" FontSize="Small" VerticalOptions="Center" IsChecked="True" CheckedChanged="CheckedChanged" HorizontalOptions="Center"/>
+            <RadioButton Grid.Column="2" x:Name="RBernä" Text="Ernährungspläne" FontSize="Small" VerticalOptions="Center" CheckedChanged="CheckedChanged" HorizontalOptions="Center"/>
+        </Grid>
+
+        <SearchBar Grid.Row="1" x:Name="searchBar" Placeholder="Suchen..." TextChanged="TextChanged" FontSize="Medium" Margin="0" Keyboard="Text" BackgroundColor="White" TextColor="Black" IsSpellCheckEnabled="False"/>
+
+        <ListView x:Name="listUser" Grid.Row="2" IsVisible="True" ItemsSource="{Binding UsersResult}" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never" ItemTapped="Tapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label Text="{Binding Nutzername}" FontSize="Large" TextColor="Black"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView x:Name="listTrain" Grid.Row="2" IsVisible="false" HasUnevenRows="True" ItemsSource="{Binding TPläneResult}" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never" ItemTapped="Tapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell BindingContextChanged="OnBindingContextChanged">
+                        <Frame Padding="0" Margin="0,0,0,10" HasShadow="False" BorderColor="Black">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titel}" FontSize="Large" FontAttributes="Bold" TextColor="Black" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Kategorie}" FontSize="Medium" TextColor="Black" HorizontalOptions="End" VerticalOptions="Center"/>
+                                <Grid Grid.Row="1" Grid.Column="0" x:Name="bewGrid" HorizontalOptions="Start" VerticalOptions="End">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+
+                                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="End">
+                                    <Label Text="{Binding User.Nutzername}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End" Margin="0,0,5,0"/>
+                                    <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <ListView x:Name="listErnäh" Grid.Row="2" IsVisible="false" HasUnevenRows="True" ItemsSource="{Binding EPläneResult}" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never" ItemTapped="Tapped">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell BindingContextChanged="OnBindingContextChanged">
+                        <Frame Padding="0" Margin="0,0,0,10" HasShadow="False" BorderColor="Black">
+                            <Grid Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titel}" FontSize="Large" FontAttributes="Bold" TextColor="Black" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Kategorie}" FontSize="Medium" TextColor="Black" HorizontalOptions="End" VerticalOptions="Center"/>
+                                <Grid Grid.Row="1" Grid.Column="0" x:Name="bewGrid" HorizontalOptions="Start" VerticalOptions="End">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                    </Grid.ColumnDefinitions>
+                                </Grid>
+
+                                <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="End">
+                                    <Label Text="{Binding User.Nutzername}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End" Margin="0,0,5,0"/>
+                                    <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End"/>
+                                </StackLayout>
+                            </Grid>
+                        </Frame>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentPage>

@@ -35,7 +35,7 @@ namespace FitnessApp
 
         void GetList()
         {
-            EPlaene = AllVM.Datenbank.Ernährungsplan.GetErnährungsplaene(user.Nutzername);
+            EPlaene = AllVM.Datenbank.Ernährungsplan.GetList(user.Nutzername);
 
             if (EPlaene != null)
                 EPlaene = EPlaene.OrderByDescending(o => o.ErstelltAm).ToList();

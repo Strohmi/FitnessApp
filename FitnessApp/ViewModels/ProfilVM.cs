@@ -37,13 +37,4 @@ namespace FitnessApp
             this.User = _user;
         }
     }
-
-    public class ProfilSearchVM : NotifyPropertyBase
-    {
-        private List<User> _users;
-        private List<User> _usersResult;
-
-        public List<User> Users { get { return _users; } set { OnPropertyChanged(ref _users, value); } }
-        public List<User> UsersResult { get { return _usersResult; } set { OnPropertyChanged(ref _usersResult, value); } }
-    }
 }

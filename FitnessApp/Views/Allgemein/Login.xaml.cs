@@ -35,6 +35,7 @@ namespace FitnessApp
                     if (hpw == pw)
                     {
                         AllVM.Initial(Nutzername);
+                        Application.Current.Properties.Clear();
                         Application.Current.Properties.Add("userid", Nutzername);
                         Application.Current.Properties.Add("userpw", pw);
                         await Application.Current.SavePropertiesAsync();

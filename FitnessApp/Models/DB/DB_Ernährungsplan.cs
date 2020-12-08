@@ -8,17 +8,30 @@ namespace FitnessApp.Models.DB
 {
     public class DB_Ernährungsplan
     {
-        public List<Ernährungsplan> GetErnährungsplaene(string Nutzername)
+        public List<Ernährungsplan> GetList(string Nutzername = null)
         {
             try
             {
+                string com = null;
                 List<Ernährungsplan> ernährungsplaene = new List<Ernährungsplan>();
                 StaticDB.Connect();
-                string com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm, info.Kategorie " +
+
+                if (string.IsNullOrWhiteSpace(Nutzername))
+                {
+                    com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm, info.Kategorie " +
+                             "FROM EP_Base as base " +
+                             "INNER JOIN EP_Info as info " +
+                             "ON base.ID = info.ID ";
+                }
+                else
+                {
+                    com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm, info.Kategorie " +
                              "FROM EP_Base as base " +
                              "INNER JOIN EP_Info as info " +
                              "ON base.ID = info.ID " +
                              $"WHERE info.ErstelltVon = '{Nutzername}'";
+                }
+
                 SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
                 var r = sqlCommand.ExecuteReader();
@@ -51,7 +64,7 @@ namespace FitnessApp.Models.DB
         {
             throw new NotImplementedException();
         }
-        
+
         internal List<string> GetCategories()
         {
             throw new NotImplementedException();

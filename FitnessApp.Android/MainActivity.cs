@@ -24,9 +24,6 @@ namespace FitnessApp.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            //var helper = new HelperDROID();
-            //permissions.Check(this);
-
             InitFontSize();
 
             base.OnCreate(savedInstanceState);

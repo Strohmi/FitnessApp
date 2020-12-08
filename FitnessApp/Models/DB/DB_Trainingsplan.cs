@@ -14,18 +14,30 @@ namespace FitnessApp.Models.DB
         /// </summary>
         /// <param name="Nutzername">Nutzername von dem Trainingspläne geladen werden sollen (string)</param>
         /// <returns>Liste von Trainingsplänen</returns>
-        public List<Trainingsplan> GetTrainingsplaene(string Nutzername)
+        public List<Trainingsplan> GetList(string Nutzername = null)
         {
             try
             {
+                string com = null;
                 Trainingsplan trainingsplan = null;
                 List<Trainingsplan> trainingsplaene = new List<Trainingsplan>();
                 StaticDB.Connect();
-                string com = "SELECT TP_Base.ID, TP_Base.Titel, TP_Info.ErstelltAM, TP_Info.ErstelltVon, TP_Info.GeaendertAm, TP_Info.Kategorie " +
-                             "FROM TP_Base " +
-                             "INNER JOIN TP_Info " +
-                             "ON TP_Base.ID = TP_Info.ID " +
-                             $"WHERE TP_Info.ErstelltVon = '{Nutzername}'";
+
+                if (string.IsNullOrWhiteSpace(Nutzername))
+                {
+                    com = "SELECT TP_Base.ID, TP_Base.Titel, TP_Info.ErstelltAM, TP_Info.ErstelltVon, TP_Info.GeaendertAm, TP_Info.Kategorie " +
+                          "FROM TP_Base " +
+                          "INNER JOIN TP_Info " +
+                          "ON TP_Base.ID = TP_Info.ID ";
+                }
+                else
+                {
+                    com = "SELECT TP_Base.ID, TP_Base.Titel, TP_Info.ErstelltAM, TP_Info.ErstelltVon, TP_Info.GeaendertAm, TP_Info.Kategorie " +
+                          "FROM TP_Base " +
+                          "INNER JOIN TP_Info " +
+                          "ON TP_Base.ID = TP_Info.ID " +
+                         $"WHERE TP_Info.ErstelltVon = '{Nutzername}'";
+                }
 
                 SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
