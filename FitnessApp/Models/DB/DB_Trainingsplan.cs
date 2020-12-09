@@ -90,21 +90,25 @@ namespace FitnessApp.Models.DB
             try
             {
                 List<Uebung> uebungen = new List<Uebung>();
-                string sqlCommand = "SELECT ueb.ID, ueb.Name, ueb.Gewicht, ueb.Repetition, ueb.Repetition " +
+                string sqlCommand = "SELECT ueb.ID, ueb.Name, ueb.Gewicht, ueb.Repetition, ueb.Sets " +
                                     "FROM TP_Base as base " +
                                     "INNER JOIN TP_Link_BaseUebung as link " +
                                     "ON base.ID = link.ID_Base " +
                                     "INNER JOIN TP_Uebungen as ueb " +
                                     "ON ueb.ID = link.ID_Uebung " +
                                    $"WHERE base.ID = {ID}";
-                SqlCommand command = new SqlCommand(sqlCommand, StaticDB.Connection);
                 StaticDB.Connection.Open();
+                SqlCommand command = new SqlCommand(sqlCommand, StaticDB.Connection);
                 IDataReader r = command.ExecuteReader();
                 while (r.Read())
                 {
                     Uebung uebung = new Uebung()
                     {
-
+                        ID = r.GetInt32(0),
+                        Name = r.GetString(1),
+                        Gewicht = r.GetDecimal(2),
+                        Wiederholungen = r.GetInt32(3),
+                        Sätze = r.GetInt32(4)
                     };
                     uebungen.Add(uebung);
                 }
@@ -140,13 +144,13 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Open();
 
                 int lastID = (int)command.ExecuteScalar();
-
+                StaticDB.Connection.Close();
                 com = $"INSERT INTO TP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm, Kategorie) VALUES ({lastID}, '{trainingsplan.ErstelltAm}', '{trainingsplan.User.Nutzername}', '{trainingsplan.GeAendertAm}', '{trainingsplan.Kategorie}');";
                 StaticDB.RunSQL(com);
 
                 foreach (var uebung in trainingsplan.UebungList)
                 {
-                    string checkEx = $"SELECT * FROM TP_Uebungen WHERE Name='{uebung.Name}' AND Gewicht={uebung.Menge.ToString().Replace(",", ".")} AND Repetition={uebung.Wiederholungen} AND Sets={uebung.Sätze}";
+                    string checkEx = $"SELECT * FROM TP_Uebungen WHERE Name='{uebung.Name}' AND Gewicht={uebung.Gewicht.ToString().Replace(",", ".")} AND Repetition={uebung.Wiederholungen} AND Sets={uebung.Sätze}";
                     if (StaticDB.CheckExistenz(checkEx) == true)
                     {
                         int uebID = StaticDB.GetID(checkEx);
@@ -155,11 +159,12 @@ namespace FitnessApp.Models.DB
                     }
                     else
                     {
-                        com = $"INSERT INTO TP_Uebungen (Name, Gewicht, Repetition, Sets) VALUES ('{uebung.Name}', {uebung.Menge.ToString().Replace(",", ".")}, {uebung.Wiederholungen}, {uebung.Sätze}); " +
+                        com = $"INSERT INTO TP_Uebungen (Name, Gewicht, Repetition, Sets) VALUES ('{uebung.Name}', {uebung.Gewicht.ToString().Replace(",", ".")}, {uebung.Wiederholungen}, {uebung.Sätze}); " +
                                "SELECT CAST(SCOPE_IDENTITY() AS INT)";
                         SqlCommand insertUeb = new SqlCommand(com, StaticDB.Connection);
                         StaticDB.Connection.Open();
                         int lastUebID = (int)insertUeb.ExecuteScalar();
+                        StaticDB.Connection.Close();
                         string comTpLink = $"INSERT INTO TP_Link_BaseUebung (ID_Base, ID_Uebung) VALUES({lastID}, {lastUebID})";
                         StaticDB.RunSQL(comTpLink);
                     }
@@ -187,16 +192,18 @@ namespace FitnessApp.Models.DB
         {
             try
             {
+                StaticDB.Connect();
                 string editTP_Base = $"UPDATE TP_Base SET Titel = '{trainingsplan.Titel}' WHERE ID={trainingsplan.ID}";
                 StaticDB.RunSQL(editTP_Base);
                 foreach (var item in trainingsplan.UebungList)
                 {
-                    string com = $"SELECT * FROM TP_Uebungen WHERE Name='{item.Name}' AND Gewicht='{item.Menge.ToString().Replace(",", ".")}' AND Repetition={item.Wiederholungen} AND Sets={item.Sätze}";
+                    string com = $"SELECT * FROM TP_Uebungen WHERE Name='{item.Name}' AND Gewicht='{item.Gewicht.ToString().Replace(",", ".")}' AND Repetition={item.Wiederholungen} AND Sets={item.Sätze}";
                     if (StaticDB.CheckExistenz(com) == true)
                     {
                         SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                         StaticDB.Connection.Open();
                         int ID = (int)sqlCommand.ExecuteScalar();
+                        StaticDB.Connection.Close();
                         if (StaticDB.CheckExistenz($"SELECT * FROM TP_Link_BaseUebung WHERE ID_Base='{trainingsplan.ID}' AND ID_Uebung='{ID}'") == true)
                         {
                             continue;
@@ -209,11 +216,12 @@ namespace FitnessApp.Models.DB
                     }
                     else
                     {
-                        com = $"INSERT INTO TP_Uebungen (Name, Gewicht, Repetition, Sets) VALUES ('{item.Name}', '{item.Menge.ToString().Replace(",", ".")}', '{item.Wiederholungen}', '{item.Sätze}'); " +
+                        com = $"INSERT INTO TP_Uebungen (Name, Gewicht, Repetition, Sets) VALUES ('{item.Name}', '{item.Gewicht.ToString().Replace(",", ".")}', '{item.Wiederholungen}', '{item.Sätze}'); " +
                                "SELECT CAST(SCOPE_IDENTITY() AS INT)";
-                        SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                         StaticDB.Connection.Open();
+                        SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                         int ID = (int)command.ExecuteScalar();
+                        StaticDB.Connection.Close();
                         com = $"INSERT INTO TP_Link_BaseUebung (ID_Base, ID_Uebung) VALUES('{trainingsplan.ID}', '{ID}')";
                         StaticDB.RunSQL(com);
                     }
@@ -249,11 +257,11 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Open();
                 SqlCommand command = new SqlCommand(insertBew, StaticDB.Connection);
                 int lastID = (int)command.ExecuteScalar();
+                StaticDB.Connection.Close();
                 string insertLink = $"INSERT INTO TP_Link_BaseBewertung (ID_TP_Base, ID_TP_Bewertung) VALUES ({trainingsplan.ID}, {lastID})";
                 StaticDB.RunSQL(insertLink);
 
                 trainingsplan.Bewertungen.Add(bewertung);
-                StaticDB.Connection.Close();
                 return true;
             }
             catch (Exception ex)
@@ -297,6 +305,7 @@ namespace FitnessApp.Models.DB
         {
             try
             {
+                StaticDB.Connect();
                 List<BewertungTrainingpsplan> bewertungsList = new List<BewertungTrainingpsplan>();
                 string com = "SELECT bew.ID, bew.[User], Bewertung " +
                              "FROM TP_Base as base " +
@@ -306,9 +315,8 @@ namespace FitnessApp.Models.DB
                              "ON bew.ID = link.ID_TP_Bewertung " +
                              $"WHERE base.ID = {ID}";
 
-
-                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
 
                 var r = sqlCommand.ExecuteReader();
                 while (r.Read())
@@ -316,12 +324,16 @@ namespace FitnessApp.Models.DB
                     BewertungTrainingpsplan bewertung = new BewertungTrainingpsplan()
                     {
                         ID = r.GetInt32(0),
-                        Bewerter = AllVM.Datenbank.User.GetByName(r.GetString(1)),
+                        Bewerter = new User() { Nutzername = r.GetString(1)},
                         Bewertung = r.GetInt32(2)
                     };
                     bewertungsList.Add(bewertung);
                 }
                 StaticDB.Connection.Close();
+                foreach (var item in bewertungsList)
+                {
+                    item.Bewerter = AllVM.Datenbank.User.GetByName(item.Bewerter.Nutzername);
+                }
                 return bewertungsList;
             }
             catch (Exception ex)
@@ -338,6 +350,7 @@ namespace FitnessApp.Models.DB
         {
             try
             {
+                StaticDB.Connect();
                 string durcchBew = "SELECT AVG(bew.Bewertung) " +
                                    "FROM TP_Base as base " +
                                    "INNER JOIN TP_Link_BaseBewertung as link " +
@@ -397,16 +410,16 @@ namespace FitnessApp.Models.DB
         {
             try
             {
-                Trainingsplan trainingsplan = new Trainingsplan();
                 StaticDB.Connect();
+                Trainingsplan trainingsplan = new Trainingsplan();
                 string com = "SELECT TP_Base.ID, TP_Base.Titel, TP_Info.ErstelltAM, TP_Info.ErstelltVon, TP_Info.GeaendertAm, TP_Info.Kategorie " +
                              "FROM TP_Base " +
                              "INNER JOIN TP_Info " +
                              "ON TP_Base.ID = TP_Info.ID " +
                              $"WHERE TP_Info.ID = '{ID}'";
 
-                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 IDataReader r = sqlCommand.ExecuteReader();
                 while (r.Read())
                 {
@@ -415,16 +428,45 @@ namespace FitnessApp.Models.DB
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
                         ErstelltAm = r.GetDateTime(2),
-                        User = AllVM.Datenbank.User.GetByName(r.GetString(3)),
+                        User = new User() { Nutzername = r.GetString(3) },
                         GeAendertAm = r.GetDateTime(4),
-                        UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(r.GetInt32(0)),
-                        Bewertungen = AllVM.Datenbank.Trainingsplan.GetBewertungen(r.GetInt32(0)),
                         Kategorie = r.GetString(5),
-                        DurchBewertung = AllVM.Datenbank.Trainingsplan.GetAvgBewertung(r.GetInt32(0))
                     };
                 }
+
                 StaticDB.Connection.Close();
+
+                trainingsplan.User = AllVM.Datenbank.User.GetByName(trainingsplan.User.Nutzername);
+                trainingsplan.UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(trainingsplan.ID);
+                trainingsplan.Bewertungen = AllVM.Datenbank.Trainingsplan.GetBewertungen(trainingsplan.ID);
+                trainingsplan.DurchBewertung = AllVM.Datenbank.Trainingsplan.GetAvgBewertung(trainingsplan.ID);
                 return trainingsplan;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
+        }
+        public List<string> GetCategories()
+        {
+            try
+            {
+                List<string> categories = new List<string>();
+                string com = "SELECT * FROM TP_Kategorien";
+                StaticDB.Connect();
+                StaticDB.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+                var r = sqlCommand.ExecuteReader();
+                while (r.Read())
+                {
+                    categories.Add(r.GetString(0));
+                }
+                StaticDB.Connection.Close();
+                return categories;
             }
             catch (Exception ex)
             {

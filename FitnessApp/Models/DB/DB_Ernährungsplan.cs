@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Data;
 
 namespace FitnessApp.Models.DB
 {
@@ -12,9 +13,9 @@ namespace FitnessApp.Models.DB
         {
             try
             {
+                StaticDB.Connect();
                 string com = null;
                 List<Ernährungsplan> ernährungsplaene = new List<Ernährungsplan>();
-                StaticDB.Connect();
 
                 if (string.IsNullOrWhiteSpace(Nutzername))
                 {
@@ -32,8 +33,8 @@ namespace FitnessApp.Models.DB
                              $"WHERE info.ErstelltVon = '{Nutzername}'";
                 }
 
-                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 var r = sqlCommand.ExecuteReader();
                 while (r.Read())
                 {
@@ -41,70 +42,82 @@ namespace FitnessApp.Models.DB
                     {
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
-                        User = AllVM.Datenbank.User.GetByName(r.GetString(2)),
+                        User = new User() { Nutzername = r.GetString(2)},
                         ErstelltAm = r.GetDateTime(3),
                         GeAendertAm = r.GetDateTime(4),
-                        Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(r.GetInt32(0)),
-                        MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(r.GetInt32(0)),
                         Kategorie = r.GetString(5),
-                        DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(r.GetInt32(0))
                     };
                     ernährungsplaene.Add(ernährungsplan);
                 }
                 StaticDB.Connection.Close();
+                foreach (var item in ernährungsplaene)
+                {
+                    item.User = AllVM.Datenbank.User.GetByName(item.User.Nutzername);
+                    item.Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(item.ID);
+                    item.MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(item.ID);
+                    item.DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(item.ID);
+                }
                 return ernährungsplaene;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
             }
         }
-
-        internal List<string> GetUnits()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal List<string> GetCategories()
-        {
-            throw new NotImplementedException();
-        }
-
         internal Ernährungsplan GetByID(int iD)
         {
-            var ePlan = new Ernährungsplan();
-            StaticDB.Connect();
-            string com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm, info.Kategorie " +
-                         "FROM EP_Base as base " +
-                         "INNER JOIN EP_Info as info " +
-                         "ON base.ID = info.ID " +
-                         $"WHERE base.ID = '{iD}'";
-            SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
-            StaticDB.Connection.Open();
-            var r = sqlCommand.ExecuteReader();
-            while (r.Read())
+            try
             {
-                ePlan = new Ernährungsplan()
+                StaticDB.Connect();
+                var ePlan = new Ernährungsplan();
+                string com = "SELECT base.ID, base.Titel , info.ErstelltVon, info.ErstelltAm, info.GeaendertAm, info.Kategorie " +
+                             "FROM EP_Base as base " +
+                             "INNER JOIN EP_Info as info " +
+                             "ON base.ID = info.ID " +
+                             $"WHERE base.ID = '{iD}'";
+                StaticDB.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+                var r = sqlCommand.ExecuteReader();
+                while (r.Read())
                 {
-                    ID = r.GetInt32(0),
-                    Titel = r.GetString(1),
-                    User = AllVM.Datenbank.User.GetByName(r.GetString(2)),
-                    ErstelltAm = r.GetDateTime(3),
-                    GeAendertAm = r.GetDateTime(4),
-                    Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(r.GetInt32(0)),
-                    MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(r.GetInt32(0)),
-                    Kategorie = r.GetString(5),
-                    DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(r.GetInt32(0))
-                };
+                    ePlan = new Ernährungsplan()
+                    {
+                        ID = r.GetInt32(0),
+                        Titel = r.GetString(1),
+                        User = new User() { Nutzername = r.GetString(2)},
+                        ErstelltAm = r.GetDateTime(3),
+                        GeAendertAm = r.GetDateTime(4),
+                        Kategorie = r.GetString(5)
+                    };
+                }
+                StaticDB.Connection.Close();
+
+                ePlan.User = AllVM.Datenbank.User.GetByName(ePlan.User.Nutzername);
+                ePlan.Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(ePlan.ID);
+                ePlan.MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(ePlan.ID);
+                ePlan.DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(ePlan.ID);
+
+                return ePlan;
             }
-            StaticDB.Connection.Close();
-            return ePlan;
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
         }
 
         public List<Mahlzeiten> GetMahlzeiten(int ID)
         {
             try
             {
+                StaticDB.Connect();
                 List<Mahlzeiten> mahlzeitenList = new List<Mahlzeiten>();
                 string com = "select mahl.ID, mahl.Nahrungsmittel, mahl.Menge, mahl.Einheit " +
                              "FROM EP_Base as base " +
@@ -113,8 +126,8 @@ namespace FitnessApp.Models.DB
                              "INNER JOIN EP_Mahlzeiten as mahl " +
                              "ON link.ID_Mahlzeit = mahl.ID " +
                              $"WHERE base.ID = {ID}";
-                SqlCommand sqlcommand = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
+                SqlCommand sqlcommand = new SqlCommand(com, StaticDB.Connection);
                 var r = sqlcommand.ExecuteReader();
                 while (r.Read())
                 {
@@ -130,10 +143,13 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 return mahlzeitenList;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
             }
 
         }
@@ -173,9 +189,12 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                StaticDB.Connection.Close();
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return false;
             }
         }
@@ -193,9 +212,12 @@ namespace FitnessApp.Models.DB
                 StaticDB.RunSQL(com);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                StaticDB.Connection.Close();
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
                 return false;
             }
         }
@@ -237,10 +259,13 @@ namespace FitnessApp.Models.DB
                 StaticDB.RunSQL(editEP_Info);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return false;
             }
         }
         public List<BewertungErnährungsplan> GetBewertungen(int ID)
@@ -270,10 +295,13 @@ namespace FitnessApp.Models.DB
                 }
                 return bewertungsList;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
             }
         }
         public decimal GetAvgBewertung(int ID)
@@ -293,10 +321,13 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 return durchschnitt;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                StaticDB.Connection.Close();
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return -2;
             }
         }
         public bool DeleteBewertung(BewertungErnährungsplan bewertung)
@@ -307,10 +338,13 @@ namespace FitnessApp.Models.DB
                 StaticDB.RunSQL(delBew);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return false;
             }
         }
         public bool AddBewertung(BewertungErnährungsplan bewertung, Ernährungsplan ernährungsplan)
@@ -330,10 +364,65 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return false;
+            }
+        }
+        public List<string> GetCategories()
+        {
+            try
+            {
+                StaticDB.Connect();
+                List<string> categories = new List<string>();
+                string com = "SELECT * FROM EP_Kategorien";
+                StaticDB.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+                var r = sqlCommand.ExecuteReader();
+                while (r.Read())
+                {
+                    categories.Add(r.GetString(0));
+                }
+                StaticDB.Connection.Close();
+                return categories;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
+        }
+        public List<string> GetUnits()
+        {
+            try
+            {
+                List<string> units = new List<string>();
+                string com = "SELECT * FROM EP_Einheiten";
+                StaticDB.Connect();
+                StaticDB.Connection.Open();
+                SqlCommand sql = new SqlCommand(com, StaticDB.Connection);
+                var r = sql.ExecuteReader();
+                while (r.Read())
+                {
+                    units.Add(r.GetString(0));
+                }
+                StaticDB.Connection.Close();
+                return units;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
             }
         }
     }

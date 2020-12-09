@@ -257,8 +257,12 @@
     <ImageAsset Include="Assets.xcassets\Trash.imageset\Trash.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Star_HalfFilled.imageset\Contents.json" />
-    <ImageAsset Include="Assets.xcassets\Star_HalfFilled.imageset\Star_HalfFilled-1.png" />
+    <ImageAsset Include="Assets.xcassets\Star_HalfFilled.imageset\Contents.json">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Star_HalfFilled.imageset\Star_HalfFilled-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
