@@ -69,8 +69,8 @@ namespace FitnessApp
                             plan.UebungList.Add(new Uebung
                             {
                                 Name = NewName,
-                                Sätze = Convert.ToDecimal(NewSätze),
-                                Wiederholungen = Convert.ToDecimal(NewWiederholungen),
+                                Sätze = Convert.ToInt32(NewSätze),
+                                Wiederholungen = Convert.ToInt32(NewWiederholungen),
                                 Menge = Convert.ToDecimal(NewMenge),
                                 Einheit = NewEinheit
                             });

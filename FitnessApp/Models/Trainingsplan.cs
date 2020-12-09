@@ -43,6 +43,8 @@ namespace FitnessApp.Models
         public int Sätze { get; set; }
         public int Wiederholungen { get; set; }
         public decimal Gewicht { get; set; }
+        public decimal Menge { get; set; }
+        public string Einheit { get; set; }
     }
     public class BewertungTrainingpsplan
     {
