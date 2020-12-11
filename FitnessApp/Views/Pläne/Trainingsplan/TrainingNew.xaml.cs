@@ -39,8 +39,8 @@ namespace FitnessApp
             Title = "Training erstellen";
 
             //Diese Methoden müssen noch geschrieben werden!
-            //Units = AllVM.Datenbank.Trainingsgsplan.GetUnits();
-            //Categories = AllVM.Datenbank.Trainingsplan.GetCategories();
+            //Units = AllVM.Datenbank.Trainingsplan.GetUnits();
+            Categories = AllVM.Datenbank.Trainingsplan.GetCategories();
         }
 
         private void SetNavBar()
