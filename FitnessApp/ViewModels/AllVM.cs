@@ -27,7 +27,9 @@ namespace FitnessApp.Models.General
                 Passwort = _user.Passwort,
                 ProfilBild = _user.ProfilBild,
                 ErstelltAm = _user.ErstelltAm,
-                AnzahlFollower = _user.AnzahlFollower
+                AnzahlFollower = _user.AnzahlFollower,
+                OnlyCustomName = _user.OnlyCustomName,
+                CustomName = _user.CustomName
             };
         }
 
@@ -44,7 +46,9 @@ namespace FitnessApp.Models.General
                 Passwort = User.Passwort,
                 ProfilBild = User.ProfilBild,
                 ErstelltAm = User.ErstelltAm,
-                AnzahlFollower = User.AnzahlFollower
+                AnzahlFollower = User.AnzahlFollower,
+                OnlyCustomName = User.OnlyCustomName,
+                CustomName = User.CustomName
             };
         }
 

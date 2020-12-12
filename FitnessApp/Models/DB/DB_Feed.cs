@@ -62,6 +62,7 @@ namespace FitnessApp.Models
                 {
                     item.Liked = CheckIfLiked(item.ID);
                     item.Likes = GetLikes(item.ID);
+                    item.Ersteller = AllVM.Datenbank.User.GetByName(item.Ersteller.Nutzername);
                 }
 
                 return list;

@@ -39,14 +39,6 @@ namespace FitnessApp
                 user = AllVM.ConvertToUser();
             ProfilVM = new ProfilShowVM(user);
             GetFitFeed();
-
-            ////Entfernen nach Auto-Login !
-            //if (ProfilVM.User.ProfilBild == null)
-            //    using (var webClient = new WebClient())
-            //    {
-            //        ProfilVM.User.ProfilBild = webClient.DownloadData("https://cdn.pixabay.com/photo/2016/11/11/09/59/white-male-1816195_1280.jpg");
-            //    }
-
             BindingContext = ProfilVM;
             SetButton();
         }

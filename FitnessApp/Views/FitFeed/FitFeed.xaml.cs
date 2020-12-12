@@ -50,7 +50,7 @@ namespace FitnessApp
                     "Falls du neue Leute kennen lernen willst, die das gleiche Interesse wie du haben, geh einfach auf die Suche und finde neue Leute!\n\n" +
                     "Achja, und wenn du ein paar Fehler findest, schreib mir einfach. Ich leite die Nachricht ans Entwicklerteam weiter ;)\n\n" +
                     "Tschüssikowski und bis denne dein Fitness_Bot",
-                    Ersteller = AllVM.Datenbank.User.GetByName("fitness_bot"),
+                    Ersteller = new User() { Nutzername = "fitness_bot" },
                     ErstelltAm = DateTime.Now
                 });
             }
@@ -118,10 +118,10 @@ namespace FitnessApp
         {
             Label label = (sender as Label);
 
-            if (label.Text == AllVM.User.Nutzername)
+            if (label.ClassId == AllVM.User.Nutzername)
                 this.Navigation.PushAsync(new Profil());
             else
-                this.Navigation.PushAsync(new Profil(label.Text));
+                this.Navigation.PushAsync(new Profil(label.ClassId));
         }
 
         async void Delete(object sender, EventArgs e)
@@ -153,7 +153,9 @@ namespace FitnessApp
 
             ViewCell theViewCell = ((ViewCell)sender);
             News item = theViewCell.BindingContext as News;
-            theViewCell.ContextActions.Clear();
+
+            if (theViewCell.ContextActions.Count > 0)
+                theViewCell.ContextActions.Clear();
 
             if (item != null)
             {
@@ -171,39 +173,38 @@ namespace FitnessApp
             }
         }
 
-        void LoadMore(System.Object sender, System.EventArgs e)
+        void LoadMore(object sender, EventArgs e)
         {
             loadMoreBtn.IsVisible = false;
             vonDatum = DateTime.Now.AddDays(-days * (multiplikator + 1));
             bisDatum = DateTime.Now.AddDays(-days * multiplikator);
             CacheList = AllVM.Datenbank.Feed.Get(AllVM.ConvertToUser(), vonDatum, bisDatum);
 
-            if (CacheList != null && CacheList.Count > 0)
+            if (CacheList == null)
             {
-                int lastIndex = FitFeedVM.ListNews.Count;
-                CacheList = CacheList.OrderByDescending(o => o.ErstelltAm).ToList();
-                foreach (var item in CacheList)
-                    FitFeedVM.ListNews.Add(item);
-
-                multiplikator++;
-                listview.ScrollTo(FitFeedVM.ListNews[lastIndex], ScrollToPosition.Start, true);
-            }
-            else if (CacheList.Count == 0)
-                DependencyService.Get<IMessage>().ShortAlert("Keine weiteren Daten verfügbar");
-            else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Abruf der Liste");
+            }
+            else
+            {
+                if (CacheList.Count > 0)
+                {
+                    int lastIndex = FitFeedVM.ListNews.Count;
+                    CacheList = CacheList.OrderByDescending(o => o.ErstelltAm).ToList();
+                    foreach (var item in CacheList)
+                        FitFeedVM.ListNews.Add(item);
+
+                    multiplikator++;
+                    //listview.ScrollTo(FitFeedVM.ListNews[lastIndex], ScrollToPosition.Start, true);
+                }
+                else
+                    DependencyService.Get<IMessage>().ShortAlert("Keine weiteren Daten verfügbar");
+            }
         }
 
         void ItemAppearing(System.Object sender, EventArgs e)
         {
-            if (FitFeedVM.ListNews.Last() == ((sender as ViewCell).View.BindingContext as News))
-            {
+            if (((sender as ViewCell).View.BindingContext as News) == FitFeedVM.ListNews.Last())
                 loadMoreBtn.IsVisible = true;
-            }
-            else
-            {
-                loadMoreBtn.IsVisible = false;
-            }
         }
 
         void ShowLikes(System.Object sender, System.EventArgs e)

@@ -81,6 +81,14 @@ namespace FitnessApp.Models
             }
         }
 
+        internal bool ChangePW(string nutzername, string hpw)
+        {
+            string com = $"UPDATE User_Password " +
+                         $"SET Password = '{hpw}' " +
+                         $"WHERE Nutzername = '{nutzername}';";
+            return StaticDB.RunSQL(com);
+        }
+
         /// <summary>
         /// Favorisierte Pläne (Training und Ernährung) aus der Datenbank ermitteln
         /// </summary>
@@ -134,7 +142,7 @@ namespace FitnessApp.Models
             if (result == false)
                 return false;
 
-            com = $"INSERT INTO User_Info (Nutzername, ErstelltAm, Infotext) VALUES('{user.Nutzername}', '{user.ErstelltAm:yyyy-MM-dd HH:mm:ss}', '{user.InfoText}')";
+            com = $"INSERT INTO User_Info (Nutzername, ErstelltAm, Infotext, OnlyCustomName, CustomName) VALUES('{user.Nutzername}', '{user.ErstelltAm:yyyy-MM-dd HH:mm:ss}', '{user.InfoText}', '0', '{user.Nutzername}')";
             result = StaticDB.RunSQL(com);
 
             if (result == false)
@@ -166,7 +174,7 @@ namespace FitnessApp.Models
                 User user = null;
                 StaticDB.Connect();
 
-                string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, bild.Bild " +
+                string com = "SELECT base.Nutzername, info.ErstelltAm, info.Infotext, info.OnlyCustomName, info.CustomName, bild.Bild " +
                              "FROM User_Base AS base " +
                              "INNER JOIN User_Info AS info " +
                              "ON info.Nutzername = base.Nutzername " +
@@ -183,17 +191,17 @@ namespace FitnessApp.Models
                     {
                         Nutzername = r.GetString(0),
                         ErstelltAm = r.GetDateTime(1),
-                        InfoText = r.GetString(2)
+                        InfoText = r.GetString(2),
+                        OnlyCustomName = StaticDB.ConvertByteToBool(r.GetByte(3)),
+                        CustomName = r.GetString(4)
                     };
 
-                    if (!r.IsDBNull(3))
-                        user.ProfilBild = (byte[])r[3];
+                    if (!r.IsDBNull(5))
+                        user.ProfilBild = (byte[])r[5];
                 }
 
                 StaticDB.Connection.Close();
-
                 user.AnzahlFollower = GetAnzahlFollower(user.Nutzername);
-                //user.AnzahlFollower = 999999;
 
                 return user;
             }
@@ -260,7 +268,9 @@ namespace FitnessApp.Models
         {
             string com = $"UPDATE User_Info SET " +
                          $"GeaendertAm = '{DateTime.Now:yyyy-MM-dd HH:mm:ss}', " +
-                         $"Infotext = '{user.InfoText}' " +
+                         $"Infotext = '{user.InfoText}'," +
+                         $"OnlyCustomName = '{StaticDB.ConvertBoolToByte(user.OnlyCustomName)}'," +
+                         $"CustomName = '{user.CustomName}' " +
                          $"WHERE Nutzername = '{user.Nutzername}';";
 
             bool result = StaticDB.RunSQL(com);
@@ -344,7 +354,49 @@ namespace FitnessApp.Models
         /// <returns></returns>
         internal bool Delete(User user)
         {
-            throw new NotImplementedException();
+            try
+            {
+                string com = $"DELETE FROM User_Info WHERE Nutzername = '{user.Nutzername}';" +
+                             $"DELETE FROM User_Bild WHERE Nutzername = '{user.Nutzername}';" +
+                             $"DELETE FROM User_Favo WHERE Nutzername = '{user.Nutzername}';" +
+                             $"DELETE FROM User_Password WHERE Nutzername = '{user.Nutzername}';" +
+                             $"DELETE FROM User_Follows WHERE User_ID = '{user.Nutzername}' OR Follow_ID = '{user.Nutzername}';" +
+                             $"DELETE FROM User_Base WHERE Nutzername = '{user.Nutzername}';";
+
+                bool result = StaticDB.RunSQL(com);
+                if (result == false)
+                    return result;
+
+
+                List<News> news = AllVM.Datenbank.Feed.GetByUser(user);
+                List<Trainingsplan> tlist = AllVM.Datenbank.Trainingsplan.GetList(user.Nutzername);
+                List<Ernährungsplan> elist = AllVM.Datenbank.Ernährungsplan.GetList(user.Nutzername);
+
+                foreach (var item in news)
+                {
+                    AllVM.Datenbank.Feed.Delete(item);
+                }
+
+                foreach (var item in tlist)
+                {
+                    item.User = new User() { Nutzername = "fitness_bot" };
+                    item.GeAendertAm = DateTime.Now;
+                    AllVM.Datenbank.Trainingsplan.Edit(item);
+                }
+
+                foreach (var item in elist)
+                {
+                    item.User = new User() { Nutzername = "fitness_bot" };
+                    item.GeAendertAm = DateTime.Now;
+                    AllVM.Datenbank.Ernährungsplan.Edit(item);
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                return false;
+            }
         }
 
         /// <summary>

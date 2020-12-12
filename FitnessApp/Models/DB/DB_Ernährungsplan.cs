@@ -42,7 +42,7 @@ namespace FitnessApp.Models.DB
                     {
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
-                        User = new User() { Nutzername = r.GetString(2)},
+                        User = new User() { Nutzername = r.GetString(2) },
                         ErstelltAm = r.GetDateTime(3),
                         GeAendertAm = r.GetDateTime(4),
                         Kategorie = r.GetString(5),
@@ -88,7 +88,7 @@ namespace FitnessApp.Models.DB
                     {
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
-                        User = new User() { Nutzername = r.GetString(2)},
+                        User = new User() { Nutzername = r.GetString(2) },
                         ErstelltAm = r.GetDateTime(3),
                         GeAendertAm = r.GetDateTime(4),
                         Kategorie = r.GetString(5)
@@ -304,6 +304,7 @@ namespace FitnessApp.Models.DB
                 return null;
             }
         }
+
         public decimal GetAvgBewertung(int ID)
         {
             try

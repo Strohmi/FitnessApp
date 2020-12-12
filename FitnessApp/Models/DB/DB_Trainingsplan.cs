@@ -324,7 +324,7 @@ namespace FitnessApp.Models.DB
                     BewertungTrainingpsplan bewertung = new BewertungTrainingpsplan()
                     {
                         ID = r.GetInt32(0),
-                        Bewerter = new User() { Nutzername = r.GetString(1)},
+                        Bewerter = new User() { Nutzername = r.GetString(1) },
                         Bewertung = r.GetInt32(2)
                     };
                     bewertungsList.Add(bewertung);

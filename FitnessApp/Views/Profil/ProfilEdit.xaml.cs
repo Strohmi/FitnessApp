@@ -29,14 +29,6 @@ namespace FitnessApp
         private void Loaded(object sender, EventArgs e)
         {
             pickPhoto = false;
-
-            //Entfernen nach Auto-Login !
-            if (ProfilVM.User.ProfilBild == null)
-                using (var webClient = new WebClient())
-                {
-                    ProfilVM.User.ProfilBild = webClient.DownloadData("https://cdn.pixabay.com/photo/2016/11/11/09/59/white-male-1816195_1280.jpg");
-                }
-
             BindingContext = ProfilVM;
         }
 
@@ -60,21 +52,11 @@ namespace FitnessApp
 
         private void Save(object sender, EventArgs e)
         {
-            //ProfilVM.User.Nutzername = nutzername.Text;
+            ProfilVM.User.OnlyCustomName = onlyCustomName.IsChecked;
+            ProfilVM.User.CustomName = customName.Text;
             ProfilVM.User.InfoText = infoText.Text;
 
             AllVM.User = AllVM.ConvertFromUser(ProfilVM.User);
-
-            //if (AllVM.Datenbank.User.UploadProfilBild(ProfilVM.User, ProfilVM.User.ProfilBild))
-            //{
-            //    saved = true;
-            //    OnBackButtonPressed();
-            //    DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gespeichert");
-            //}
-            //else
-            //{
-            //    DependencyService.Get<IMessage>().ShortAlert("Fehler beim Speichern");
-            //}
 
             if (AllVM.Datenbank.User.Update(ProfilVM.User))
             {
@@ -83,9 +65,7 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gespeichert");
             }
             else
-            {
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Speichern");
-            }
         }
 
         private async void UploadPhoto(object sender, EventArgs e)
@@ -162,55 +142,23 @@ namespace FitnessApp
             }
         }
 
-        void DeleteUser(System.Object sender, System.EventArgs e)
+        async void DeleteUser(System.Object sender, System.EventArgs e)
         {
-            if (AllVM.Datenbank.User.Delete(AllVM.ConvertToUser()))
+            if (await DisplayAlert("Löschen?", "Möchtest du deinen Account wirklich löschen?\nAlle deine Daten werden nicht mehr zugänglich sein!", "Ja", "Nein"))
             {
-                Application.Current.MainPage = new Login();
-                DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
-            }
-            else
-                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
-        }
-
-        void ChangeStatus(System.Object sender, System.EventArgs e)
-        {
-
-        }
-
-        async void ChangePWD(System.Object sender, System.EventArgs e)
-        {
-            string pwAlt = await DisplayPromptAsync("Aktuelles Passwort", null);
-
-            if (!string.IsNullOrWhiteSpace(pwAlt))
-            {
-                //Passwort hashen MD5 und dann Vergleich mit den aus der Datenbank
-                string hashpw = null;
-
-                if (hashpw == pwAlt)
+                if (AllVM.Datenbank.User.Delete(AllVM.ConvertToUser()))
                 {
-                    string pw1 = await DisplayPromptAsync("Neues Passwort", null);
-
-                    if (!string.IsNullOrWhiteSpace(pw1))
-                    {
-                        string pw2 = await DisplayPromptAsync("Passwort wiederholen", null);
-
-                        if (!string.IsNullOrWhiteSpace(pw2))
-                        {
-                            if (pw1 == pw2)
-                            {
-                                //Passwort hashen MD5
-                                //Passwort in Datenbank UPDATE
-                                //Passwort in AllVM.User
-                            }
-                            else
-                                DependencyService.Get<IMessage>().ShortAlert("Passwörter stimmen nicht überein");
-                        }
-                    }
+                    Application.Current.MainPage = new Login();
+                    DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gelöscht");
                 }
                 else
-                    DependencyService.Get<IMessage>().ShortAlert("Aktuelles Passwort stimmt nicht");
+                    DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
             }
+        }
+
+        void ChangePWD(System.Object sender, System.EventArgs e)
+        {
+            this.Navigation.PushAsync(new ChangePassword(ProfilVM.User));
         }
 
         protected override bool OnBackButtonPressed()

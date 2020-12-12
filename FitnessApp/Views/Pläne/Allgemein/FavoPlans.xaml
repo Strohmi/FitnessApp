@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:FitnessApp.Models.General"
              x:Class="FitnessApp.FavoPlans"
-             Title="{Binding Title}"
-             Appearing="Loaded">
+             Title="{Binding Title}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -35,7 +34,16 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titel}" FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation"/>
                                 <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Start">
-                                    <Label Text="{Binding User.Nutzername}" FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation"/>
+                                    <Label FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="True">
+                                                <Setter Property="Text" Value="{Binding User.CustomName}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="False">
+                                                <Setter Property="Text" Value="{Binding User.Nutzername}"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
                                     <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black"/>
                                 </StackLayout>
                                 <Image Grid.RowSpan="2" Grid.Column="1" Source="Profil_32" HeightRequest="25" WidthRequest="25" ClassId="{Binding User.Nutzername}">

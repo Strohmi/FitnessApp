@@ -27,7 +27,16 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label Text="{Binding Nutzername}" FontSize="Large" TextColor="Black"/>
+                        <Label FontSize="Large" TextColor="Black">
+                            <Label.Triggers>
+                                <DataTrigger TargetType="Label" Binding="{Binding OnlyCustomName}" Value="True">
+                                    <Setter Property="Text" Value="{Binding CustomName}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Label" Binding="{Binding OnlyCustomName}" Value="False">
+                                    <Setter Property="Text" Value="{Binding Nutzername}"/>
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -60,7 +69,16 @@
                                 </Grid>
 
                                 <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="End">
-                                    <Label Text="{Binding User.Nutzername}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End" Margin="0,0,5,0"/>
+                                    <Label FontSize="Medium" TextColor="Black" VerticalTextAlignment="End" Margin="0,0,5,0">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="True">
+                                                <Setter Property="Text" Value="{Binding User.CustomName}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="False">
+                                                <Setter Property="Text" Value="{Binding User.Nutzername}"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
                                     <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End"/>
                                 </StackLayout>
                             </Grid>
@@ -97,7 +115,16 @@
                                 </Grid>
 
                                 <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalOptions="End" VerticalOptions="End">
-                                    <Label Text="{Binding User.Nutzername}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End" Margin="0,0,5,0"/>
+                                    <Label FontSize="Medium" TextColor="Black" VerticalTextAlignment="End" Margin="0,0,5,0">
+                                        <Label.Triggers>
+                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="True">
+                                                <Setter Property="Text" Value="{Binding User.CustomName}"/>
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="False">
+                                                <Setter Property="Text" Value="{Binding User.Nutzername}"/>
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
                                     <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" VerticalTextAlignment="End"/>
                                 </StackLayout>
                             </Grid>

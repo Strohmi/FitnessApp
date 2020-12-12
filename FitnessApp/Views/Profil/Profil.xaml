@@ -133,7 +133,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Text="{Binding User.Nutzername}" FontSize="Large" TextColor="Black" VerticalOptions="Center" HorizontalOptions="StartAndExpand" LineBreakMode="TailTruncation"/>
+            <Label Grid.Column="0" FontSize="Large" TextColor="Black" VerticalOptions="Center" HorizontalOptions="StartAndExpand" LineBreakMode="TailTruncation">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="True">
+                        <Setter Property="Text" Value="{Binding User.CustomName}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="False">
+                        <Setter Property="Text" Value="{Binding User.Nutzername}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
             <Button Grid.Column="1" x:Name="followBtn" Text="{Binding AboBtnText}" HorizontalOptions="End" Padding="10,0" Margin="5" FontSize="Medium" TextColor="White" BackgroundColor="Black" VerticalOptions="Start" Clicked="Follow_UnFollow">
                 <Button.CornerRadius>
                     <OnPlatform x:TypeArguments="x:Int32">

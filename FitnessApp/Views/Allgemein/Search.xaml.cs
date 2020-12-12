@@ -40,11 +40,11 @@ namespace FitnessApp
             if (!string.IsNullOrEmpty(text))
             {
                 if (RBnutzer.IsChecked == true)
-                    SearchVM.UsersResult = SearchVM.Users.Where(s => s.Nutzername.ToLower().Contains(text.ToLower()) && s.Nutzername != AllVM.User.Nutzername).ToList();
+                    SearchVM.UsersResult = SearchVM.Users.Where(s => s.Nutzername.ToLower().Contains(text.ToLower()) || s.CustomName.ToLower().Contains(text.ToLower()) && s.Nutzername != AllVM.User.Nutzername).ToList();
                 else if (RBtrain.IsChecked == true)
-                    SearchVM.TPläneResult = SearchVM.TPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower())).ToList();
+                    SearchVM.TPläneResult = SearchVM.TPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower()) || s.User.CustomName.ToLower().Contains(text.ToLower())).ToList();
                 else if (RBernä.IsChecked == true)
-                    SearchVM.EPläneResult = SearchVM.EPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower())).ToList();
+                    SearchVM.EPläneResult = SearchVM.EPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower()) || s.User.CustomName.ToLower().Contains(text.ToLower())).ToList();
             }
             else
             {

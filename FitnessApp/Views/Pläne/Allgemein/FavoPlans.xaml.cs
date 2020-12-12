@@ -35,11 +35,6 @@ namespace FitnessApp
             FavoPlansVM.AnzeigeListe = FavoPlansVM.ListTrPlan.ToList<object>();
         }
 
-        void Loaded(System.Object sender, System.EventArgs e)
-        {
-
-        }
-
         void Refresh(System.Object sender, System.EventArgs e)
         {
             FavoPlansVM.AnzeigeListe = new List<object>();

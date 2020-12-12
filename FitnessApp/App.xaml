@@ -76,7 +76,6 @@
             </Style>
 
             <Style x:Key="ErstellerStyle" TargetType="Label">
-                <Setter Property="Text" Value="{Binding Ersteller.Nutzername}"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="End"/>
                 <Setter Property="FontSize" Value="Small"/>

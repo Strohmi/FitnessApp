@@ -117,6 +117,22 @@ namespace FitnessApp.Models
                 return -2;
             }
         }
+
+        public static byte ConvertBoolToByte(bool _input)
+        {
+            if (_input)
+                return 1;
+            else
+                return 0;
+        }
+
+        public static bool ConvertByteToBool(byte _input)
+        {
+            if (_input == 1)
+                return true;
+            else
+                return false;
+        }
     }
 
     /// <summary>

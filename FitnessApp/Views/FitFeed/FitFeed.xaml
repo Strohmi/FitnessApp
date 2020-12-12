@@ -44,7 +44,15 @@
                                         <Label Style="{StaticResource Key=LikesTextStyle}"/>
                                     </StackLayout>
                                 </Frame>
-                                <Label Grid.Column="1" Style="{StaticResource Key=ErstellerStyle}">
+                                <Label Grid.Column="1" ClassId="{Binding Ersteller.Nutzername}" Style="{StaticResource Key=ErstellerStyle}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ersteller.OnlyCustomName}" Value="True">
+                                            <Setter Property="Text" Value="{Binding Ersteller.CustomName}"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ersteller.OnlyCustomName}" Value="False">
+                                            <Setter Property="Text" Value="{Binding Ersteller.Nutzername}"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="GoToProfil"/>
                                     </Label.GestureRecognizers>
@@ -76,12 +84,12 @@
                     <Grid>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="1"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="200" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
+                            <Image Grid.Row="0" Aspect="AspectFit" MinimumHeightRequest="200" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
                             <Label Grid.Row="1" Style="{StaticResource Key=BeschreibungStyle}"/>
                             <BoxView Grid.Row="2" BackgroundColor="Black"/>
                             <Grid Grid.Row="3" VerticalOptions="End" Margin="0,2">
@@ -107,7 +115,15 @@
                                         <Label Style="{StaticResource Key=LikesTextStyle}"/>
                                     </StackLayout>
                                 </Frame>
-                                <Label Grid.Column="1" Style="{StaticResource Key=ErstellerStyle}">
+                                <Label Grid.Column="1" ClassId="{Binding Ersteller.Nutzername}" Style="{StaticResource Key=ErstellerStyle}">
+                                    <Label.Triggers>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ersteller.OnlyCustomName}" Value="True">
+                                            <Setter Property="Text" Value="{Binding Ersteller.CustomName}"/>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Label" Binding="{Binding Ersteller.OnlyCustomName}" Value="False">
+                                            <Setter Property="Text" Value="{Binding Ersteller.Nutzername}"/>
+                                        </DataTrigger>
+                                    </Label.Triggers>
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="GoToProfil"/>
                                     </Label.GestureRecognizers>
@@ -145,11 +161,11 @@
 
     <ContentPage.Content>
         <Grid BackgroundColor="White">
-            <ListView x:Name="listview" ItemsSource="{Binding ListNews, Mode=OneWay}"
+            <ListView x:Name="listview" ItemsSource="{Binding ListNews}"
                       ItemTemplate="{StaticResource fitFeedTemplateSelector}" CachingStrategy="RecycleElement"
                       BackgroundColor="Transparent" SeparatorVisibility="None" HasUnevenRows="True"
                       IsPullToRefreshEnabled="True" Refreshing="Refresh" SelectionMode="None"/>
-            <Button x:Name="loadMoreBtn" IsVisible="false" Text="Weitere laden..." BorderColor="DarkOrange" BorderWidth="3" Padding="10,5" Margin="0,0,0,5" BackgroundColor="White" TextColor="Black" FontSize="Large" HorizontalOptions="Center" VerticalOptions="End" Clicked="LoadMore"/>
+            <Button x:Name="loadMoreBtn" IsVisible="false" Text="Weitere laden..." BorderColor="DarkOrange" BorderWidth="3" Padding="10,5" Margin="0,0,0,5" BackgroundColor="White" TextColor="Black" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="End" Clicked="LoadMore"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
