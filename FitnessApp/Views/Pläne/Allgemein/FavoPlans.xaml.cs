@@ -12,6 +12,8 @@ using FitnessApp.ViewModels;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class FavoPlans : ContentPage
     {
         public FavoPlansVM FavoPlansVM { get; set; }
@@ -145,6 +147,19 @@ namespace FitnessApp
             else
             {
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Entfernen");
+            }
+        }
+
+        void GoToPlan(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
+        {
+            var listview = (sender as ListView);
+            var item = listview.SelectedItem;
+            if (item != null)
+            {
+                if (item.GetType() == typeof(Trainingsplan))
+                    this.Navigation.PushAsync(new MahlzeitAnsicht((item as Trainingsplan).ID));
+                else if (item.GetType() == typeof(Ernährungsplan))
+                    this.Navigation.PushAsync(new TrainingsplanAnsicht((item as Ernährungsplan).ID));
             }
         }
     }

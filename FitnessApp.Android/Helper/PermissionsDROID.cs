@@ -12,6 +12,8 @@ using Android.Views;
 
 namespace FitnessApp.Droid.Helper
 {
+    //Autor: NiE
+
     public class HelperDROID
     {
         public void CheckPermissions(MainActivity context)

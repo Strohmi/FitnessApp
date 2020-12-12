@@ -72,7 +72,7 @@
                                 <RowDefinition Height="1"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="200" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
+                            <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="{Binding Foto, Converter={StaticResource ImageHeight}}" WidthRequest="{Binding Foto, Converter={StaticResource ImageWidth}}" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
                             <Label Grid.Row="1" Style="{StaticResource Key=BeschreibungStyle}"/>
                             <BoxView Grid.Row="2" BackgroundColor="Black"/>
                             <Grid Grid.Row="3" VerticalOptions="End" Margin="0,2">
@@ -113,7 +113,9 @@
         </DataTemplate>
         <ResourceDictionary>
 
-            <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage" />
+            <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage"/>
+            <local:ImageHeightConverter x:Key="ImageHeight"/>
+            <local:ImageWidthConverter x:Key="ImageWidth"/>
         </ResourceDictionary>
         <local:FitFeedTemplateSelector x:Key="fitFeedTemplateSelector"
             TextTemplate="{StaticResource Key=textTemplate}"

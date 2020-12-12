@@ -10,6 +10,8 @@ using System.Linq;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class MahlzeitList : ContentPage
     {
         public List<Ernährungsplan> EPlaene { get; set; }
@@ -41,6 +43,14 @@ namespace FitnessApp
                 EPlaene = EPlaene.OrderByDescending(o => o.ErstelltAm).ToList();
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Laden");
+        }
+
+        void GoToPlan(System.Object sender, ItemTappedEventArgs e)
+        {
+            var item = (e.Item as Ernährungsplan);
+
+            if (item != null)
+                this.Navigation.PushAsync(new MahlzeitAnsicht(item.ID));
         }
 
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)

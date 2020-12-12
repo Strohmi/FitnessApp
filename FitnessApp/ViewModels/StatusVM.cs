@@ -2,6 +2,8 @@
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public class StatusVM : NotifyPropertyBase
     {
         private Status _status;

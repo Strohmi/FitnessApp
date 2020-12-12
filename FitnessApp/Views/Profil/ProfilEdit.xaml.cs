@@ -13,6 +13,8 @@ using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class ProfilEdit : ContentPage
     {
         public ProfilEditVM ProfilVM { get; set; }

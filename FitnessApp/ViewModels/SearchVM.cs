@@ -4,6 +4,8 @@ using FitnessApp.Models;
 
 namespace FitnessApp.ViewModels
 {
+    //Autor: NiE
+
     public class SearchVM : NotifyPropertyBase
     {
         private List<User> _users;

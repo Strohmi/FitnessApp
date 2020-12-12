@@ -3,6 +3,8 @@ using FitnessApp.Models;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     /// <summary>
     /// Benutzerklasse
     /// </summary>

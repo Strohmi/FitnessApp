@@ -14,6 +14,8 @@ using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class ChangePassword : ContentPage
     {
         private ChangePWVM cPWVM;

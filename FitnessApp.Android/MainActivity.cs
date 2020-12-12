@@ -14,6 +14,7 @@ using Xamarin.Forms;
 
 [assembly: Dependency(typeof(CloseDROID))]
 [assembly: Dependency(typeof(MessageDROID))]
+[assembly: Dependency(typeof(ImageManagerDROID))]
 namespace FitnessApp.Droid
 {
     [Activity(Label = "FitnessApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
@@ -28,10 +29,9 @@ namespace FitnessApp.Droid
 
             base.OnCreate(savedInstanceState);
 
-            global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
-            global::Xamarin.Forms.Forms.SetFlags("RadioButton_Experimental");
+            Forms.SetFlags("CollectionView_Experimental");
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
 

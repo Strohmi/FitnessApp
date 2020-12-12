@@ -9,6 +9,8 @@ using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class Likes : ContentPage
     {
         public string ID { get; set; }

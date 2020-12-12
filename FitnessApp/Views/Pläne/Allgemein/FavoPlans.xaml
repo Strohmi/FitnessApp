@@ -18,7 +18,7 @@
             <Button Grid.Column="1" x:Name="btnErnae" Text="Ernährung" FontSize="Medium" TextColor="Black" BackgroundColor="White" Clicked="ChangeCategory"/>
         </Grid>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding AnzeigeListe}" HasUnevenRows="True" SeparatorVisibility="None">
+        <ListView Grid.Row="1" BackgroundColor="Red" ItemsSource="{Binding AnzeigeListe}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="GoToPlan">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell BindingContextChanged="OnBindingContextChanged">
@@ -46,11 +46,11 @@
                                     </Label>
                                     <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black"/>
                                 </StackLayout>
-                                <Image Grid.RowSpan="2" Grid.Column="1" Source="Profil_32" HeightRequest="25" WidthRequest="25" ClassId="{Binding User.Nutzername}">
+                                <!--<Image Grid.RowSpan="2" Grid.Column="1" Source="Profil_32" HeightRequest="25" WidthRequest="25" ClassId="{Binding User.Nutzername}">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="GoToProfil"/>
                                     </Image.GestureRecognizers>
-                                </Image>
+                                </Image>-->
                             </Grid>
                         </Frame>
                     </ViewCell>

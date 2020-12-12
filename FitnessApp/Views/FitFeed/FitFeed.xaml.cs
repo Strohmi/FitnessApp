@@ -13,6 +13,8 @@ using System.Collections.ObjectModel;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class FitFeed : ContentPage
     {
         public FitFeedVM FitFeedVM { get; set; }
@@ -88,6 +90,7 @@ namespace FitnessApp
                 CacheList = CacheList.OrderByDescending(o => o.ErstelltAm).ToList();
                 foreach (var item in CacheList)
                     FitFeedVM.ListNews.Add(item);
+                multiplikator++;
             }
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Abruf der Liste");
@@ -176,7 +179,7 @@ namespace FitnessApp
         void LoadMore(object sender, EventArgs e)
         {
             loadMoreBtn.IsVisible = false;
-            vonDatum = DateTime.Now.AddDays(-days * (multiplikator + 1));
+            vonDatum = DateTime.Now.AddDays(-days * (multiplikator + 1)).AddDays(1);
             bisDatum = DateTime.Now.AddDays(-days * multiplikator);
             CacheList = AllVM.Datenbank.Feed.Get(AllVM.ConvertToUser(), vonDatum, bisDatum);
 

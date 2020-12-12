@@ -16,9 +16,9 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <RadioButton Grid.Column="0" x:Name="RBtrain" Text="Trainingspläne" FontSize="Small" VerticalOptions="Center" CheckedChanged="CheckedChanged" HorizontalOptions="Center"/>
-            <RadioButton Grid.Column="1" x:Name="RBnutzer" Text="Nutzer" FontSize="Small" VerticalOptions="Center" IsChecked="True" CheckedChanged="CheckedChanged" HorizontalOptions="Center"/>
-            <RadioButton Grid.Column="2" x:Name="RBernä" Text="Ernährungspläne" FontSize="Small" VerticalOptions="Center" CheckedChanged="CheckedChanged" HorizontalOptions="Center"/>
+            <Button Grid.Column="0" x:Name="BTNtrain" Text="Trainingspläne" TextColor="Black" BackgroundColor="White" FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Clicked="ButtonChanged"/>
+            <Button Grid.Column="1" x:Name="BTNnutzer" Text="Nutzer" TextColor="Black" BackgroundColor="LightGreen" FontSize="Small" VerticalOptions="Center"  HorizontalOptions="Center" Clicked="ButtonChanged"/>
+            <Button Grid.Column="2" x:Name="BTNernä" Text="Ernährungspläne" TextColor="Black" BackgroundColor="White" FontSize="Small" VerticalOptions="Center" HorizontalOptions="Center" Clicked="ButtonChanged"/>
         </Grid>
 
         <SearchBar Grid.Row="1" x:Name="searchBar" Placeholder="Suchen..." TextChanged="TextChanged" FontSize="Medium" Margin="0" Keyboard="Text" BackgroundColor="White" TextColor="Black" IsSpellCheckEnabled="False"/>

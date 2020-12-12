@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public class AddNewVM
     {
         public Dictionary<int, string> Options { get; set; }

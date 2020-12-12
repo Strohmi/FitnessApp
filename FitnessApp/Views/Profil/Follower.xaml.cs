@@ -8,6 +8,8 @@ using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class Follower : ContentPage
     {
         public User user { get; set; }

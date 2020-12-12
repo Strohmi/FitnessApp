@@ -6,7 +6,7 @@
              Appearing="Loaded">
 
     <Grid BackgroundColor="White">
-        <ListView ItemsSource="{Binding EPlaene}" HasUnevenRows="True" Margin="10" BackgroundColor="Transparent" SeparatorVisibility="None">
+        <ListView ItemsSource="{Binding EPlaene}" HasUnevenRows="True" Margin="10" BackgroundColor="Transparent" SeparatorVisibility="None" ItemTapped="GoToPlan">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell BindingContextChanged="OnBindingContextChanged">

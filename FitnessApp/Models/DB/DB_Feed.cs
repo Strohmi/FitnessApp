@@ -5,6 +5,8 @@ using FitnessApp.Models.General;
 
 namespace FitnessApp.Models
 {
+    //Autor: NiE
+
     public class DB_Feed
     {
         /// <summary>

@@ -5,6 +5,8 @@ using FitnessApp.Models.General;
 
 namespace FitnessApp.iOS.Helper
 {
+    //Autor: NiE
+
     public class MessageIOS : IMessage
     {
         const double SHORT_DELAY = 1.5;

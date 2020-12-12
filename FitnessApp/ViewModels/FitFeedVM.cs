@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public class FitFeedVM : NotifyPropertyBase
     {
         private ObservableCollection<News> _listNews;

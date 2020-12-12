@@ -5,6 +5,8 @@ using Xamarin.Forms;
 
 namespace FitnessApp.ViewModels
 {
+    //Autor: NiE
+
     public class FavoPlansVM : NotifyPropertyBase
     {
         private List<object> _anzeigeListe;

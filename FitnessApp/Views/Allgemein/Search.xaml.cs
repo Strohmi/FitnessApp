@@ -10,6 +10,8 @@ using FitnessApp.Models;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class Search : ContentPage
     {
         public SearchVM SearchVM { get; set; }
@@ -39,11 +41,11 @@ namespace FitnessApp
         {
             if (!string.IsNullOrEmpty(text))
             {
-                if (RBnutzer.IsChecked == true)
-                    SearchVM.UsersResult = SearchVM.Users.Where(s => s.Nutzername.ToLower().Contains(text.ToLower()) || s.CustomName.ToLower().Contains(text.ToLower()) && s.Nutzername != AllVM.User.Nutzername).ToList();
-                else if (RBtrain.IsChecked == true)
+                if (BTNnutzer.BackgroundColor == Color.LightGreen)
+                    SearchVM.UsersResult = SearchVM.Users.Where(s => s.Nutzername.ToLower().Contains(text.ToLower()) | s.CustomName.ToLower().Contains(text.ToLower()) && s.Nutzername != AllVM.User.Nutzername).ToList();
+                else if (BTNtrain.BackgroundColor == Color.LightGreen)
                     SearchVM.TPläneResult = SearchVM.TPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower()) || s.User.CustomName.ToLower().Contains(text.ToLower())).ToList();
-                else if (RBernä.IsChecked == true)
+                else if (BTNernä.BackgroundColor == Color.LightGreen)
                     SearchVM.EPläneResult = SearchVM.EPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower()) || s.User.CustomName.ToLower().Contains(text.ToLower())).ToList();
             }
             else
@@ -59,42 +61,51 @@ namespace FitnessApp
             ListView list = (sender as ListView);
 
             if (list == listUser)
-            {
                 this.Navigation.PushAsync(new Profil((e.Item as User).Nutzername));
-            }
             else if (list == listTrain)
-            {
-                DependencyService.Get<IMessage>().ShortAlert("Hier sehen Sie einen Trainingsplan");
-            }
+                this.Navigation.PushAsync(new TrainingsplanAnsicht((e.Item as Trainingsplan).ID));
             else if (list == listErnäh)
-            {
-                DependencyService.Get<IMessage>().ShortAlert("Hier sehen Sie einen Ernärhungsplan");
-            }
+                this.Navigation.PushAsync(new MahlzeitAnsicht((e.Item as Ernährungsplan).ID));
         }
 
-        void CheckedChanged(System.Object sender, Xamarin.Forms.CheckedChangedEventArgs e)
+        void ButtonChanged(System.Object sender, EventArgs e)
         {
-            RadioButton radio = (sender as RadioButton);
+            Button button = (sender as Button);
 
-            if (radio == RBnutzer)
+            if (button == BTNnutzer)
             {
                 listUser.IsVisible = true;
                 listTrain.IsVisible = false;
                 listErnäh.IsVisible = false;
+
+                BTNnutzer.BackgroundColor = Color.LightGreen;
+                BTNtrain.BackgroundColor = Color.White;
+                BTNernä.BackgroundColor = Color.White;
+
                 Suchen(searchBar.Text);
             }
-            else if (radio == RBtrain)
+            else if (button == BTNtrain)
             {
                 listUser.IsVisible = false;
                 listTrain.IsVisible = true;
                 listErnäh.IsVisible = false;
+
+                BTNnutzer.BackgroundColor = Color.White;
+                BTNtrain.BackgroundColor = Color.LightGreen;
+                BTNernä.BackgroundColor = Color.White;
+
                 Suchen(searchBar.Text);
             }
-            else if (radio == RBernä)
+            else if (button == BTNernä)
             {
                 listUser.IsVisible = false;
                 listTrain.IsVisible = false;
                 listErnäh.IsVisible = true;
+
+                BTNnutzer.BackgroundColor = Color.White;
+                BTNtrain.BackgroundColor = Color.White;
+                BTNernä.BackgroundColor = Color.LightGreen;
+
                 Suchen(searchBar.Text);
             }
         }

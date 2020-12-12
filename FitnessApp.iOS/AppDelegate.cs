@@ -9,6 +9,7 @@ using Xamarin.Forms;
 
 [assembly: Dependency(typeof(MessageIOS))]
 [assembly: Dependency(typeof(CloseIOS))]
+[assembly: Dependency(typeof(ImageManagerIOS))]
 namespace FitnessApp.iOS
 {
     // The UIApplicationDelegate for the application. This class is responsible for launching the 
@@ -27,7 +28,6 @@ namespace FitnessApp.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
-            global::Xamarin.Forms.Forms.SetFlags("RadioButton_Experimental");
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
 

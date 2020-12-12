@@ -79,6 +79,7 @@
     <Compile Include="Helper\PermissionsDROID.cs" />
     <Compile Include="Helper\CloseDROID.cs" />
     <Compile Include="Helper\MessageDROID.cs" />
+    <Compile Include="Helper\ImageManagerDROID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

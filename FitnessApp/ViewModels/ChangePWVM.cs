@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public class ChangePWVM : NotifyPropertyBase
     {
         private string _curPW;

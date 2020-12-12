@@ -11,6 +11,8 @@ using System.IO;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class StatusNew : ContentPage
     {
         public StatusVM StatusVM { get; set; }

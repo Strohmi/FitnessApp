@@ -7,6 +7,8 @@ using Xamarin.Forms;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public class ProfilShowVM : NotifyPropertyBase
     {
         private User _user;

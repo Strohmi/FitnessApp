@@ -10,6 +10,8 @@ using System.Linq;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class TrainingList : ContentPage
     {
         public List<Trainingsplan> TPlaene { get; set; }
@@ -46,6 +48,14 @@ namespace FitnessApp
             listView.ItemsSource = TPlaene;
         }
 
+        void GoToPlan(System.Object sender, ItemTappedEventArgs e)
+        {
+            var item = (e.Item as Trainingsplan);
+
+            if (item != null)
+                this.Navigation.PushAsync(new TrainingsplanAnsicht(item.ID));
+        }
+
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)
         {
             MenuItem menuItem = new MenuItem();
@@ -63,7 +73,6 @@ namespace FitnessApp
                 int count_bew = 5;
                 Grid bewGrid = ((theViewCell.View as Frame).Content as Grid).FindByName<Grid>("bewGrid");
                 double bewertung = -1;
-                item.DurchBewertung = (decimal)3.47;
                 if (item.DurchBewertung != -1 && item.DurchBewertung != -2)
                 {
                     bewertung = Math.Round((double)item.DurchBewertung * 2, MidpointRounding.AwayFromZero) / 2;

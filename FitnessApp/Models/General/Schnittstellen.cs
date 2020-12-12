@@ -1,7 +1,10 @@
 ﻿using System;
+using Xamarin.Forms;
 
 namespace FitnessApp.Models.General
 {
+    //Autor: NiE
+
     public interface IMessage
     {
         void ShortAlert(string message);
@@ -11,5 +14,10 @@ namespace FitnessApp.Models.General
     public interface ICloseApp
     {
         void Close();
+    }
+
+    public interface IImageManager
+    {
+        Size GetDimensionsFrom(byte[] bytes);
     }
 }

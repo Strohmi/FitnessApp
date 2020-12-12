@@ -1,6 +1,8 @@
 ﻿using System;
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public class News : NotifyPropertyBase
     {
         private int _id;

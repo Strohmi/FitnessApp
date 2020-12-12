@@ -8,6 +8,8 @@ using Xamarin.Forms;
 
 namespace FitnessApp.Models.General
 {
+    //Autor: NiE
+
     public class AllVM
     {
         public static User2 User { get; set; } = new User2();

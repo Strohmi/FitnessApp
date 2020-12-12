@@ -10,6 +10,8 @@ using Plugin.Permissions.Abstractions;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class App : Application
     {
 

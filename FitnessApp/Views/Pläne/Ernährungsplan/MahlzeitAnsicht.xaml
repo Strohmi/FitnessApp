@@ -2,26 +2,16 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FitnessApp.MahlzeitAnsicht"
-             Title="{Binding Title}"
-             Appearing="Loaded">
+             Title="{Binding Title}">
 
     <ContentPage.Resources>
-        <Style TargetType="Entry" x:Key="EntryStyle">
-            <Setter Property="FontSize" Value="Medium"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="TextColor" Value="Black"/>
-            <Setter Property="PlaceholderColor" Value="Gray"/>
-        </Style>
-        <Style TargetType="Picker" x:Key="PickerStyle">
-            <Setter Property="FontSize" Value="Medium"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="TextColor" Value="Black"/>
-            <Setter Property="TitleColor" Value="Gray"/>
-        </Style>
         <Style TargetType="Label" x:Key="HeadingStyle">
             <Setter Property="FontSize" Value="Medium"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
             <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="Black"/>
+        </Style>
+        <Style TargetType="Label" x:Key="FooterStyle">
+            <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="TextColor" Value="Black"/>
         </Style>
     </ContentPage.Resources>
@@ -29,18 +19,19 @@
     <Grid BackgroundColor="LightBlue">
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Column="0" Margin="10,10,10,0" BackgroundColor="White">
+        <Grid Grid.Row="0" Padding="10" Margin="10,10,10,0" BackgroundColor="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label  Grid.Column="0" Margin="10,0,0,0" Style="{StaticResource Key=EntryStyle}" Text="{Binding MealName}" HorizontalTextAlignment="Start"/>
-            <Label Grid.Column="1" Margin="0,0,10,0" Style="{StaticResource Key=PickerStyle}" Text="{Binding Mealkategorie}"/>
+            <Label Grid.Column="0" Style="{StaticResource Key=HeadingStyle}" Text="{Binding EPlan.Titel}" HorizontalTextAlignment="Start" VerticalOptions="Center" FontSize="Title" LineBreakMode="TailTruncation"/>
+            <Label Grid.Column="1" Style="{StaticResource Key=HeadingStyle}" Text="{Binding EPlan.Kategorie}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Large"/>
         </Grid>
 
         <Grid Grid.Row="1" Margin="10,0,10,0" BackgroundColor="White">
@@ -81,6 +72,39 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+        </Grid>
+
+        <Grid Grid.Row="2" Padding="10" Margin="10,10,10,0" BackgroundColor="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Style="{StaticResource Key=FooterStyle}" HorizontalTextAlignment="Start" VerticalOptions="Center" FontSize="Medium" LineBreakMode="TailTruncation">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer ClassId="{Binding EPlan.User.Nutzername}" Tapped="GoToProfil"/>
+                </Label.GestureRecognizers>
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding EPlan.User.OnlyCustomName}" Value="True">
+                        <Setter Property="Text" Value="{Binding EPlan.User.CustomName}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding EPlan.User.OnlyCustomName}" Value="False">
+                        <Setter Property="Text" Value="{Binding EPlan.User.Nutzername}"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <Grid Grid.Column="1" x:Name="bewGrid" VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+            </Grid>
+
+            <Label Grid.Column="2" Style="{StaticResource Key=FooterStyle}" Text="{Binding EPlan.ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Medium"/>
         </Grid>
     </Grid>
 </ContentPage>

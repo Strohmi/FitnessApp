@@ -9,6 +9,8 @@ using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
+    //Autor: NiE
+
     public partial class AddNew : ContentPage
     {
         public AddNewVM AddNewVM { get; set; }

@@ -6,6 +6,8 @@ using FitnessApp.ViewModels;
 
 namespace FitnessApp.Models
 {
+    //Autor: NiE
+
     public class DB_User
     {
         /// <summary>
@@ -19,8 +21,10 @@ namespace FitnessApp.Models
                 List<User> list = new List<User>();
                 StaticDB.Connect();
 
-                string com = "SELECT Nutzername " +
-                             "FROM User_Base";
+                string com = "SELECT base.Nutzername, info.CustomName " +
+                             "FROM User_Base AS base " +
+                             "INNER JOIN User_Info AS info " +
+                             "ON info.Nutzername =  base.Nutzername;";
                 SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
@@ -29,7 +33,8 @@ namespace FitnessApp.Models
                 {
                     User user = new User()
                     {
-                        Nutzername = r.GetString(0)
+                        Nutzername = r.GetString(0),
+                        CustomName = r.GetString(1)
                     };
                     list.Add(user);
                 }
