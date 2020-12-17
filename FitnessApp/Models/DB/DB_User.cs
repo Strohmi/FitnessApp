@@ -404,6 +404,41 @@ namespace FitnessApp.Models
             }
         }
 
+        internal List<User> GetSubs(string nutzername)
+        {
+            try
+            {
+                List<User> list = new List<User>();
+                StaticDB.Connect();
+
+                string com = "SELECT User_ID " +
+                             "FROM User_Follows " +
+                             $"WHERE Follow_ID = '{nutzername}';";
+                SqlCommand command = new SqlCommand(com, StaticDB.Connection);
+                StaticDB.Connection.Open();
+                var r = command.ExecuteReader();
+
+                int counter = 1;
+                while (r.Read())
+                {
+                    User user = new User() { Nutzername = r.GetString(0) };
+                    list.Add(user);
+                    counter += 1;
+                }
+
+                StaticDB.Connection.Close();
+                return list;
+            }
+            catch (Exception ex)
+            {
+                _ = ex.Message;
+                if (StaticDB.Connection != null)
+                    if (StaticDB.Connection.State != System.Data.ConnectionState.Closed)
+                        StaticDB.Connection.Close();
+                return null;
+            }
+        }
+
         /// <summary>
         /// Benutzer verfolgen
         /// </summary>

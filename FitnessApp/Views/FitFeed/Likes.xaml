@@ -4,7 +4,7 @@
              x:Class="FitnessApp.Likes"
              Title="{Binding Title}">
     <Grid>
-        <ListView ItemsSource="{Binding ListLikes}" HasUnevenRows="True" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never">
+        <ListView x:Name="listView" ItemsSource="{Binding ListLikes}" HasUnevenRows="True" SeparatorVisibility="None" Margin="10" BackgroundColor="White" VerticalScrollBarVisibility="Default" HorizontalScrollBarVisibility="Never" ItemSelected="GoToProfil">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -18,9 +18,33 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Label Grid.Column="0" Text="{Binding Index, StringFormat='{0}.'}" FontSize="Large" TextColor="Black"/>
-                            <Label Grid.Column="1" Text="{Binding User.Nutzername}" FontSize="Large" TextColor="Black" LineBreakMode="TailTruncation"/>
+                            <Image Grid.Column="0" Aspect="AspectFit" HeightRequest="50" WidthRequest="50" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}}" VerticalOptions="Center"/>
+                            <Label Grid.Column="1" FontSize="Large" TextColor="Black" LineBreakMode="TailTruncation" VerticalOptions="Center">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="True">
+                                        <Setter Property="Text" Value="{Binding User.CustomName}"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="False">
+                                        <Setter Property="Text" Value="{Binding User.Nutzername}"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                            <Button Grid.Column="2" ClassId="{Binding User.Nutzername}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Small" CornerRadius="15" BorderColor="Black" BorderWidth="1" Padding="10,5" Clicked="FollowOrUnFollow">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSub}" Value="True">
+                                        <Setter Property="Text" Value="Entfolgen"/>
+                                        <Setter Property="BackgroundColor" Value="#b81a19"/>
+                                        <Setter Property="TextColor" Value="White"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsSub}" Value="False">
+                                        <Setter Property="Text" Value="Folgen"/>
+                                        <Setter Property="BackgroundColor" Value="LightGreen"/>
+                                        <Setter Property="TextColor" Value="Black"/>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>

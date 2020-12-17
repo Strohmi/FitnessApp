@@ -37,10 +37,8 @@ namespace FitnessApp
         private void Start()
         {
             NavigationPage.SetIconColor(this, Color.White);
-            vonDatum = DateTime.Now.AddDays(-days * multiplikator);
-            GetList();
 
-            if (FitFeedVM.ListNews.Count == 0)
+            if (AllVM.Datenbank.User.GetSubs(AllVM.User.Nutzername).Count == 0)
             {
                 FitFeedVM.ListNews.Add(new News()
                 {
@@ -55,6 +53,17 @@ namespace FitnessApp
                     Ersteller = new User() { Nutzername = "fitness_bot" },
                     ErstelltAm = DateTime.Now
                 });
+            }
+            else
+            {
+                vonDatum = DateTime.Now.AddDays(-days * multiplikator);
+                GetList();
+
+                while (FitFeedVM.ListNews != null & FitFeedVM.ListNews.Count == 0)
+                {
+                    vonDatum = DateTime.Now.AddDays(-days * multiplikator);
+                    GetList();
+                }
             }
         }
 

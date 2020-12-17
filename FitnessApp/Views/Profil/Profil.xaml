@@ -111,12 +111,6 @@
                 </Frame>
             </ViewCell>
         </DataTemplate>
-        <ResourceDictionary>
-
-            <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage"/>
-            <local:ImageHeightConverter x:Key="ImageHeight"/>
-            <local:ImageWidthConverter x:Key="ImageWidth"/>
-        </ResourceDictionary>
         <local:FitFeedTemplateSelector x:Key="fitFeedTemplateSelector"
             TextTemplate="{StaticResource Key=textTemplate}"
             FotoTemplate="{StaticResource Key=fotoTemplate}" />

@@ -371,29 +371,34 @@ namespace FitnessApp.Models
         {
             try
             {
+                List<User> subs = AllVM.Datenbank.User.GetSubs(AllVM.User.Nutzername);
                 List<Like> list = new List<Like>();
                 StaticDB.Connect();
 
-                string com = "SELECT [User]" +
+                string com = "SELECT [User] " +
                              "FROM Feed_Likes " +
                             $"WHERE Feed_ID = '{id}'";
                 SqlCommand command = new SqlCommand(com, StaticDB.Connection);
                 StaticDB.Connection.Open();
                 var r = command.ExecuteReader();
 
-                int counter = 1;
                 while (r.Read())
                 {
                     Like like = new Like()
                     {
-                        Index = counter,
                         User = new User() { Nutzername = r.GetString(0) }
                     };
                     list.Add(like);
-                    counter += 1;
                 }
 
                 StaticDB.Connection.Close();
+
+                foreach (var item in list)
+                {
+                    item.User = AllVM.Datenbank.User.GetByName(item.User.Nutzername);
+                    item.IsSub = subs.Exists(s => s.Nutzername == item.User.Nutzername);
+                }
+
                 return list;
             }
             catch (Exception ex)

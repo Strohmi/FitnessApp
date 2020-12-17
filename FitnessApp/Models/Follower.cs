@@ -12,7 +12,7 @@ namespace FitnessApp.Models
 
     public class Like
     {
-        public int Index { get; set; }
         public User User { get; set; }
+        public bool IsSub { get; set; }
     }
 }

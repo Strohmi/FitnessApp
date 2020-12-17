@@ -18,7 +18,7 @@
             <Button Grid.Column="1" x:Name="btnErnae" Text="Ernährung" FontSize="Medium" TextColor="Black" BackgroundColor="White" Clicked="ChangeCategory"/>
         </Grid>
 
-        <ListView Grid.Row="1" BackgroundColor="Red" ItemsSource="{Binding AnzeigeListe}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="GoToPlan">
+        <ListView Grid.Row="1" BackgroundColor="White" ItemsSource="{Binding AnzeigeListe}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="GoToPlan">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell BindingContextChanged="OnBindingContextChanged">

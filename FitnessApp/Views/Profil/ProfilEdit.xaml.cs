@@ -58,10 +58,9 @@ namespace FitnessApp
             ProfilVM.User.CustomName = customName.Text;
             ProfilVM.User.InfoText = infoText.Text;
 
-            AllVM.User = AllVM.ConvertFromUser(ProfilVM.User);
-
             if (AllVM.Datenbank.User.Update(ProfilVM.User))
             {
+                AllVM.User = AllVM.ConvertFromUser(ProfilVM.User);
                 saved = true;
                 OnBackButtonPressed();
                 DependencyService.Get<IMessage>().ShortAlert("Erfolgreich gespeichert");

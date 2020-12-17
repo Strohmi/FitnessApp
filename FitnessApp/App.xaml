@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:FitnessApp.Models.General"
              x:Class="FitnessApp.App">
     <Application.Resources>
         <ResourceDictionary>
@@ -32,6 +32,10 @@
             </Style>
 
             <!--CUSTOM-->
+            <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage"/>
+            <local:ImageHeightConverter x:Key="ImageHeight"/>
+            <local:ImageWidthConverter x:Key="ImageWidth"/>
+
             <Style x:Key="ShellFrameStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="BackgroundColor" Value="White"/>
