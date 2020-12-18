@@ -44,10 +44,11 @@ namespace FitnessApp.Models.DB
                         Titel = r.GetString(1),
                         User = new User() { Nutzername = r.GetString(2) },
                         ErstelltAm = r.GetDateTime(3),
-                        GeAendertAm = r.GetDateTime(4),
                         Kategorie = r.GetString(5),
                     };
                     ernährungsplaene.Add(ernährungsplan);
+                    if (!r.IsDBNull(4))
+                        ernährungsplan.GeAendertAm = r.GetDateTime(4);
                 }
                 StaticDB.Connection.Close();
                 foreach (var item in ernährungsplaene)
@@ -93,6 +94,9 @@ namespace FitnessApp.Models.DB
                         GeAendertAm = r.GetDateTime(4),
                         Kategorie = r.GetString(5)
                     };
+
+                    if (!r.IsDBNull(4))
+                        ePlan.GeAendertAm = r.GetDateTime(4);
                 }
                 StaticDB.Connection.Close();
 
@@ -135,7 +139,7 @@ namespace FitnessApp.Models.DB
                     {
                         ID = r.GetInt32(0),
                         Nahrungsmittel = r.GetString(1),
-                        Menge = r.GetDecimal(2),
+                        Menge = r.GetInt32(2),
                         Einheit = r.GetString(3)
                     };
                     mahlzeitenList.Add(mahlzeit);
@@ -158,17 +162,18 @@ namespace FitnessApp.Models.DB
         {
             try
             {
+                StaticDB.Connect();
                 StaticDB.Connection.Open();
                 string com = $"INSERT INTO EP_Base (Titel) VALUES ('{ernährungsplan.Titel}'); SELECT CAST(SCOPE_IDENTITY() AS INT)";
                 SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 int ID = (int)sqlCommand.ExecuteScalar();
-
-                com = $"INSERT INTO EP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm) VALUES ({ID}, '{ernährungsplan.ErstelltAm}', '{ernährungsplan.User.Nutzername}', '{ernährungsplan.GeAendertAm}');";
+                StaticDB.Connection.Close();
+                com = $"INSERT INTO EP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm, Kategorie) VALUES ({ID}, '{ernährungsplan.ErstelltAm}', '{ernährungsplan.User.Nutzername}', '{ernährungsplan.GeAendertAm}', '{ernährungsplan.Kategorie}');";
                 StaticDB.RunSQL(com);
 
                 foreach (var mahlzeit in ernährungsplan.MahlzeitenList)
                 {
-                    string checkEx = $"SELECT * FROM EP_Mahlzeiten WHERE Nahrungsmittel='{mahlzeit.Nahrungsmittel}' AND Menge={mahlzeit.Menge.ToString().Replace(",", ".")} AND Einheit={mahlzeit.Einheit}";
+                    string checkEx = $"SELECT * FROM EP_Mahlzeiten WHERE Nahrungsmittel='{mahlzeit.Nahrungsmittel}' AND Menge={mahlzeit.Menge.ToString().Replace(",", ".")} AND Einheit='{mahlzeit.Einheit}'";
                     if (StaticDB.CheckExistenz(checkEx) == true)
                     {
                         int mahlID = StaticDB.GetID(checkEx);
@@ -177,11 +182,12 @@ namespace FitnessApp.Models.DB
                     }
                     else
                     {
-                        com = $"INSERT INTO EP_Mahlzeiten (Nahrungsmittel, Menge, Einheit) VALUES ('{mahlzeit.Nahrungsmittel}', {mahlzeit.Menge.ToString().Replace(",", ".")}, {mahlzeit.Einheit}); " +
+                        com = $"INSERT INTO EP_Mahlzeiten (Nahrungsmittel, Menge, Einheit) VALUES ('{mahlzeit.Nahrungsmittel}', {mahlzeit.Menge.ToString().Replace(",", ".")}, '{mahlzeit.Einheit}'); " +
                                "SELECT CAST(SCOPE_IDENTITY() AS INT)";
                         SqlCommand insertMahl = new SqlCommand(com, StaticDB.Connection);
                         StaticDB.Connection.Open();
                         int lastMahlID = (int)insertMahl.ExecuteScalar();
+                        StaticDB.Connection.Close();
                         string comTpLink = $"INSERT INTO EP_Link_BaseMahlzeiten (ID_Base, ID_Mahlzeit) VALUES({ID}, {lastMahlID})";
                         StaticDB.RunSQL(comTpLink);
                     }
@@ -225,8 +231,11 @@ namespace FitnessApp.Models.DB
         {
             try
             {
+                StaticDB.Connect();
                 string editEP_Base = $"UPDATE EP_Base SET Titel='{ernährungsplan.Titel}' WHERE ID={ernährungsplan.ID}";
                 StaticDB.RunSQL(editEP_Base);
+                string delLink = $"DELETE FROM EP_Link_BaseMahlzeiten WHERE ID_Base={ernährungsplan.ID}";
+                StaticDB.RunSQL(delLink);
                 foreach (var item in ernährungsplan.MahlzeitenList)
                 {
                     string com = $"SELECT * FROM EP_Mahlzeiten WHERE Nahrungsmittel='{item.Nahrungsmittel}' AND Menge='{item.Menge.ToString().Replace(",", ".")}' AND Einheit='{item.Einheit}'";
@@ -235,28 +244,26 @@ namespace FitnessApp.Models.DB
                         SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                         StaticDB.Connection.Open();
                         int ID = (int)sqlCommand.ExecuteScalar();
-                        if (StaticDB.CheckExistenz($"SELECT * FROM EP_Link_BaseMahlzeiten WHERE ID_Base={ernährungsplan.ID} AND ID_Mahlzeit={ID}") == true)
-                        {
-                            continue;
-                        }
-                        else
-                        {
-                            com = $"INSERT INTO EP_Link_BaseMahlzeiten (ID_Base, ID_Mahlzeit) VALUES('{ernährungsplan.ID}', '{ID}')";
-                            StaticDB.RunSQL(com);
-                        }
+                        StaticDB.Connection.Close();
+
+                        com = $"INSERT INTO EP_Link_BaseMahlzeiten (ID_Base, ID_Mahlzeit) VALUES('{ernährungsplan.ID}', '{ID}')";
+                        StaticDB.RunSQL(com);
                     }
                     else
                     {
-                        com = $"INSERT INTO EP_Mahlzeiten (Nahrungsmittel, Menge, Einheit) VALUES ('{item.Nahrungsmittel}', '{item.Menge.ToString().Replace(",", ".")}', '{item.Einheit}')";
-                        SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+                        com = $"INSERT INTO EP_Mahlzeiten (Nahrungsmittel, Menge, Einheit) VALUES ('{item.Nahrungsmittel}', '{item.Menge.ToString().Replace(",", ".")}', '{item.Einheit}');" +
+                              $"SELECT CAST(SCOPE_IDENTITY() AS INT)";
                         StaticDB.Connection.Open();
+                        SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                         int ID = (int)sqlCommand.ExecuteScalar();
-                        com = $"INSERT INTO TP_Link_BaseMahlzeiten (ID_Base, ID_Mahlzeit) VALUES('{ernährungsplan.ID}', '{ID}')";
+                        StaticDB.Connection.Close();
+                        com = $"INSERT INTO EP_Link_BaseMahlzeiten (ID_Base, ID_Mahlzeit) VALUES('{ernährungsplan.ID}', '{ID}')";
                         StaticDB.RunSQL(com);
                     }
                 }
                 string editEP_Info = $"UPDATE EP_Info SET GeaendertAm='{DateTime.Now}' WHERE ID={ernährungsplan.ID}";
                 StaticDB.RunSQL(editEP_Info);
+
                 return true;
             }
             catch (Exception ex)
@@ -272,6 +279,7 @@ namespace FitnessApp.Models.DB
         {
             try
             {
+                StaticDB.Connect();
                 List<BewertungErnährungsplan> bewertungsList = new List<BewertungErnährungsplan>();
                 string com = "SELECT bew.ID, bew.[User], Bewertung " +
                              "FROM EP_Base as base " +
@@ -280,18 +288,25 @@ namespace FitnessApp.Models.DB
                              "INNER JOIN EP_Bewertung as bew " +
                              "ON bew.ID = link.ID_EP_Bewertung " +
                             $"WHERE base.ID = {ID}";
-                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+
                 StaticDB.Connection.Open();
+                SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
+
                 var r = sqlCommand.ExecuteReader();
                 while (r.Read())
                 {
                     BewertungErnährungsplan bewertung = new BewertungErnährungsplan()
                     {
                         ID = r.GetInt32(0),
-                        Bewerter = AllVM.Datenbank.User.GetByName(r.GetString(1)),
-                        Bewertung = r.GetString(2)
+                        Bewerter = new User() { Nutzername = r.GetString(1) },
+                        Bewertung = r.GetInt32(2)
                     };
                     bewertungsList.Add(bewertung);
+                }
+                StaticDB.Connection.Close();
+                foreach (var item in bewertungsList)
+                {
+                    item.Bewerter = AllVM.Datenbank.User.GetByName(item.Bewerter.Nutzername);
                 }
                 return bewertungsList;
             }
@@ -318,9 +333,13 @@ namespace FitnessApp.Models.DB
                                    $"WHERE base.ID = {ID}";
                 SqlCommand command = new SqlCommand(durcchBew, StaticDB.Connection);
                 StaticDB.Connection.Open();
-                decimal durchschnitt = (decimal)command.ExecuteScalar();
+                var x = command.ExecuteScalar();
                 StaticDB.Connection.Close();
-                return durchschnitt;
+
+                if (x != null && x.GetType() != typeof(System.DBNull))
+                    return decimal.Parse(x.ToString());
+                else
+                    return -1;
             }
             catch (Exception ex)
             {
@@ -358,11 +377,11 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Open();
                 SqlCommand command = new SqlCommand(insertBew, StaticDB.Connection);
                 int lastID = (int)command.ExecuteScalar();
+                StaticDB.Connection.Close();
                 string insertLink = $"INSERT INTO EP_Link_BaseBewertung (ID_EP_Base, ID_EP_Bewertung) VALUES ({ernährungsplan.ID}, {lastID})";
                 StaticDB.RunSQL(insertLink);
 
                 ernährungsplan.Bewertungen.Add(bewertung);
-                StaticDB.Connection.Close();
                 return true;
             }
             catch (Exception ex)
