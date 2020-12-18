@@ -81,5 +81,10 @@ namespace FitnessApp
         {
             this.Navigation.PushAsync(new Profil((sender as Label).ClassId));
         }
+
+        void GoToBewertung(System.Object sender, System.EventArgs e)
+        {
+
+        }
     }
 }

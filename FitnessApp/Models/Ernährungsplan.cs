@@ -45,7 +45,7 @@ namespace FitnessApp.Models
     public class BewertungErnährungsplan
     {
         public int ID { get; set; }
-        public string Bewertung { get; set; }
+        public int Bewertung { get; set; }
         public User Bewerter { get; set; }
     }
 }
