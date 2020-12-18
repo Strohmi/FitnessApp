@@ -101,7 +101,10 @@
                 </Label.Triggers>
             </Label>
 
-            <Grid Grid.Column="1" x:Name="bewGrid" VerticalOptions="Center" HorizontalOptions="Center">
+            <Grid Grid.Column="1" ClassId="{Binding TPlan.ID}" x:Name="bewGrid" VerticalOptions="Center" HorizontalOptions="Center">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GoToBewertung"/>
+                </Grid.GestureRecognizers>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="auto"/>

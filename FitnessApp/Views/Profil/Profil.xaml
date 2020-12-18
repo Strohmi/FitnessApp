@@ -143,7 +143,7 @@
                 <Button.CornerRadius>
                     <OnPlatform x:TypeArguments="x:Int32">
                         <On Platform="iOS" Value="15"/>
-                        <On Platform="Android" Value="30"/>
+                        <On Platform="Android" Value="20"/>
                     </OnPlatform>
                 </Button.CornerRadius>
             </Button>
@@ -213,8 +213,7 @@
                         </Frame>
 
                         <ImageButton x:Name="directChat" Grid.Row="0" Grid.Column="1" Source="Inbox" HeightRequest="35" WidthRequest="35" Margin="10,0" HorizontalOptions="End" Clicked="DirectChat"/>
-
-                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding User.InfoText}" FontSize="Medium" TextColor="Black" LineBreakMode="WordWrap" Margin="0,0"/>
+                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding User.InfoText}" FontSize="Large" TextColor="Black" LineBreakMode="WordWrap" Margin="0,0"/>
                     </Grid>
                 </StackLayout>
             </Frame>
