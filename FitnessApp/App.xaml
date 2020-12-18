@@ -75,14 +75,14 @@
             <Style x:Key="LikesTextStyle" TargetType="Label">
                 <Setter Property="Text" Value="{Binding Likes, StringFormat='{}{0:#,##0}'}"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontSize" Value="Large"/>
                 <Setter Property="TextColor" Value="Black"/>
             </Style>
 
             <Style x:Key="ErstellerStyle" TargetType="Label">
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="End"/>
-                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontSize" Value="Large"/>
                 <Setter Property="TextColor" Value="DarkOrange"/>
                 <Setter Property="FontAttributes" Value="Bold"/>
                 <Setter Property="LineBreakMode" Value="TailTruncation"/>
@@ -92,7 +92,7 @@
                 <Setter Property="Text" Value="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
                 <Setter Property="HorizontalOptions" Value="End"/>
-                <Setter Property="FontSize" Value="Small"/>
+                <Setter Property="FontSize" Value="Large"/>
                 <Setter Property="TextColor" Value="Black"/>
             </Style>
 
