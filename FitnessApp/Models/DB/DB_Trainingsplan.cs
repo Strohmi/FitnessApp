@@ -245,12 +245,12 @@ namespace FitnessApp.Models.DB
         /// <param name="bewertung">Hinzuzufügende Bewertung (Typ BewertungTrainingsplan)</param>
         /// <param name="trainingsplan">Zur Bewertung zugehöriger Trainingsplan (Typ Trainingsplan)</param>
         /// <returns>Gibt bei erfolgreichem Ausführen true zurück und bei einem Fehler false</returns>
-        public bool AddBewertung(BewertungTrainingpsplan bewertung, Trainingsplan trainingsplan)
+        public bool AddBewertung(Bewertung bewertung, Trainingsplan trainingsplan)
         {
             try
             {
                 StaticDB.Connect();
-                string insertBew = $"INSERT INTO TP_Bewertung ([User], Bewertung) VALUES ('{bewertung.Bewerter.Nutzername}', '{bewertung.Bewertung}');" +
+                string insertBew = $"INSERT INTO TP_Bewertung ([User], Bewertung) VALUES ('{bewertung.Bewerter.Nutzername}', '{bewertung.Rating}');" +
                                     "SELECT CAST(SCOPE_IDENTITY() AS INT)";
                 StaticDB.Connection.Open();
                 SqlCommand command = new SqlCommand(insertBew, StaticDB.Connection);
@@ -277,7 +277,7 @@ namespace FitnessApp.Models.DB
         /// </summary>
         /// <param name="bewertung">Zu löschende Bewertung (Typ BewertungTrainingsplan)</param>
         /// <returns>Gibt bei erfolgreichem Ausführen true zurück und bei einem Fehler false</returns>
-        public bool DeleteBewertung(BewertungTrainingpsplan bewertung)
+        public bool DeleteBewertung(Bewertung bewertung)
         {
             try
             {
@@ -299,12 +299,12 @@ namespace FitnessApp.Models.DB
         /// </summary>
         /// <param name="ID">Nimmt die ID eines Trainingsplans entgegen (Integer)</param>
         /// <returns>Gibt eine Liste von Bewertungen zurück</returns>
-        public List<BewertungTrainingpsplan> GetBewertungen(int ID)
+        public List<Bewertung> GetBewertungen(int ID)
         {
             try
             {
                 StaticDB.Connect();
-                List<BewertungTrainingpsplan> bewertungsList = new List<BewertungTrainingpsplan>();
+                List<Bewertung> bewertungsList = new List<Bewertung>();
                 string com = "SELECT bew.ID, bew.[User], Bewertung " +
                              "FROM TP_Base as base " +
                              "INNER JOIN TP_Link_BaseBewertung as link " +
@@ -319,11 +319,11 @@ namespace FitnessApp.Models.DB
                 var r = sqlCommand.ExecuteReader();
                 while (r.Read())
                 {
-                    BewertungTrainingpsplan bewertung = new BewertungTrainingpsplan()
+                    Bewertung bewertung = new Bewertung()
                     {
                         ID = r.GetInt32(0),
                         Bewerter = new User() { Nutzername = r.GetString(1) },
-                        Bewertung = r.GetInt32(2)
+                        Rating = r.GetInt32(2)
                     };
                     bewertungsList.Add(bewertung);
                 }

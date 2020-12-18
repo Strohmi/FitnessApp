@@ -12,7 +12,7 @@ namespace FitnessApp.Models
         public DateTime ErstelltAm { get; set; }
         public DateTime GeAendertAm { get; set; }
         public List<Uebung> UebungList { get; set; } = new List<Uebung>();
-        public List<BewertungTrainingpsplan> Bewertungen { get; set; } = new List<BewertungTrainingpsplan>();
+        public List<Bewertung> Bewertungen { get; set; } = new List<Bewertung>();
         public string Kategorie { get; set; }
         public decimal DurchBewertung { get; set; }
         public string DurchBewertAnzeige
@@ -43,11 +43,5 @@ namespace FitnessApp.Models
         public int Wiederholungen { get; set; }
         public decimal Menge { get; set; }
         public string Einheit { get; set; }
-    }
-    public class BewertungTrainingpsplan
-    {
-        public int ID { get; set; }
-        public User Bewerter { get; set; }
-        public int Bewertung { get; set; }
     }
 }

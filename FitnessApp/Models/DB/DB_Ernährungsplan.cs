@@ -275,12 +275,12 @@ namespace FitnessApp.Models.DB
                 return false;
             }
         }
-        public List<BewertungErnährungsplan> GetBewertungen(int ID)
+        public List<Bewertung> GetBewertungen(int ID)
         {
             try
             {
                 StaticDB.Connect();
-                List<BewertungErnährungsplan> bewertungsList = new List<BewertungErnährungsplan>();
+                List<Bewertung> bewertungsList = new List<Bewertung>();
                 string com = "SELECT bew.ID, bew.[User], Bewertung " +
                              "FROM EP_Base as base " +
                              "INNER JOIN EP_Link_BaseBewertung as link " +
@@ -295,11 +295,11 @@ namespace FitnessApp.Models.DB
                 var r = sqlCommand.ExecuteReader();
                 while (r.Read())
                 {
-                    BewertungErnährungsplan bewertung = new BewertungErnährungsplan()
+                    Bewertung bewertung = new Bewertung()
                     {
                         ID = r.GetInt32(0),
                         Bewerter = new User() { Nutzername = r.GetString(1) },
-                        Bewertung = r.GetInt32(2)
+                        Rating = r.GetInt32(2)
                     };
                     bewertungsList.Add(bewertung);
                 }
@@ -350,7 +350,7 @@ namespace FitnessApp.Models.DB
                 return -2;
             }
         }
-        public bool DeleteBewertung(BewertungErnährungsplan bewertung)
+        public bool DeleteBewertung(Bewertung bewertung)
         {
             try
             {
@@ -367,12 +367,12 @@ namespace FitnessApp.Models.DB
                 return false;
             }
         }
-        public bool AddBewertung(BewertungErnährungsplan bewertung, Ernährungsplan ernährungsplan)
+        public bool AddBewertung(Bewertung bewertung, Ernährungsplan ernährungsplan)
         {
             try
             {
                 StaticDB.Connect();
-                string insertBew = $"INSERT INTO EP_Bewertung ([User], Bewertung) VALUES ('{bewertung.Bewerter.Nutzername}', '{bewertung.Bewertung}');" +
+                string insertBew = $"INSERT INTO EP_Bewertung ([User], Bewertung) VALUES ('{bewertung.Bewerter.Nutzername}', '{bewertung.Rating}');" +
                                     "SELECT CAST(SCOPE_IDENTITY() AS INT)";
                 StaticDB.Connection.Open();
                 SqlCommand command = new SqlCommand(insertBew, StaticDB.Connection);

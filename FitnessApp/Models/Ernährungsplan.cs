@@ -12,7 +12,7 @@ namespace FitnessApp.Models
         public DateTime ErstelltAm { get; set; }
         public DateTime GeAendertAm { get; set; }
         public List<Mahlzeiten> MahlzeitenList { get; set; } = new List<Mahlzeiten>();
-        public List<BewertungErnährungsplan> Bewertungen { get; set; } = new List<BewertungErnährungsplan>();
+        public List<Bewertung> Bewertungen { get; set; } = new List<Bewertung>();
         public string Kategorie { get; set; }
 
         public decimal DurchBewertung { get; set; }
@@ -41,11 +41,5 @@ namespace FitnessApp.Models
         public string Nahrungsmittel { get; set; }
         public decimal Menge { get; set; }
         public string Einheit { get; set; }
-    }
-    public class BewertungErnährungsplan
-    {
-        public int ID { get; set; }
-        public int Bewertung { get; set; }
-        public User Bewerter { get; set; }
     }
 }
