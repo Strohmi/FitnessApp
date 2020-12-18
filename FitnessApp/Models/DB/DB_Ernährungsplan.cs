@@ -139,7 +139,7 @@ namespace FitnessApp.Models.DB
                     {
                         ID = r.GetInt32(0),
                         Nahrungsmittel = r.GetString(1),
-                        Menge = r.GetInt32(2),
+                        Menge = r.GetDecimal(2),
                         Einheit = r.GetString(3)
                     };
                     mahlzeitenList.Add(mahlzeit);
