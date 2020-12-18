@@ -52,7 +52,7 @@ namespace FitnessApp
             Bewertung bewertung = new Bewertung()
             {
                 Bewerter = AllVM.ConvertToUser(),
-                Bewertung = bewert
+                Rating = bewert
             };
 
             if (type == typeof(Trainingsplan))

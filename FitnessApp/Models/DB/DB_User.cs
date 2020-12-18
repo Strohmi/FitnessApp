@@ -52,6 +52,18 @@ namespace FitnessApp.Models
             }
         }
 
+        internal bool CheckIfFavo(string key, User user)
+        {
+            string[] keys = key.Split(';');
+            string com = $"SELECT * FROM User_Favo WHERE Nutzername = '{user.Nutzername}' AND Typ = '{keys[0]}' AND Plan_ID = '{keys[1]}'";
+            bool? x = StaticDB.CheckExistenz(com);
+
+            if (x == true)
+                return true;
+            else
+                return false;
+        }
+
         internal bool? Exists(string user)
         {
             string com = $"SELECT Nutzername FROM User_Base WHERE Nutzername = '{user}'";
@@ -261,6 +273,19 @@ namespace FitnessApp.Models
         {
             string[] keys = classid.Split(';');
             string com = $"DELETE FROM User_Favo WHERE Nutzername = '{user.Nutzername}' AND Typ = '{keys[0]}' AND Plan_ID = '{keys[1]}'";
+            return StaticDB.RunSQL(com);
+        }
+
+        /// <summary>
+        /// Plan in Favoritenliste einfügen
+        /// </summary>
+        /// <param name="classid">Bezeichner aus MenuItem.ClassID (Typ;Id)</param>
+        /// <param name="user">Benutzer</param>
+        /// <returns></returns>
+        internal bool AddFavo(string classid, User user)
+        {
+            string[] keys = classid.Split(';');
+            string com = $"INSERT INTO User_Favo (Nutzername, Typ, Plan_ID)  VALUES('{user.Nutzername}', '{keys[0]}', '{keys[1]}')";
             return StaticDB.RunSQL(com);
         }
 

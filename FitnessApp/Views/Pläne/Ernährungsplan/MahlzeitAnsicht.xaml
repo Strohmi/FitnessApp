@@ -29,9 +29,23 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Style="{StaticResource Key=HeadingStyle}" Text="{Binding EPlan.Titel}" HorizontalTextAlignment="Start" VerticalOptions="Center" FontSize="Title" LineBreakMode="TailTruncation"/>
             <Label Grid.Column="1" Style="{StaticResource Key=HeadingStyle}" Text="{Binding EPlan.Kategorie}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Large"/>
+            <Image Grid.Column="2" ClassId="{Binding EPlan.ID}" HeightRequest="30" WidthRequest="30" HorizontalOptions="End" VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FavoritePlan"/>
+                </Image.GestureRecognizers>
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image" Binding="{Binding IsFavorite}" Value="True">
+                        <Setter Property="Source" Value="Star_Filled"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Image" Binding="{Binding IsFavorite}" Value="False">
+                        <Setter Property="Source" Value="Star_Unfilled"/>
+                    </DataTrigger>
+                </Image.Triggers>
+            </Image>
         </Grid>
 
         <Grid Grid.Row="1" Margin="10,0,10,0" BackgroundColor="White">

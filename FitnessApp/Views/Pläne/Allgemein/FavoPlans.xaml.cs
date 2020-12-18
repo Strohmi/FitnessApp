@@ -157,9 +157,9 @@ namespace FitnessApp
             if (item != null)
             {
                 if (item.GetType() == typeof(Trainingsplan))
-                    this.Navigation.PushAsync(new MahlzeitAnsicht((item as Trainingsplan).ID));
+                    this.Navigation.PushAsync(new TrainingsplanAnsicht((item as Trainingsplan).ID));
                 else if (item.GetType() == typeof(Ernährungsplan))
-                    this.Navigation.PushAsync(new TrainingsplanAnsicht((item as Ernährungsplan).ID));
+                    this.Navigation.PushAsync(new MahlzeitAnsicht((item as Ernährungsplan).ID));
             }
         }
     }

@@ -349,7 +349,7 @@ namespace FitnessApp.Models.DB
             try
             {
                 StaticDB.Connect();
-                string durcchBew = "SELECT AVG(bew.Bewertung) " +
+                string durcchBew = "SELECT CONVERT(decimal(3,2),AVG(bew.Bewertung)) " +
                                    "FROM TP_Base as base " +
                                    "INNER JOIN TP_Link_BaseBewertung as link " +
                                    "ON base.ID = link.ID_TP_Base " +

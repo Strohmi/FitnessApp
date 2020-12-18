@@ -10,6 +10,7 @@ namespace FitnessApp
     {
         public List<Mahlzeiten> MahlzeitenList { get; set; }
         private Ernährungsplan EPlan;
+        public bool IsFavorite { get; set; }
 
         public MahlzeitAnsicht(int id)
         {
@@ -27,6 +28,7 @@ namespace FitnessApp
         void GetByID(int id)
         {
             EPlan = AllVM.Datenbank.Ernährungsplan.GetByID(id);
+            IsFavorite = AllVM.Datenbank.User.CheckIfFavo($"E;{EPlan.ID}", AllVM.ConvertToUser());
             CalculateStars();
         }
 
@@ -81,6 +83,30 @@ namespace FitnessApp
         void GoToBewertung(System.Object sender, System.EventArgs e)
         {
             this.Navigation.PushAsync(new BewertungAdd((sender as Grid).ClassId, typeof(Ernährungsplan)));
+        }
+
+        void FavoritePlan(System.Object sender, System.EventArgs e)
+        {
+            Image image = (sender as Image);
+
+            if (image != null)
+            {
+                string key = "E;" + image.ClassId;
+                if ((image.Source as FileImageSource).File == "Star_Unfilled")
+                {
+                    if (AllVM.Datenbank.User.AddFavo(key, AllVM.ConvertToUser()))
+                        image.Source = ImageSource.FromFile("Star_Filled");
+                    else
+                        DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
+                }
+                else if ((image.Source as FileImageSource).File == "Star_Filled")
+                {
+                    if (AllVM.Datenbank.User.DeleteFavo(key, AllVM.ConvertToUser()))
+                        image.Source = ImageSource.FromFile("Star_Unfilled");
+                    else
+                        DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
+                }
+            }
         }
     }
 }
