@@ -19,7 +19,7 @@ namespace FitnessApp
         //Die Eigenschaft wird erstellt, um die Einheiten aus der Datenbank abzurufen und im Picker beim hinufügen von Nahrungen darzustellen
         public List<string> Units { get; set; }
 
-        public List<string> Cateogries { get; set; }
+        public List<string> Categories { get; set; }
 
         //Eine neue Instanz "plan" von Ernährungsplan wird erstellt
         Ernährungsplan plan = new Ernährungsplan();
@@ -37,8 +37,8 @@ namespace FitnessApp
             Title = "Mahlzeit erstellen";
 
             //Diese Methoden müssen noch geschrieben werden!
-            //Units = AllVM.Datenbank.Ernährungsplan.GetUnits();
-            //Categories = AllVM.Datenbank.Ernährungsplan.GetCategories();
+            Units = AllVM.Datenbank.Ernährungsplan.GetUnits();
+            Categories = AllVM.Datenbank.Ernährungsplan.GetCategories();
         }
 
         private void SetNavBar()
