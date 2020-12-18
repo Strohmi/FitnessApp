@@ -84,7 +84,7 @@ namespace FitnessApp
 
         void GoToBewertung(System.Object sender, System.EventArgs e)
         {
-
+            this.Navigation.PushAsync(new BewertungAdd((sender as Grid).ClassId, typeof(Trainingsplan)));
         }
     }
 }
