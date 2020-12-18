@@ -91,7 +91,6 @@ namespace FitnessApp.Models.DB
                         Titel = r.GetString(1),
                         User = new User() { Nutzername = r.GetString(2) },
                         ErstelltAm = r.GetDateTime(3),
-                        GeAendertAm = r.GetDateTime(4),
                         Kategorie = r.GetString(5)
                     };
 

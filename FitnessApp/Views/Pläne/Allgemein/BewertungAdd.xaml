@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FitnessApp.BewertungAdd"
+             Title="{Binding Title}">
+
+    <Grid>
+        <Grid x:Name="bewGrid" VerticalOptions="Center" HorizontalOptions="Center" Margin="10,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="Star_Unfilled">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FillStars"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="1" Source="Star_Unfilled">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FillStars"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="2" Source="Star_Unfilled">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FillStars"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="3" Source="Star_Unfilled">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FillStars"/>
+                </Image.GestureRecognizers>
+            </Image>
+            <Image Grid.Column="4" Source="Star_Unfilled">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FillStars"/>
+                </Image.GestureRecognizers>
+            </Image>
+        </Grid>
+    </Grid>
+</ContentPage>

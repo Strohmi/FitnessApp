@@ -17,6 +17,7 @@
     <Compile Remove="Views\Pläne\Trainingsplan\TrainingFavo.xaml.cs" />
     <Compile Remove="Views\Pläne\Allgemein\NewsFeed.xaml.cs" />
     <Compile Remove="Views\Pläne\Ernährungsplan\TrainingList.xaml.cs" />
+    <Compile Remove="Views\Pläne\Trainingsplan\TrainingsplanAnsicht %28Kopie%29.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Profil\" />
@@ -57,10 +58,6 @@
       <DependentUpon>ProfilEdit.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Remove="Views\Pläne\Trainingsplan\TrainingsplanAnsicht %28Kopie%29.xaml" />
-    <EmbeddedResource Remove="Views\Pläne\Trainingsplan\TrainingBewert.xaml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\Chat\ChatView.xaml">
