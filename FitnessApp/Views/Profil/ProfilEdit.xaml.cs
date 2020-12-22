@@ -69,7 +69,7 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Speichern");
         }
 
-        private async void UploadPhoto(object sender, EventArgs e)
+        private async void UploadPhoto()
         {
             try
             {
@@ -101,7 +101,7 @@ namespace FitnessApp
             }
         }
 
-        private async void TakePhoto(object sender, EventArgs e)
+        private async void TakePhoto()
         {
             try
             {
@@ -171,6 +171,22 @@ namespace FitnessApp
         void Logoff(System.Object sender, System.EventArgs e)
         {
             App.Current.MainPage = new NavigationPage(new Login());
+        }
+
+        async void ChangePhoto(System.Object sender, System.EventArgs e)
+        {
+            var result = await DisplayActionSheet("Profilbild ändern", "Abbrechen", null, new string[] { "Aufnehmen", "Hochladen" });
+            switch (result)
+            {
+                case "Aufnehmen":
+                    TakePhoto();
+                    break;
+                case "Hochladen":
+                    UploadPhoto();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

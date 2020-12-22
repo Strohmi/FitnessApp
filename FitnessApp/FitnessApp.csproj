@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
     <PackageReference Include="Xam.Plugin.Media" Version="5.0.1" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
@@ -35,9 +35,6 @@
     <Compile Update="Views\Allgemein\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\Chat\ChatView.xaml.cs">
-      <DependentUpon>ChatView.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Views\Pläne\Ernährungsplan\MahlzeitNew.xaml.cs">
       <DependentUpon>MahlzeitNew.xaml</DependentUpon>
     </Compile>
@@ -58,13 +55,5 @@
       <DependentUpon>ProfilEdit.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Views\Chat\ChatView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\Chat\MessageView.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

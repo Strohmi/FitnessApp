@@ -44,21 +44,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Image Grid.Column="0" x:Name="profilBild" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}, UpdateSourceEventName=Save}" HeightRequest="100" WidthRequest="100"/>
+            <Image Grid.Column="0" x:Name="profilBild" Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}, UpdateSourceEventName=Save}" HeightRequest="40" WidthRequest="40"/>
             <Grid Grid.Column="1" VerticalOptions="Center" Margin="10,0" BackgroundColor="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
                 <Frame Grid.Row="0" BackgroundColor="White" Padding="0" VerticalOptions="Center">
-                    <Button Text="Aufnehmen" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Clicked="TakePhoto"/>
+                    <Button Text="Neues Bild" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Padding="0" Clicked="ChangePhoto"/>
                 </Frame>
-                <Frame Grid.Row="1" BackgroundColor="White" Padding="0" VerticalOptions="Center" Margin="0,0">
-                    <Button Text="Hochladen" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Clicked="UploadPhoto"/>
-                </Frame>
-                <Frame Grid.Row="2" BackgroundColor="White" Padding="0" VerticalOptions="Center">
-                    <Button Text="Entfernen" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Clicked="DeletePhoto"/>
+                <Frame Grid.Row="1" BackgroundColor="White" Padding="0" VerticalOptions="Center">
+                    <Button Text="Entfernen" FontSize="Medium" TextColor="Black" BackgroundColor="Transparent" Padding="0" Clicked="DeletePhoto"/>
                 </Frame>
             </Grid>
         </Grid>
@@ -72,6 +68,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
@@ -81,7 +78,7 @@
             <Label Grid.Row="0" Grid.Column="0" Text="Anzeigename:" Style="{StaticResource Key=Bezeichner}" TextColor="Black"/>
             <Entry Grid.Row="0" Grid.Column="1" x:Name="customName" Text="{Binding User.CustomName}" Style="{StaticResource Key=EingabeFeld}" MaxLength="25"/>
 
-            <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10" HorizontalOptions="Center" VerticalOptions="Start">
+            <StackLayout Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,0" HorizontalOptions="Center" VerticalOptions="Start">
                 <CheckBox x:Name="onlyCustomName" IsChecked="{Binding User.OnlyCustomName}" VerticalOptions="Center"/>
                 <Label Text="Nur Anzeigename anzeigen" VerticalOptions="Center" FontSize="Medium" Style="{StaticResource Key=Bezeichner}"/>
             </StackLayout>
@@ -94,7 +91,7 @@
             <Button Grid.Row="4" Grid.ColumnSpan="2" Margin="0,10,0,0" Text="Passwort ändern..." FontSize="Medium" TextColor="Black" BorderColor="Black" BorderWidth="1" Clicked="ChangePWD"/>
         </Grid>
 
-        <Button Grid.Row="3" VerticalOptions="End" Text="Abmelden" TextColor="White" FontSize="Large" FontAttributes="Bold" BackgroundColor="LightSkyBlue" Margin="30,0,30,10" CornerRadius="20" Clicked="Logoff"/>
-        <Button Grid.Row="4" VerticalOptions="End" Text="Account löschen" TextColor="White" FontSize="Large" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0,30,5" CornerRadius="20" Clicked="DeleteUser"/>
+        <Button Grid.Row="4" VerticalOptions="End" Text="Abmelden" TextColor="White" FontSize="Medium" FontAttributes="Bold" BackgroundColor="LightSkyBlue" Margin="30,0,30,10" CornerRadius="20" Clicked="Logoff"/>
+        <Button Grid.Row="5" VerticalOptions="End" Text="Account löschen" TextColor="White" FontSize="Medium" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0,30,5" CornerRadius="20" Clicked="DeleteUser"/>
     </Grid>
 </ContentPage>

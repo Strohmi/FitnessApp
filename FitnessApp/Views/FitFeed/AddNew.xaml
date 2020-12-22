@@ -4,15 +4,27 @@
              x:Class="FitnessApp.AddNew"
              Title="{Binding Title}">
 
+    <ContentPage.Resources>
+        <Style TargetType="Button" x:Key="buttonStyle">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="BorderColor" Value="Black"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="Margin" Value="20,0,20,10"/>
+        </Style>
+    </ContentPage.Resources>
+
     <Grid BackgroundColor="White">
-        <ListView x:Name="listOptions" HasUnevenRows="True" ItemsSource="{Binding Options}" BackgroundColor="Transparent" SeparatorVisibility="None" ItemSelected="Selection" Margin="20">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Label Text="{Binding Value}" FontSize="Large" TextColor="Black" Padding="0,20" Margin="15,10,5,10" BackgroundColor="Orange" HorizontalTextAlignment="Center"/>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Row="0" Text="Status" Style="{StaticResource Key=buttonStyle}" Clicked="GoToStatus"/>
+        <Button Grid.Row="1" Text="Trainingsplan" Style="{StaticResource Key=buttonStyle}" Clicked="GoToTrainingsplan"/>
+        <Button Grid.Row="2" Text="Ernährungsplan" Style="{StaticResource Key=buttonStyle}" Clicked="GoToErnährunsplan"/>
     </Grid>
 </ContentPage>
