@@ -89,7 +89,7 @@
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
 
-            <Entry  x:Name="foodEntry"   Grid.Column="0" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewFood}"      Placeholder="Lebensmittel" ReturnType="Next" Margin="10,0,0,0" HorizontalTextAlignment="Start"/>
+            <Entry  x:Name="foodEntry"   Grid.Column="0" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewName}"      Placeholder="Lebensmittel" ReturnType="Next" Margin="10,0,0,0" HorizontalTextAlignment="Start"/>
             <Entry  x:Name="amountEntry" Grid.Column="1" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewAmount}"    Placeholder="Mg." Keyboard="Numeric" ReturnType="Next"  />
             <Picker x:Name="unitPicker"  Grid.Column="2" Style="{StaticResource Key=PickerStyle}" ItemsSource="{Binding Units}" Title="Einh." SelectedItem="{Binding NewUnit}"/>
             <ImageButton Grid.Column="3" Margin="0,0,10,0" Source="Add.png" Clicked="Add" BackgroundColor="Transparent" />
