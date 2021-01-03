@@ -22,7 +22,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titel}" FontSize="Large" FontAttributes="Bold" TextColor="Black" LineBreakMode="TailTruncation" VerticalOptions="Center"/>
-                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Kategorie}" FontSize="Medium" TextColor="Black" HorizontalOptions="End" VerticalOptions="Center"/>
+                                <Label Grid.Row="0" Grid.Column="1" Text="{Binding Kategorie}" FontSize="Large" TextColor="Black" HorizontalOptions="End" VerticalOptions="Center"/>
                                 <Grid Grid.Row="1" Grid.Column="0" x:Name="bewGrid" VerticalOptions="End">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
@@ -32,7 +32,7 @@
                                         <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
                                 </Grid>
-                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black" HorizontalOptions="End" VerticalOptions="End" />
+                                <Label Grid.Row="1" Grid.Column="1" Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Large" TextColor="Black" HorizontalOptions="End" VerticalOptions="End" />
                             </Grid>
                         </Frame>
                     </ViewCell>

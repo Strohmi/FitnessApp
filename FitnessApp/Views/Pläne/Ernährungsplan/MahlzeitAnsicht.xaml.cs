@@ -8,36 +8,45 @@ namespace FitnessApp
 {
     public partial class MahlzeitAnsicht : ContentPage
     {
-        public List<Mahlzeiten> MahlzeitenList { get; set; }
-        private Ernährungsplan EPlan;
+        public Ernährungsplan EPlan { get; set; }
         public bool IsFavorite { get; set; }
 
         public MahlzeitAnsicht(int id)
         {
+            GetByID(id);
             InitializeComponent();
             Start();
-            GetByID(id);
             BindingContext = this;
         }
 
         void Start()
         {
             Title = "Ernährungsplan";
+            CalculateStars();
         }
 
         void GetByID(int id)
         {
             EPlan = AllVM.Datenbank.Ernährungsplan.GetByID(id);
-            IsFavorite = AllVM.Datenbank.User.CheckIfFavo($"E;{EPlan.ID}", AllVM.ConvertToUser());
-            CalculateStars();
+
+            if (EPlan != null)
+            {
+                EPlan.MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(EPlan.ID);
+                IsFavorite = AllVM.Datenbank.User.CheckIfFavo($"E;{EPlan.ID}", AllVM.ConvertToUser());
+            }
+            else
+                DependencyService.Get<IMessage>().ShortAlert("Es ist ein Fehler aufgetreten");
         }
 
         void CalculateStars()
         {
             int count_bew = 5;
             double bewertung = -1;
-            if (EPlan.DurchBewertung != -1 && EPlan.DurchBewertung != -2)
+            if (EPlan.DurchBewertung != -2)
             {
+                if (EPlan.DurchBewertung != -1)
+                    EPlan.DurchBewertung = 0;
+
                 bewertung = Math.Round((double)EPlan.DurchBewertung * 2, MidpointRounding.AwayFromZero) / 2;
                 int count_filled = (int)Math.Floor(bewertung);
                 double count_half = bewertung - count_filled;
@@ -82,7 +91,8 @@ namespace FitnessApp
 
         void GoToBewertung(System.Object sender, System.EventArgs e)
         {
-            this.Navigation.PushAsync(new BewertungAdd((sender as Grid).ClassId, typeof(Ernährungsplan)));
+            if (EPlan.Ersteller.Nutzername != AllVM.User.Nutzername)
+                this.Navigation.PushAsync(new BewertungAdd((sender as Grid).ClassId, typeof(Ernährungsplan)));
         }
 
         void FavoritePlan(System.Object sender, System.EventArgs e)
@@ -92,17 +102,17 @@ namespace FitnessApp
             if (image != null)
             {
                 string key = "E;" + image.ClassId;
-                if ((image.Source as FileImageSource).File == "Star_Unfilled")
+                if ((image.Source as FileImageSource).File == "Herz_Unfilled")
                 {
                     if (AllVM.Datenbank.User.AddFavo(key, AllVM.ConvertToUser()))
-                        image.Source = ImageSource.FromFile("Star_Filled");
+                        image.Source = ImageSource.FromFile("Herz_Filled");
                     else
                         DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
                 }
-                else if ((image.Source as FileImageSource).File == "Star_Filled")
+                else if ((image.Source as FileImageSource).File == "Herz_Filled")
                 {
                     if (AllVM.Datenbank.User.DeleteFavo(key, AllVM.ConvertToUser()))
-                        image.Source = ImageSource.FromFile("Star_Unfilled");
+                        image.Source = ImageSource.FromFile("Herz_Unfilled");
                     else
                         DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
                 }

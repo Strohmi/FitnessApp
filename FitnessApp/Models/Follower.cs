@@ -14,5 +14,6 @@ namespace FitnessApp.Models
     {
         public User User { get; set; }
         public bool IsSub { get; set; }
+        public bool IsUser { get; set; }
     }
 }

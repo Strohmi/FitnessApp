@@ -7,7 +7,7 @@
 
     <ContentPage.Resources>
         <DataTemplate x:Key="textTemplate">
-            <ViewCell BindingContextChanged="OnBindingContextChanged" Appearing="ItemAppearing">
+            <ViewCell Appearing="ItemAppearing">
                 <Frame ClassId="{Binding ID}" Style="{StaticResource Key=ShellFrameStyle}">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Like"/>
@@ -18,14 +18,30 @@
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="1"/>
                                 <RowDefinition Height="auto"/>
+                                <RowDefinition Height="1"/>
+                                <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
-                            <Label Grid.Row="0" Style="{StaticResource Key=BeschreibungStyle}"/>
+
+                            <Grid Grid.Row="0" Margin="5,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Style="{StaticResource Key=ErstelltAmStyle}"/>
+                                <Image Grid.Column="1" ClassId="{Binding ID}" Source="Three_Lines" WidthRequest="17" HorizontalOptions="End" Margin="3,0,5,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GoToSettings"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
                             <BoxView Grid.Row="1" BackgroundColor="Black"/>
-                            <Grid Grid.Row="2" VerticalOptions="End" Margin="0,2">
+
+                            <Label Grid.Row="2" Style="{StaticResource Key=BeschreibungStyle}"/>
+                            <BoxView Grid.Row="3" BackgroundColor="Black"/>
+                            <Grid Grid.Row="4" VerticalOptions="End" Margin="0,2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Frame Grid.Column="0" Style="{StaticResource Key=LikeFrameStyle}">
                                     <Frame.Triggers>
@@ -57,7 +73,6 @@
                                         <TapGestureRecognizer Tapped="GoToProfil"/>
                                     </Label.GestureRecognizers>
                                 </Label>
-                                <Label Grid.Column="2" Style="{StaticResource Key=ErstelltAmStyle}"/>
                             </Grid>
                         </Grid>
                         <Image Style="{StaticResource Key=ThumbsUpStyle}">
@@ -76,7 +91,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="fotoTemplate">
-            <ViewCell BindingContextChanged="OnBindingContextChanged" Appearing="ItemAppearing">
+            <ViewCell Appearing="ItemAppearing">
                 <Frame ClassId="{Binding ID}" Style="{StaticResource Key=ShellFrameStyle}">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="Like"/>
@@ -85,19 +100,34 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto"/>
+                                <RowDefinition Height="1"/>
+                                <RowDefinition Height="auto"/>
                                 <RowDefinition Height="auto"/>
                                 <RowDefinition Height="1"/>
                                 <RowDefinition Height="auto"/>
                             </Grid.RowDefinitions>
 
-                            <Image Grid.Row="0" Aspect="AspectFit" HeightRequest="{Binding Foto, Converter={StaticResource ImageHeight}}" WidthRequest="{Binding Foto, Converter={StaticResource ImageWidth}}" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
-                            <Label Grid.Row="1" Style="{StaticResource Key=BeschreibungStyle}"/>
-                            <BoxView Grid.Row="2" BackgroundColor="Black"/>
-                            <Grid Grid.Row="3" VerticalOptions="End" Margin="0,2">
+                            <Grid Grid.Row="0" Margin="5,2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Style="{StaticResource Key=ErstelltAmStyle}"/>
+                                <Image Grid.Column="1" ClassId="{Binding ID}" Source="Three_Lines" WidthRequest="17" HorizontalOptions="End" Margin="3,0,5,0">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GoToSettings"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </Grid>
+
+                            <BoxView Grid.Row="1" BackgroundColor="Black"/>
+                            <Image Grid.Row="2" Aspect="AspectFit" HeightRequest="{Binding Foto, Converter={StaticResource ImageHeight}}" WidthRequest="{Binding Foto, Converter={StaticResource ImageWidth}}" Source="{Binding Foto, Converter={StaticResource ByteArrayToImage}}"/>
+                            <Label Grid.Row="3" Style="{StaticResource Key=BeschreibungStyle}"/>
+                            <BoxView Grid.Row="4" BackgroundColor="Black"/>
+                            <Grid Grid.Row="5" VerticalOptions="End" Margin="0,2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Frame Grid.Column="0" Style="{StaticResource Key=LikeFrameStyle}">
                                     <Frame.Triggers>
@@ -129,7 +159,6 @@
                                         <TapGestureRecognizer Tapped="GoToProfil"/>
                                     </Label.GestureRecognizers>
                                 </Label>
-                                <Label Grid.Column="2" Style="{StaticResource Key=ErstelltAmStyle}"/>
                             </Grid>
                         </Grid>
                         <Image Style="{StaticResource Key=ThumbsUpStyle}">
@@ -158,17 +187,22 @@
     </ContentPage.Resources>
 
     <Shell.TitleView>
-        <Label Text="FitApp" CharacterSpacing="10" FontAttributes="Bold" TextColor="DarkOrange"
-               FontSize="Title" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="FitApp" CharacterSpacing="5" FontAttributes="Bold" TextColor="DarkOrange" FontSize="35" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Button Grid.Column="1" x:Name="loadMoreBtn" IsVisible="false" Text="Weitere laden..." TextColor="Black" FontSize="Medium" HorizontalOptions="End" Clicked="LoadMore"/>
+        </Grid>
     </Shell.TitleView>
 
     <ContentPage.Content>
         <Grid BackgroundColor="White">
-            <ListView x:Name="listview" ItemsSource="{Binding ListNews}"
+            <ListView x:Name="listview" ItemsSource="{Binding ListNews}" Margin="2,0,7,0"
                       ItemTemplate="{StaticResource fitFeedTemplateSelector}" CachingStrategy="RecycleElement"
                       BackgroundColor="Transparent" SeparatorVisibility="None" HasUnevenRows="True"
                       IsPullToRefreshEnabled="True" Refreshing="Refresh" SelectionMode="None"/>
-            <Button x:Name="loadMoreBtn" IsVisible="false" Text="Weitere laden..." BorderColor="DarkOrange" BorderWidth="3" Padding="10,0" Margin="0,0,0,5" BackgroundColor="White" TextColor="Black" FontSize="Medium" HorizontalOptions="Center" VerticalOptions="Start" Clicked="LoadMore"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

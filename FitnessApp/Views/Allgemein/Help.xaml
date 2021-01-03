@@ -4,22 +4,7 @@
              x:Class="FitnessApp.Help"
              Title="{Binding Title}">
 
-    <ContentPage.Resources>
-        <Style TargetType="Entry" x:Key="EntryStyle">
-            <Setter Property="BackgroundColor" Value="White"/>
-            <Setter Property="PlaceholderColor" Value="LightGray"/>
-            <Setter Property="TextColor" Value="Black"/>
-            <Setter Property="FontSize" Value="Large"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-        </Style>
-    </ContentPage.Resources>
-
-    <Grid BackgroundColor="Gray">
-
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Grid BackgroundColor="White">
+        <Label x:Name="helpText" Margin="10" FontSize="Large" TextColor="Black" LineBreakMode="WordWrap"/>
     </Grid>
 </ContentPage>

@@ -44,9 +44,9 @@ namespace FitnessApp
                 if (BTNnutzer.BackgroundColor == Color.LightGreen)
                     SearchVM.UsersResult = SearchVM.Users.Where(s => s.Nutzername.ToLower().Contains(text.ToLower()) | s.CustomName.ToLower().Contains(text.ToLower()) && s.Nutzername != AllVM.User.Nutzername).ToList();
                 else if (BTNtrain.BackgroundColor == Color.LightGreen)
-                    SearchVM.TPläneResult = SearchVM.TPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower()) || s.User.CustomName.ToLower().Contains(text.ToLower())).ToList();
+                    SearchVM.TPläneResult = SearchVM.TPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.Ersteller.Nutzername.ToLower().Contains(text.ToLower()) || s.Ersteller.CustomName.ToLower().Contains(text.ToLower())).ToList();
                 else if (BTNernä.BackgroundColor == Color.LightGreen)
-                    SearchVM.EPläneResult = SearchVM.EPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.User.Nutzername.ToLower().Contains(text.ToLower()) || s.User.CustomName.ToLower().Contains(text.ToLower())).ToList();
+                    SearchVM.EPläneResult = SearchVM.EPläne.Where(s => s.Titel.ToLower().Contains(text.ToLower()) || s.Kategorie.ToLower().Contains(text.ToLower()) || s.Ersteller.Nutzername.ToLower().Contains(text.ToLower()) || s.Ersteller.CustomName.ToLower().Contains(text.ToLower())).ToList();
             }
             else
             {
@@ -133,8 +133,11 @@ namespace FitnessApp
                 Grid bewGrid = ((theViewCell.View as Frame).Content as Grid).FindByName<Grid>("bewGrid");
                 double bewertung = -1;
 
-                if (durchbewert != -1 && durchbewert != -2)
+                if (durchbewert != -2)
                 {
+                    if (durchbewert == -1)
+                        durchbewert = 0;
+
                     bewertung = Math.Round((double)durchbewert * 2, MidpointRounding.AwayFromZero) / 2;
                     int count_filled = (int)Math.Floor(bewertung);
                     double count_half = bewertung - count_filled;

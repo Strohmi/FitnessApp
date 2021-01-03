@@ -8,7 +8,7 @@ namespace FitnessApp.Models
     {
         public int ID { get; set; }
         public string Titel { get; set; }
-        public User User { get; set; }
+        public User Ersteller { get; set; }
         public DateTime ErstelltAm { get; set; }
         public DateTime GeAendertAm { get; set; }
         public List<Uebung> UebungList { get; set; } = new List<Uebung>();

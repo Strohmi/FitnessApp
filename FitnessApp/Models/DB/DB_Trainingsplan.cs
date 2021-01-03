@@ -49,7 +49,7 @@ namespace FitnessApp.Models.DB
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
                         ErstelltAm = r.GetDateTime(2),
-                        User = new User() { Nutzername = r.GetString(3) },
+                        Ersteller = new User() { Nutzername = r.GetString(3) },
                         Kategorie = r.GetString(5),
                     };
 
@@ -63,7 +63,7 @@ namespace FitnessApp.Models.DB
 
                 foreach (var item in trainingsplaene)
                 {
-                    item.User = AllVM.Datenbank.User.GetByName(item.User.Nutzername);
+                    item.Ersteller = AllVM.Datenbank.User.GetByName(item.Ersteller.Nutzername);
                     item.UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(item.ID);
                     item.Bewertungen = AllVM.Datenbank.Trainingsplan.GetBewertungen(item.ID);
                     item.DurchBewertung = AllVM.Datenbank.Trainingsplan.GetAvgBewertung(item.ID);
@@ -147,8 +147,19 @@ namespace FitnessApp.Models.DB
 
                 int lastID = (int)command.ExecuteScalar();
                 StaticDB.Connection.Close();
-                com = $"INSERT INTO TP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm, Kategorie) VALUES ({lastID}, '{trainingsplan.ErstelltAm}', '{trainingsplan.User.Nutzername}', '{trainingsplan.GeAendertAm}', '{trainingsplan.Kategorie}');";
-                StaticDB.RunSQL(com);
+
+                if (trainingsplan.GeAendertAm != default)
+                    com = $"INSERT INTO TP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm, Kategorie) VALUES ({lastID}, '{trainingsplan.ErstelltAm:yyyy-dd-MM HH:mm:ss}', '{trainingsplan.Ersteller.Nutzername}', '{trainingsplan.GeAendertAm:yyyy-dd-MM HH:mm:ss}', '{trainingsplan.Kategorie}');";
+                else
+                    com = $"INSERT INTO TP_Info (ID, ErstelltAm, ErstelltVon, Kategorie) VALUES ({lastID}, '{trainingsplan.ErstelltAm:yyyy-dd-MM HH:mm:ss}', '{trainingsplan.Ersteller.Nutzername}', '{trainingsplan.Kategorie}');";
+
+                bool result = StaticDB.RunSQL(com);
+                if (result == false)
+                {
+                    com = $"DELETE FROM TP_Base WHERE ID = '{lastID}'";
+                    StaticDB.RunSQL(com);
+                    return false;
+                }
 
                 foreach (var uebung in trainingsplan.UebungList)
                 {
@@ -161,7 +172,7 @@ namespace FitnessApp.Models.DB
                     }
                     else
                     {
-                        com = $"INSERT INTO TP_Uebungen (Name, Gewicht, Repetition, Sets) VALUES ('{uebung.Name}', {uebung.Menge.ToString().Replace(",", ".")}, {uebung.Wiederholungen}, {uebung.Sätze}); " +
+                        com = $"INSERT INTO TP_Uebungen (Name, Gewicht, Repetition, Sets, Einheit) VALUES ('{uebung.Name}', {uebung.Menge.ToString().Replace(",", ".")}, {uebung.Wiederholungen}, {uebung.Sätze}, '{uebung.Einheit}'); " +
                                "SELECT CAST(SCOPE_IDENTITY() AS INT)";
                         SqlCommand insertUeb = new SqlCommand(com, StaticDB.Connection);
                         StaticDB.Connection.Open();
@@ -430,7 +441,7 @@ namespace FitnessApp.Models.DB
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
                         ErstelltAm = r.GetDateTime(2),
-                        User = new User() { Nutzername = r.GetString(3) },
+                        Ersteller = new User() { Nutzername = r.GetString(3) },
                         Kategorie = r.GetString(5),
                     };
                     if (!r.IsDBNull(4))
@@ -439,7 +450,7 @@ namespace FitnessApp.Models.DB
 
                 StaticDB.Connection.Close();
 
-                trainingsplan.User = AllVM.Datenbank.User.GetByName(trainingsplan.User.Nutzername);
+                trainingsplan.Ersteller = AllVM.Datenbank.User.GetByName(trainingsplan.Ersteller.Nutzername);
                 trainingsplan.UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(trainingsplan.ID);
                 trainingsplan.Bewertungen = AllVM.Datenbank.Trainingsplan.GetBewertungen(trainingsplan.ID);
                 trainingsplan.DurchBewertung = AllVM.Datenbank.Trainingsplan.GetAvgBewertung(trainingsplan.ID);

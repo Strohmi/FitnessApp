@@ -42,7 +42,7 @@ namespace FitnessApp.Models.DB
                     {
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
-                        User = new User() { Nutzername = r.GetString(2) },
+                        Ersteller = new User() { Nutzername = r.GetString(2) },
                         ErstelltAm = r.GetDateTime(3),
                         Kategorie = r.GetString(5),
                     };
@@ -53,7 +53,7 @@ namespace FitnessApp.Models.DB
                 StaticDB.Connection.Close();
                 foreach (var item in ernährungsplaene)
                 {
-                    item.User = AllVM.Datenbank.User.GetByName(item.User.Nutzername);
+                    item.Ersteller = AllVM.Datenbank.User.GetByName(item.Ersteller.Nutzername);
                     item.Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(item.ID);
                     item.MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(item.ID);
                     item.DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(item.ID);
@@ -89,7 +89,7 @@ namespace FitnessApp.Models.DB
                     {
                         ID = r.GetInt32(0),
                         Titel = r.GetString(1),
-                        User = new User() { Nutzername = r.GetString(2) },
+                        Ersteller = new User() { Nutzername = r.GetString(2) },
                         ErstelltAm = r.GetDateTime(3),
                         Kategorie = r.GetString(5)
                     };
@@ -99,7 +99,7 @@ namespace FitnessApp.Models.DB
                 }
                 StaticDB.Connection.Close();
 
-                ePlan.User = AllVM.Datenbank.User.GetByName(ePlan.User.Nutzername);
+                ePlan.Ersteller = AllVM.Datenbank.User.GetByName(ePlan.Ersteller.Nutzername);
                 ePlan.Bewertungen = AllVM.Datenbank.Ernährungsplan.GetBewertungen(ePlan.ID);
                 ePlan.MahlzeitenList = AllVM.Datenbank.Ernährungsplan.GetMahlzeiten(ePlan.ID);
                 ePlan.DurchBewertung = AllVM.Datenbank.Ernährungsplan.GetAvgBewertung(ePlan.ID);
@@ -167,8 +167,23 @@ namespace FitnessApp.Models.DB
                 SqlCommand sqlCommand = new SqlCommand(com, StaticDB.Connection);
                 int ID = (int)sqlCommand.ExecuteScalar();
                 StaticDB.Connection.Close();
-                com = $"INSERT INTO EP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm, Kategorie) VALUES ({ID}, '{ernährungsplan.ErstelltAm}', '{ernährungsplan.User.Nutzername}', '{ernährungsplan.GeAendertAm}', '{ernährungsplan.Kategorie}');";
-                StaticDB.RunSQL(com);
+
+                if (ernährungsplan.GeAendertAm != default)
+                {
+                    com = $"INSERT INTO EP_Info (ID, ErstelltAm, ErstelltVon, GeaendertAm, Kategorie) VALUES ({ID}, '{ernährungsplan.ErstelltAm:yyyy-dd-MM HH:mm:ss}', '{ernährungsplan.Ersteller.Nutzername}', '{ernährungsplan.GeAendertAm:yyyy-dd-MM HH:mm:ss}', '{ernährungsplan.Kategorie}');";
+                }
+                else
+                {
+                    com = $"INSERT INTO EP_Info (ID, ErstelltAm, ErstelltVon, Kategorie) VALUES ({ID}, '{ernährungsplan.ErstelltAm:yyyy-dd-MM HH:mm:ss}', '{ernährungsplan.Ersteller.Nutzername}', '{ernährungsplan.Kategorie}');";
+                }
+
+                bool result = StaticDB.RunSQL(com);
+                if (result == false)
+                {
+                    com = $"DELETE FROM EP_Base WHERE ID = '{ID}'";
+                    StaticDB.RunSQL(com);
+                    return false;
+                }
 
                 foreach (var mahlzeit in ernährungsplan.MahlzeitenList)
                 {

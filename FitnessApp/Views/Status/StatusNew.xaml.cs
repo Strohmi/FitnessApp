@@ -66,7 +66,7 @@ namespace FitnessApp
             }
         }
 
-        private async void UploadPhoto(object sender, EventArgs e)
+        private async void PickPhoto()
         {
             try
             {
@@ -80,11 +80,8 @@ namespace FitnessApp
 
                 if (photo != null)
                 {
-                    using (FileStream fs = File.OpenRead(photo.Path))
-                    {
-                        fs.CopyTo(ms);
-                        StatusVM.Status.Foto = ms.ToArray();
-                    }
+                    photo.GetStreamWithImageRotatedForExternalStorage().CopyTo(ms);
+                    StatusVM.Status.Foto = ms.ToArray();
                 }
             }
             catch (NotSupportedException ex1)
@@ -97,7 +94,7 @@ namespace FitnessApp
             }
         }
 
-        private async void TakePhoto(object sender, EventArgs e)
+        private async void TakePhoto()
         {
             try
             {
@@ -112,11 +109,8 @@ namespace FitnessApp
 
                 if (photo != null)
                 {
-                    using (FileStream fs = File.OpenRead(photo.Path))
-                    {
-                        fs.CopyTo(ms);
-                        StatusVM.Status.Foto = ms.ToArray();
-                    }
+                    photo.GetStreamWithImageRotatedForExternalStorage().CopyTo(ms);
+                    StatusVM.Status.Foto = ms.ToArray();
                 }
             }
             catch (NotSupportedException ex1)
@@ -134,6 +128,23 @@ namespace FitnessApp
         {
             this.Navigation.PopAsync();
             return true;
+        }
+
+        async void UploadPhoto(System.Object sender, System.EventArgs e)
+        {
+            var result = await DisplayActionSheet("Auswahl", "Abbrechen", null, new string[] { "Aufnehmen", "Auswählen" });
+
+            switch (result)
+            {
+                case "Aufnehmen":
+                    TakePhoto();
+                    break;
+                case "Auswählen":
+                    PickPhoto();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

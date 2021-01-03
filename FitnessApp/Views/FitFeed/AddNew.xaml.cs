@@ -20,7 +20,7 @@ namespace FitnessApp
 
         private void Start()
         {
-            Title = "Neu!";
+            Title = "Neues hinzufügen";
         }
 
         void GoToStatus(System.Object sender, System.EventArgs e)

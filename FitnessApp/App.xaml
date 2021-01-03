@@ -39,7 +39,7 @@
             <Style x:Key="ShellFrameStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="20"/>
                 <Setter Property="BackgroundColor" Value="White"/>
-                <Setter Property="Margin" Value="5,10"/>
+                <Setter Property="Margin" Value="5"/>
                 <Setter Property="Padding" Value="10,5"/>
                 <Setter Property="BorderColor" Value="Black"/>
                 <Setter Property="HasShadow" Value="False"/>
@@ -91,7 +91,7 @@
             <Style x:Key="ErstelltAmStyle" TargetType="Label">
                 <Setter Property="Text" Value="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"/>
                 <Setter Property="VerticalOptions" Value="Center"/>
-                <Setter Property="HorizontalOptions" Value="End"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
                 <Setter Property="FontSize" Value="Large"/>
                 <Setter Property="TextColor" Value="Black"/>
             </Style>

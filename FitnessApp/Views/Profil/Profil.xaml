@@ -156,7 +156,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
-            <Frame Grid.Row="0" Padding="0" Margin="10" HorizontalOptions="Center" VerticalOptions="Center">
+            <Frame Grid.Row="0" Padding="0" Margin="0,10" HorizontalOptions="Center" VerticalOptions="Center">
                 <Image Source="{Binding User.ProfilBild, Converter={StaticResource ByteArrayToImage}}"/>
             </Frame>
             <Button Grid.Row="1" Text="Zurück" FontSize="Large" TextColor="Black" BorderColor="Black" BorderWidth="1" BackgroundColor="White" HorizontalOptions="Center" Padding="15,5" Clicked="BigProfilBildTapped"/>
@@ -211,8 +211,6 @@
                                 <Label Grid.Column="1" Text="{Binding User.AnzahlFollower, StringFormat='{}{0:#,##0}'}" TextColor="Black" FontSize="Large" FontAttributes="Bold" VerticalOptions="Center"/>
                             </Grid>
                         </Frame>
-
-                        <ImageButton x:Name="directChat" Grid.Row="0" Grid.Column="1" Source="Inbox" HeightRequest="35" WidthRequest="35" Margin="10,0" HorizontalOptions="End" Clicked="DirectChat"/>
                         <Label Grid.Row="1" Grid.Column="1" Text="{Binding User.InfoText}" FontSize="Large" TextColor="Black" LineBreakMode="WordWrap" Margin="0,0"/>
                     </Grid>
                 </StackLayout>

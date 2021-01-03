@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:FitnessApp.Models.General"
              x:Class="FitnessApp.FavoPlans"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             Appearing="ContentPage_Appearing">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -18,7 +19,7 @@
             <Button Grid.Column="1" x:Name="btnErnae" Text="Ernährung" FontSize="Medium" TextColor="Black" BackgroundColor="White" Clicked="ChangeCategory"/>
         </Grid>
 
-        <ListView Grid.Row="1" BackgroundColor="White" ItemsSource="{Binding AnzeigeListe}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="GoToPlan">
+        <ListView Grid.Row="1" BackgroundColor="White" ItemsSource="{Binding AnzeigeListe}" HasUnevenRows="True" SeparatorVisibility="None" ItemTapped="GoToPlan" IsPullToRefreshEnabled="True" Refreshing="Refresh">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell BindingContextChanged="OnBindingContextChanged">
@@ -33,24 +34,19 @@
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Grid.Row="0" Grid.Column="0" Text="{Binding Titel}" FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation"/>
-                                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Start">
+                                <StackLayout Grid.Row="1" Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Fill">
                                     <Label FontSize="Medium" TextColor="Black" LineBreakMode="TailTruncation">
                                         <Label.Triggers>
-                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="True">
-                                                <Setter Property="Text" Value="{Binding User.CustomName}"/>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Ersteller.OnlyCustomName}" Value="True">
+                                                <Setter Property="Text" Value="{Binding Ersteller.CustomName}"/>
                                             </DataTrigger>
-                                            <DataTrigger TargetType="Label" Binding="{Binding User.OnlyCustomName}" Value="False">
-                                                <Setter Property="Text" Value="{Binding User.Nutzername}"/>
+                                            <DataTrigger TargetType="Label" Binding="{Binding Ersteller.OnlyCustomName}" Value="False">
+                                                <Setter Property="Text" Value="{Binding Ersteller.Nutzername}"/>
                                             </DataTrigger>
                                         </Label.Triggers>
                                     </Label>
-                                    <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" TextColor="Black"/>
+                                    <Label Text="{Binding ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" FontSize="Medium" HorizontalOptions="EndAndExpand" TextColor="Black"/>
                                 </StackLayout>
-                                <!--<Image Grid.RowSpan="2" Grid.Column="1" Source="Profil_32" HeightRequest="25" WidthRequest="25" ClassId="{Binding User.Nutzername}">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="GoToProfil"/>
-                                    </Image.GestureRecognizers>
-                                </Image>-->
                             </Grid>
                         </Frame>
                     </ViewCell>

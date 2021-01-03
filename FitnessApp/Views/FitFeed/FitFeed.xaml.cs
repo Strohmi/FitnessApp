@@ -108,6 +108,11 @@ namespace FitnessApp
         void Like(System.Object sender, System.EventArgs e)
         {
             string id = (sender as Frame).ClassId;
+            Liken(id);
+        }
+
+        void Liken(string id)
+        {
             bool? result = AllVM.Datenbank.Feed.Like(id, AllVM.ConvertToUser());
             if (result == true)
             {
@@ -129,17 +134,20 @@ namespace FitnessApp
         void GoToProfil(System.Object sender, System.EventArgs e)
         {
             Label label = (sender as Label);
-
-            if (label.ClassId == AllVM.User.Nutzername)
-                this.Navigation.PushAsync(new Profil());
-            else
-                this.Navigation.PushAsync(new Profil(label.ClassId));
+            ZumProfil(label.ClassId);
         }
 
-        async void Delete(object sender, EventArgs e)
+        void ZumProfil(string nutzername)
         {
-            MenuItem item = (sender as MenuItem);
-            News news = FitFeedVM.ListNews.First(s => s.ID.ToString() == item.ClassId);
+            if (nutzername == AllVM.User.Nutzername)
+                this.Navigation.PushAsync(new Profil());
+            else
+                this.Navigation.PushAsync(new Profil(nutzername));
+        }
+
+        async void Delete(string id)
+        {
+            News news = FitFeedVM.ListNews.First(s => s.ID.ToString() == id);
 
             if (await DisplayAlert("Löschen?", "Willst du den Post wirklich löschen?", "Ja", "Nein"))
             {
@@ -155,36 +163,6 @@ namespace FitnessApp
             }
         }
 
-        void OnBindingContextChanged(object sender, EventArgs e)
-        {
-            MenuItem menuItem = new MenuItem();
-            base.OnBindingContextChanged();
-
-            if (BindingContext == null)
-                return;
-
-            ViewCell theViewCell = ((ViewCell)sender);
-            News item = theViewCell.BindingContext as News;
-
-            if (theViewCell.ContextActions.Count > 0)
-                theViewCell.ContextActions.Clear();
-
-            if (item != null)
-            {
-                if (item.Ersteller.Nutzername == AllVM.User.Nutzername)
-                {
-                    menuItem = new MenuItem()
-                    {
-                        Text = "Löschen",
-                        ClassId = $"{item.ID}",
-                        IsDestructive = true
-                    };
-                    menuItem.Clicked += Delete;
-                    theViewCell.ContextActions.Add(menuItem);
-                }
-            }
-        }
-
         void LoadMore(object sender, EventArgs e)
         {
             loadMoreBtn.IsVisible = false;
@@ -193,23 +171,25 @@ namespace FitnessApp
             CacheList = AllVM.Datenbank.Feed.Get(AllVM.ConvertToUser(), vonDatum, bisDatum);
 
             if (CacheList == null)
-            {
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Abruf der Liste");
-            }
             else
             {
-                if (CacheList.Count > 0)
-                {
-                    int lastIndex = FitFeedVM.ListNews.Count;
-                    CacheList = CacheList.OrderByDescending(o => o.ErstelltAm).ToList();
-                    foreach (var item in CacheList)
-                        FitFeedVM.ListNews.Add(item);
+                multiplikator++;
+                foreach (var item in CacheList)
+                    FitFeedVM.ListNews.Add(item);
+            }
 
-                    multiplikator++;
-                    //listview.ScrollTo(FitFeedVM.ListNews[lastIndex], ScrollToPosition.Start, true);
-                }
-                else
-                    DependencyService.Get<IMessage>().ShortAlert("Keine weiteren Daten verfügbar");
+            while (CacheList != null && CacheList.Count == 0 && vonDatum > DateTime.Now.AddMonths(-3))
+            {
+                vonDatum = DateTime.Now.AddDays(-days * (multiplikator + 1)).AddDays(1);
+                bisDatum = DateTime.Now.AddDays(-days * multiplikator);
+                CacheList = AllVM.Datenbank.Feed.Get(AllVM.ConvertToUser(), vonDatum, bisDatum);
+
+                CacheList = CacheList.OrderByDescending(o => o.ErstelltAm).ToList();
+                foreach (var item in CacheList)
+                    FitFeedVM.ListNews.Add(item);
+
+                multiplikator++;
             }
         }
 
@@ -222,9 +202,45 @@ namespace FitnessApp
         void ShowLikes(System.Object sender, System.EventArgs e)
         {
             StackLayout stack = (sender as StackLayout);
+            News news = FitFeedVM.ListNews.First(s => s.ID.ToString() == stack.ClassId);
 
-            if (FitFeedVM.ListNews.First(s => s.ID.ToString() == stack.ClassId).Likes != 0)
+            if (news.Likes != 0)
                 this.Navigation.PushAsync(new Likes(stack.ClassId));
+        }
+
+        async void GoToSettings(System.Object sender, System.EventArgs e)
+        {
+            News news = FitFeedVM.ListNews.First(s => s.ID.ToString() == (sender as Image).ClassId);
+
+            List<string> auswahl = new List<string>();
+
+            if (news.Liked)
+                auswahl.Add("Gefällt mir nicht mehr");
+            else
+                auswahl.Add("Gefällt mir");
+
+            auswahl.Add("Zum Profil");
+
+            if (AllVM.User.Nutzername == news.Ersteller.Nutzername)
+                auswahl.Add("Löschen");
+
+            var result = await DisplayActionSheet("Einstellungen", "Abbruch", null, auswahl.ToArray());
+
+            switch (result)
+            {
+                case "Gefällt mir":
+                case "Gefällt mir nicht mehr":
+                    Liken(news.ID.ToString());
+                    break;
+                case "Zum Profil":
+                    ZumProfil(news.Ersteller.Nutzername);
+                    break;
+                case "Löschen":
+                    Delete(news.ID.ToString());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

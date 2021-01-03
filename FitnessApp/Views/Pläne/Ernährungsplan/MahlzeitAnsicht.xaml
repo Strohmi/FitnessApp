@@ -4,20 +4,50 @@
              x:Class="FitnessApp.MahlzeitAnsicht"
              Title="{Binding Title}">
 
+    <Shell.TitleView>
+        <Grid VerticalOptions="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Text="Ernährungsplan" FontSize="Title" TextColor="Black" VerticalOptions="Center" FontAttributes="Bold"/>
+            <Image Grid.Column="1" ClassId="{Binding EPlan.ID}" HeightRequest="30" WidthRequest="30" HorizontalOptions="End" Margin="0,0,20,0">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="FavoritePlan"/>
+                </Image.GestureRecognizers>
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image" Binding="{Binding IsFavorite}" Value="True">
+                        <Setter Property="Source" Value="Herz_Filled"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Image" Binding="{Binding IsFavorite}" Value="False">
+                        <Setter Property="Source" Value="Herz_Unfilled"/>
+                    </DataTrigger>
+                </Image.Triggers>
+            </Image>
+        </Grid>
+    </Shell.TitleView>
+
     <ContentPage.Resources>
         <Style TargetType="Label" x:Key="HeadingStyle">
-            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="FontSize" Value="Large"/>
             <Setter Property="FontAttributes" Value="Bold"/>
             <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
         </Style>
+
+        <Style TargetType="Label" x:Key="ItemsStyle">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+        </Style>
+
         <Style TargetType="Label" x:Key="FooterStyle">
-            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="FontSize" Value="Large"/>
             <Setter Property="TextColor" Value="Black"/>
         </Style>
     </ContentPage.Resources>
 
     <Grid BackgroundColor="LightBlue">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -31,79 +61,60 @@
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Style="{StaticResource Key=HeadingStyle}" Text="{Binding EPlan.Titel}" HorizontalTextAlignment="Start" VerticalOptions="Center" FontSize="Title" LineBreakMode="TailTruncation"/>
+            <Label Grid.Column="0" Style="{StaticResource Key=HeadingStyle}" Text="{Binding EPlan.Titel}" HorizontalOptions="Start" VerticalOptions="Center" FontSize="Title" LineBreakMode="TailTruncation"/>
             <Label Grid.Column="1" Style="{StaticResource Key=HeadingStyle}" Text="{Binding EPlan.Kategorie}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Large"/>
-            <Image Grid.Column="2" ClassId="{Binding EPlan.ID}" HeightRequest="30" WidthRequest="30" HorizontalOptions="End" VerticalOptions="Center">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="FavoritePlan"/>
-                </Image.GestureRecognizers>
-                <Image.Triggers>
-                    <DataTrigger TargetType="Image" Binding="{Binding IsFavorite}" Value="True">
-                        <Setter Property="Source" Value="Star_Filled"/>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Image" Binding="{Binding IsFavorite}" Value="False">
-                        <Setter Property="Source" Value="Star_Unfilled"/>
-                    </DataTrigger>
-                </Image.Triggers>
-            </Image>
         </Grid>
 
-        <Grid Grid.Row="1" Margin="10,0,10,0" BackgroundColor="White">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <ListView x:Name="listView" Grid.Row="1" Grid.ColumnSpan ="4" BackgroundColor="White">
-                <ListView.Header>
-                    <Grid Grid.Row="0">
+        <ListView Grid.Row="1" ItemsSource="{Binding EPlan.MahlzeitenList}" BackgroundColor="White" SelectionMode="None">
+            <ListView.Header>
+                <StackLayout Margin="10,10,10,0" Orientation="Vertical" VerticalOptions="Center">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40"/>
-                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="0.33*"/>
+                            <ColumnDefinition Width="0.33*"/>
                         </Grid.ColumnDefinitions>
-                        <Label  Grid.Column="0" Margin="10,10,0,10" Style="{StaticResource Key=HeadingStyle}" Text="Lebensmittel" HorizontalTextAlignment="Start"/>
-                        <Label  Grid.Column="1" Margin="0,10,0,10"  Style="{StaticResource Key=HeadingStyle}" Text="Mg."/>
-                        <Label  Grid.Column="2" Margin="0,10,0,10"  Style="{StaticResource Key=HeadingStyle}" Text="Einh."/>
+                        <Label Grid.Column="0" Style="{StaticResource Key=HeadingStyle}" Text="Lebensmittel" HorizontalOptions="Start"/>
+                        <Label Grid.Column="1" Style="{StaticResource Key=HeadingStyle}" Text="Menge"/>
+                        <Label Grid.Column="2" Style="{StaticResource Key=HeadingStyle}" Text="Einheit"/>
                     </Grid>
-                </ListView.Header>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="40"/>
-                                        <ColumnDefinition Width="40"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label  Grid.Column="0" Margin="10,10,0,10" Style="{StaticResource Key=LabelStyle}" Text="{Binding Nahrungsmittel}" HorizontalTextAlignment="Start"/>
-                                    <Label  Grid.Column="1" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" Text="{Binding Menge}"/>
-                                    <Label  Grid.Column="2" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" Text="{Binding Einheit}"/>
-                                </Grid>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                    <BoxView HeightRequest="1" BackgroundColor="Black"/>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Margin="10,0" VerticalOptions="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="0.33*"/>
+                                <ColumnDefinition Width="0.33*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" Style="{StaticResource Key=ItemsStyle}" Text="{Binding Nahrungsmittel}" HorizontalOptions="Start" LineBreakMode="TailTruncation"/>
+                            <Label Grid.Column="1" Style="{StaticResource Key=ItemsStyle}" Text="{Binding Menge, StringFormat='{}{0:#,##0.##}'}"/>
+                            <Label Grid.Column="2" Style="{StaticResource Key=ItemsStyle}" Text="{Binding Einheit}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <Grid Grid.Row="2" Padding="10" Margin="10,10,10,0" BackgroundColor="White">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Style="{StaticResource Key=FooterStyle}" HorizontalTextAlignment="Start" VerticalOptions="Center" FontSize="Medium" LineBreakMode="TailTruncation">
+            <Label Grid.Column="0" Style="{StaticResource Key=FooterStyle}" HorizontalTextAlignment="Start" VerticalOptions="Center" FontSize="Large" LineBreakMode="TailTruncation">
                 <Label.GestureRecognizers>
-                    <TapGestureRecognizer ClassId="{Binding EPlan.User.Nutzername}" Tapped="GoToProfil"/>
+                    <TapGestureRecognizer ClassId="{Binding EPlan.Ersteller.Nutzername}" Tapped="GoToProfil"/>
                 </Label.GestureRecognizers>
                 <Label.Triggers>
-                    <DataTrigger TargetType="Label" Binding="{Binding EPlan.User.OnlyCustomName}" Value="True">
-                        <Setter Property="Text" Value="{Binding EPlan.User.CustomName}"/>
+                    <DataTrigger TargetType="Label" Binding="{Binding EPlan.Ersteller.OnlyCustomName}" Value="True">
+                        <Setter Property="Text" Value="{Binding EPlan.Ersteller.CustomName}"/>
                     </DataTrigger>
-                    <DataTrigger TargetType="Label" Binding="{Binding EPlan.User.OnlyCustomName}" Value="False">
-                        <Setter Property="Text" Value="{Binding EPlan.User.Nutzername}"/>
+                    <DataTrigger TargetType="Label" Binding="{Binding EPlan.Ersteller.OnlyCustomName}" Value="False">
+                        <Setter Property="Text" Value="{Binding EPlan.Ersteller.Nutzername}"/>
                     </DataTrigger>
                 </Label.Triggers>
             </Label>
@@ -121,7 +132,7 @@
                 </Grid.ColumnDefinitions>
             </Grid>
 
-            <Label Grid.Column="2" Style="{StaticResource Key=FooterStyle}" Text="{Binding EPlan.ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Medium"/>
+            <Label Grid.Column="2" Style="{StaticResource Key=FooterStyle}" Text="{Binding EPlan.ErstelltAm, StringFormat='{}{0:dd.MM.yyyy}'}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Large"/>
         </Grid>
     </Grid>
 </ContentPage>

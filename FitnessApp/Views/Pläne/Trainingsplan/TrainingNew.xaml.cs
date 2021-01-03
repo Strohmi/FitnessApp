@@ -110,25 +110,28 @@ namespace FitnessApp
         private void Save(object sender, EventArgs e)
         {
             //Übergabe von User, Mahlzeittitel und aktuellen Datum an Instanz "plan" von der Klasse Trainingsplan
-            plan.User = AllVM.ConvertToUser();
-            plan.ErstelltAm = DateTime.Now;
-            plan.Titel = TrainingName;
-            plan.Kategorie = TrainingCategorie;
-
             try
             {
                 if (!string.IsNullOrEmpty(TrainingName))
                 {
                     if (!string.IsNullOrEmpty(TrainingCategorie))
                     {
+                        plan.Ersteller = AllVM.ConvertToUser();
+                        plan.ErstelltAm = DateTime.Now;
+                        plan.Titel = TrainingName.Replace("\n", "");
+                        plan.Kategorie = TrainingCategorie;
+
                         //Die Instanz "plan" von Trainingsplan wird zur Speicherung in der Datenbank an die Methode "AddTrainingsplan" übergeben
-                        AllVM.Datenbank.Trainingsplan.AddTrainingsplan(plan);
-
-                        //Anzeige einer Meldung für die erfolgreiche Speicherung
-                        DependencyService.Get<IMessage>().ShortAlert("Training wurde gespeichert!");
-
-                        //Rückkehr zur Ansicht "AddNew"
-                        OnBackButtonPressed();
+                        if (AllVM.Datenbank.Trainingsplan.AddTrainingsplan(plan))
+                        {
+                            //Rückkehr zur Ansicht "AddNew"
+                            OnBackButtonPressed();
+                            //Anzeige einer Meldung für die erfolgreiche Speicherung
+                            DependencyService.Get<IMessage>().ShortAlert("Training wurde gespeichert!");
+                        }
+                        else
+                            //Anzeige einer Meldung für die fehlerhafte Speicherung
+                            DependencyService.Get<IMessage>().ShortAlert("Fehler beim Speichern");
                     }
                     else
                         DependencyService.Get<IMessage>().ShortAlert("Kategorie auswählen!");
@@ -141,6 +144,12 @@ namespace FitnessApp
                 //Anzeige einer Meldung eine fehlgeschlagene Speicherung
                 DependencyService.Get<IMessage>().ShortAlert("Ein unbekannter Fehler ist aufgetreten!");
             }
+        }
+
+        protected override bool OnBackButtonPressed()
+        {
+            this.Navigation.PopAsync();
+            return base.OnBackButtonPressed();
         }
     }
 }

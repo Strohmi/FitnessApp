@@ -409,14 +409,14 @@ namespace FitnessApp.Models
 
                 foreach (var item in tlist)
                 {
-                    item.User = new User() { Nutzername = "fitness_bot" };
+                    item.Ersteller = new User() { Nutzername = "fitness_bot" };
                     item.GeAendertAm = DateTime.Now;
                     AllVM.Datenbank.Trainingsplan.Edit(item);
                 }
 
                 foreach (var item in elist)
                 {
-                    item.User = new User() { Nutzername = "fitness_bot" };
+                    item.Ersteller = new User() { Nutzername = "fitness_bot" };
                     item.GeAendertAm = DateTime.Now;
                     AllVM.Datenbank.Ernährungsplan.Edit(item);
                 }

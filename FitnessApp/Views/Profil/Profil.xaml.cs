@@ -69,7 +69,6 @@ namespace FitnessApp
             if (ProfilVM.User.Nutzername == AllVM.User.Nutzername)
             {
                 ProfilVM.AboBtnText = "Bearbeiten";
-                directChat.IsVisible = false;
             }
             else
             {

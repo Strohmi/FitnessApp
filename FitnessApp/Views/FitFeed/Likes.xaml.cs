@@ -30,8 +30,8 @@ namespace FitnessApp
             var users = AllVM.Datenbank.Feed.GetLikesWithNames(ID);
             if (users != null)
             {
-                users.RemoveAll(s => s.User.Nutzername == AllVM.User.Nutzername);
                 ListLikes = users.OrderBy(s => s.User.Nutzername).ToList();
+                ListLikes.Find(s => s.User.Nutzername == AllVM.User.Nutzername).IsUser = true;
             }
             else
             {

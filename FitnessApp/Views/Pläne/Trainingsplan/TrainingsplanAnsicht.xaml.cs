@@ -12,36 +12,45 @@ namespace FitnessApp
 {
     public partial class TrainingsplanAnsicht : ContentPage
     {
-        public List<Trainingsplan> TPlaene { get; set; }
         public Trainingsplan TPlan { get; set; }
         public bool IsFavorite { get; set; }
 
         public TrainingsplanAnsicht(int id)
         {
+            GetByID(id);
             InitializeComponent();
             Start();
-            GetByID(id);
             BindingContext = this;
         }
 
         void Start()
         {
             Title = "Trainingsplan";
+            CalculateStars();
         }
 
         void GetByID(int id)
         {
             TPlan = AllVM.Datenbank.Trainingsplan.GetByID(id);
-            IsFavorite = AllVM.Datenbank.User.CheckIfFavo($"T;{TPlan.ID}", AllVM.ConvertToUser());
-            CalculateStars();
+
+            if (TPlan != null)
+            {
+                TPlan.UebungList = AllVM.Datenbank.Trainingsplan.GetUebungen(TPlan.ID);
+                IsFavorite = AllVM.Datenbank.User.CheckIfFavo($"T;{TPlan.ID}", AllVM.ConvertToUser());
+            }
+            else
+                DependencyService.Get<IMessage>().ShortAlert("Es ist ein Fehler aufgetreten");
         }
 
         void CalculateStars()
         {
             int count_bew = 5;
             double bewertung = -1;
-            if (TPlan.DurchBewertung != -1 && TPlan.DurchBewertung != -2)
+            if (TPlan.DurchBewertung != -2)
             {
+                if (TPlan.DurchBewertung == -1)
+                    TPlan.DurchBewertung = 0;
+
                 bewertung = Math.Round((double)TPlan.DurchBewertung * 2, MidpointRounding.AwayFromZero) / 2;
                 int count_filled = (int)Math.Floor(bewertung);
                 double count_half = bewertung - count_filled;
@@ -54,8 +63,8 @@ namespace FitnessApp
                     Image star = new Image()
                     {
                         Aspect = Aspect.AspectFit,
-                        HeightRequest = 20,
-                        WidthRequest = 20
+                        HeightRequest = 25,
+                        WidthRequest = 25
                     };
 
                     if (i <= count_filled - 1)
@@ -86,31 +95,35 @@ namespace FitnessApp
 
         void GoToBewertung(System.Object sender, System.EventArgs e)
         {
-            this.Navigation.PushAsync(new BewertungAdd((sender as Grid).ClassId, typeof(Trainingsplan)));
+            //Eigene Bewertungen sollen vermieden werden
+            if (TPlan.Ersteller.Nutzername != AllVM.User.Nutzername)
+                this.Navigation.PushAsync(new BewertungAdd((sender as Grid).ClassId, typeof(Trainingsplan)));
         }
 
         void FavoritePlan(System.Object sender, System.EventArgs e)
         {
             Image image = (sender as Image);
 
-            if (image != null)
+            if (image != null && image.ClassId != null)
             {
                 string key = "T;" + image.ClassId;
-                if ((image.Source as FileImageSource).File == "Star_Unfilled")
+                if ((image.Source as FileImageSource).File == "Herz_Unfilled")
                 {
                     if (AllVM.Datenbank.User.AddFavo(key, AllVM.ConvertToUser()))
-                        image.Source = ImageSource.FromFile("Star_Filled");
+                        image.Source = ImageSource.FromFile("Herz_Filled");
                     else
                         DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
                 }
-                else if ((image.Source as FileImageSource).File == "Star_Filled")
+                else if ((image.Source as FileImageSource).File == "Herz_Filled")
                 {
                     if (AllVM.Datenbank.User.DeleteFavo(key, AllVM.ConvertToUser()))
-                        image.Source = ImageSource.FromFile("Star_Unfilled");
+                        image.Source = ImageSource.FromFile("Herz_Unfilled");
                     else
                         DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
                 }
             }
+            else
+                DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
         }
     }
 }

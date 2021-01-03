@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using System.Linq;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
+﻿using Xamarin.Forms;
 
 namespace FitnessApp
 {
@@ -14,6 +7,13 @@ namespace FitnessApp
         public Help()
         {
             InitializeComponent();
+            SetHelpText();
+        }
+
+        private void SetHelpText()
+        {
+            string txt = $"Vielen Dank, dass du FitApp benutzt.\n\nHier steht normalerweise der Hilfetext, der aber noch geschrieben werden muss";
+            helpText.Text = txt;
         }
     }
 }

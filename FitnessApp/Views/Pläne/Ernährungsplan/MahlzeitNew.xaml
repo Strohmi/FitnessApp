@@ -6,20 +6,21 @@
 
     <ContentPage.Resources>
         <Style TargetType="Entry" x:Key="EntryStyle">
-            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="FontSize" Value="Large"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
             <Setter Property="TextColor" Value="Black"/>
             <Setter Property="PlaceholderColor" Value="Gray"/>
         </Style>
         <Style TargetType="Picker" x:Key="PickerStyle">
-            <Setter Property="FontSize" Value="Medium"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
             <Setter Property="TextColor" Value="Black"/>
             <Setter Property="TitleColor" Value="Gray"/>
         </Style>
         <Style TargetType="Label" x:Key="LabelStyle">
-            <Setter Property="FontSize" Value="Medium"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
             <Setter Property="TextColor" Value="Black"/>
         </Style>
     </ContentPage.Resources>
@@ -35,46 +36,44 @@
         <Grid Grid.Column="0" Margin="10,10,10,0" BackgroundColor="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="120"/>
             </Grid.ColumnDefinitions>
-            <Entry  Grid.Column="0" Margin="10,0,0,0" Style="{StaticResource Key=EntryStyle}" Placeholder="Titel" Text="{Binding MealName}" HorizontalTextAlignment="Start" ReturnType="Next"/>
-            <Picker Grid.Column="1" Margin="0,0,10,0" Style="{StaticResource Key=PickerStyle}" Title="Kategorie" ItemsSource="{Binding Categories}" SelectedItem="{Binding MealCategorie}"   />
+            <Entry  Grid.Column="0" Style="{StaticResource Key=EntryStyle}" Placeholder="Titel" Text="{Binding MealName}" HorizontalTextAlignment="Start" ReturnType="Next"/>
+            <Picker Grid.Column="1" Style="{StaticResource Key=PickerStyle}" Title="Kategorie" ItemsSource="{Binding Categories}" SelectedItem="{Binding MealCategorie}" HorizontalOptions="Fill" HorizontalTextAlignment="Center"/>
         </Grid>
 
-        <Grid Grid.Row="1" Margin="10,0,10,0" BackgroundColor="White">
+        <Grid Grid.Row="1" Margin="10,0" BackgroundColor="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <ListView x:Name="listView" Grid.Row="1" Grid.ColumnSpan ="4" BackgroundColor="White">
+            <ListView x:Name="listView" Grid.Row="1" BackgroundColor="White" Margin="10,0">
                 <ListView.Header>
-                    <Grid Grid.Row="0">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="40"/>
-                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="0.35*"/>
+                            <ColumnDefinition Width="0.35*"/>
                         </Grid.ColumnDefinitions>
-                        <Label  Grid.Column="0" Margin="10,10,0,10" Style="{StaticResource Key=LabelStyle}" FontAttributes="Bold" Text="Lebensmittel" HorizontalTextAlignment="Start"/>
-                        <Label  Grid.Column="1" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" FontAttributes="Bold" Text="Mg."/>
-                        <Label  Grid.Column="2" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" FontAttributes="Bold" Text="Einh."/>
+                        <Label Grid.Column="0" Style="{StaticResource Key=LabelStyle}" FontAttributes="Bold" Text="Lebensmittel" HorizontalOptions="Start"/>
+                        <Label Grid.Column="1" Style="{StaticResource Key=LabelStyle}" FontAttributes="Bold" Text="Menge"/>
+                        <Label Grid.Column="2" Style="{StaticResource Key=LabelStyle}" FontAttributes="Bold" Text="Einheit"/>
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout>
-                                <Grid Grid.Row="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="40"/>
-                                        <ColumnDefinition Width="40"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label  Grid.Column="0" Margin="10,10,0,10" Style="{StaticResource Key=LabelStyle}" Text="{Binding Nahrungsmittel}" HorizontalTextAlignment="Start"/>
-                                    <Label  Grid.Column="1" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" Text="{Binding Menge}"/>
-                                    <Label  Grid.Column="2" Margin="0,10,0,10"  Style="{StaticResource Key=LabelStyle}" Text="{Binding Einheit}"/>
-                                </Grid>
-                            </StackLayout>
+                            <Grid VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="0.35*"/>
+                                    <ColumnDefinition Width="0.35*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0" Style="{StaticResource Key=LabelStyle}" Text="{Binding Nahrungsmittel}" HorizontalOptions="Start"/>
+                                <Label Grid.Column="1" Style="{StaticResource Key=LabelStyle}" Text="{Binding Menge, StringFormat='{}{0:#,##0.##}'}"/>
+                                <Label Grid.Column="2" Style="{StaticResource Key=LabelStyle}" Text="{Binding Einheit}"/>
+                            </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -84,17 +83,15 @@
         <Grid Grid.Row="2" Margin="10,0,10,10" BackgroundColor="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="0.40*"/>
+                <ColumnDefinition Width="0.40*"/>
+                <ColumnDefinition Width="0.40*"/>
             </Grid.ColumnDefinitions>
 
-            <Entry  x:Name="foodEntry"   Grid.Column="0" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewFood}"      Placeholder="Lebensmittel" ReturnType="Next" Margin="10,0,0,0" HorizontalTextAlignment="Start"/>
-            <Entry  x:Name="amountEntry" Grid.Column="1" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewAmount}"    Placeholder="Mg." Keyboard="Numeric" ReturnType="Next"  />
-            <Picker x:Name="unitPicker"  Grid.Column="2" Style="{StaticResource Key=PickerStyle}" ItemsSource="{Binding Units}" Title="Einh." SelectedItem="{Binding NewUnit}"/>
-            <ImageButton Grid.Column="3" Margin="0,0,10,0" Source="Add.png" Clicked="Add" BackgroundColor="Transparent" />
+            <Entry x:Name="foodEntry" Grid.Column="0" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewFood}" Placeholder="Lebensmittel" ReturnType="Next" Margin="10,0,0,0" HorizontalTextAlignment="Start" MaxLength="25"/>
+            <Entry x:Name="amountEntry" Grid.Column="1" Style="{StaticResource Key=EntryStyle}" Text="{Binding NewAmount}" Placeholder="Menge" Keyboard="Numeric" ReturnType="Next" MaxLength="4"/>
+            <Picker x:Name="unitPicker" Grid.Column="2" Style="{StaticResource Key=PickerStyle}" ItemsSource="{Binding Units}" Title="Einheit" SelectedItem="{Binding NewUnit}" HorizontalOptions="Fill" HorizontalTextAlignment="Center"/>
+            <ImageButton Grid.Column="3" Source="Add" Clicked="Add" BackgroundColor="Transparent" />
         </Grid>
-
     </Grid>
-
 </ContentPage>

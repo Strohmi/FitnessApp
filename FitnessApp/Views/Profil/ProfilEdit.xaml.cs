@@ -84,11 +84,8 @@ namespace FitnessApp
 
                 if (photo != null)
                 {
-                    using (FileStream fs = File.OpenRead(photo.Path))
-                    {
-                        fs.CopyTo(ms);
-                        ProfilVM.User.ProfilBild = ms.ToArray();
-                    }
+                    photo.GetStreamWithImageRotatedForExternalStorage().CopyTo(ms);
+                    ProfilVM.User.ProfilBild = ms.ToArray();
                 }
             }
             catch (NotSupportedException ex1)
@@ -117,11 +114,8 @@ namespace FitnessApp
 
                 if (photo != null)
                 {
-                    using (FileStream fs = File.OpenRead(photo.Path))
-                    {
-                        fs.CopyTo(ms);
-                        ProfilVM.User.ProfilBild = ms.ToArray();
-                    }
+                    photo.GetStreamWithImageRotatedForExternalStorage().CopyTo(ms);
+                    ProfilVM.User.ProfilBild = ms.ToArray();
                 }
             }
             catch (NotSupportedException ex1)

@@ -11,8 +11,8 @@
                         <Grid>
                             <Grid.Margin>
                                 <OnPlatform x:TypeArguments="Thickness">
-                                    <On Platform="iOS" Value="10,0,0,5"/>
-                                    <On Platform="Android" Value="10,0,0,5"/>
+                                    <On Platform="iOS" Value="10,5,5,5"/>
+                                    <On Platform="Android" Value="10,5,5,5"/>
                                 </OnPlatform>
                             </Grid.Margin>
                             <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
                                     </DataTrigger>
                                 </Label.Triggers>
                             </Label>
-                            <Button Grid.Column="2" ClassId="{Binding User.Nutzername}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Small" CornerRadius="15" BorderColor="Black" BorderWidth="1" Padding="10,5" Clicked="FollowOrUnFollow">
+                            <Button Grid.Column="2" IsVisible="False" ClassId="{Binding User.Nutzername}" HorizontalOptions="End" VerticalOptions="Center" FontSize="Medium" CornerRadius="15" BorderColor="Black" BorderWidth="1" Padding="10,0" Clicked="FollowOrUnFollow">
                                 <Button.Triggers>
                                     <DataTrigger TargetType="Button" Binding="{Binding IsSub}" Value="True">
                                         <Setter Property="Text" Value="Entfolgen"/>
@@ -42,6 +42,12 @@
                                         <Setter Property="Text" Value="Folgen"/>
                                         <Setter Property="BackgroundColor" Value="LightGreen"/>
                                         <Setter Property="TextColor" Value="Black"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsUser}" Value="False">
+                                        <Setter Property="IsVisible" Value="True"/>
+                                    </DataTrigger>
+                                    <DataTrigger TargetType="Button" Binding="{Binding IsUser}" Value="True">
+                                        <Setter Property="IsVisible" Value="False"/>
                                     </DataTrigger>
                                 </Button.Triggers>
                             </Button>

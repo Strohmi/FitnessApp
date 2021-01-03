@@ -26,15 +26,18 @@ namespace FitnessApp
             BindingContext = FavoPlansVM;
         }
 
-        private void Start()
+        void ContentPage_Appearing(System.Object sender, System.EventArgs e)
         {
-            Title = "Favoriten";
-            NavigationPage.SetIconColor(this, Color.Black);
-
             FavoPlansVM.ListTrPlan = new List<Trainingsplan>();
             FavoPlansVM.ListErPlan = new List<Ernährungsplan>();
             GetList();
             FavoPlansVM.AnzeigeListe = FavoPlansVM.ListTrPlan.ToList<object>();
+        }
+
+        private void Start()
+        {
+            Title = "Favoriten";
+            NavigationPage.SetIconColor(this, Color.Black);
         }
 
         void Refresh(System.Object sender, System.EventArgs e)

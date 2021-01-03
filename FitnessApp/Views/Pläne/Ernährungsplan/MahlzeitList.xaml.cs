@@ -43,6 +43,9 @@ namespace FitnessApp
                 EPlaene = EPlaene.OrderByDescending(o => o.ErstelltAm).ToList();
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Laden");
+
+            listView.ItemsSource = null;
+            listView.ItemsSource = EPlaene;
         }
 
         void GoToPlan(System.Object sender, ItemTappedEventArgs e)
@@ -70,9 +73,11 @@ namespace FitnessApp
                 int count_bew = 5;
                 Grid bewGrid = ((theViewCell.View as Frame).Content as Grid).FindByName<Grid>("bewGrid");
                 double bewertung = -1;
-                item.DurchBewertung = (decimal)3.47;
-                if (item.DurchBewertung != -1 && item.DurchBewertung != -2)
+                if (item.DurchBewertung != -2)
                 {
+                    if (item.DurchBewertung == -1)
+                        item.DurchBewertung = 0;
+
                     bewertung = Math.Round((double)item.DurchBewertung * 2, MidpointRounding.AwayFromZero) / 2;
                     int count_filled = (int)Math.Floor(bewertung);
                     double count_half = bewertung - count_filled;
@@ -85,8 +90,8 @@ namespace FitnessApp
                         Image star = new Image()
                         {
                             Aspect = Aspect.AspectFit,
-                            HeightRequest = 30,
-                            WidthRequest = 30
+                            HeightRequest = 20,
+                            WidthRequest = 20
                         };
 
                         if (i <= count_filled - 1)
@@ -109,7 +114,7 @@ namespace FitnessApp
                     }
                 }
 
-                if (item.User.Nutzername == AllVM.User.Nutzername)
+                if (item.Ersteller.Nutzername == AllVM.User.Nutzername)
                 {
                     menuItem = new MenuItem()
                     {
