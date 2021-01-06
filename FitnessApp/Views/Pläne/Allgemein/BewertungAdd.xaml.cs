@@ -25,6 +25,9 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         void Start()
         {
             Title = "Bewertung";
@@ -38,6 +41,9 @@ namespace FitnessApp
             ToolbarItems.Add(item);
         }
 
+        /// <summary>
+        /// Die aktuelle Bewertung speichern
+        /// </summary>
         private void Save(object sender, EventArgs e)
         {
             int bewert = 0;
@@ -75,6 +81,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Herausfinden, welcher Plan bewertet werden soll
+        /// </summary>
         void GetByID(int id)
         {
             if (type == typeof(Trainingsplan))
@@ -83,6 +92,9 @@ namespace FitnessApp
                 EPlan = AllVM.Datenbank.Ernährungsplan.GetByID(id);
         }
 
+        /// <summary>
+        /// Visuelle Darstellung der Bewertung
+        /// </summary>
         private void FillStars(object sender, EventArgs e)
         {
             Image image = (sender as Image);
@@ -106,13 +118,12 @@ namespace FitnessApp
                         (bewGrid.Children[i] as Image).Source = ImageSource.FromFile("Star_Filled");
                     }
                 }
-                else
-                {
-                    _ = "stop here";
-                }
             }
         }
 
+        /// <summary>
+        /// Seite aus dem Stack löschen
+        /// </summary>
         protected override bool OnBackButtonPressed()
         {
             this.Navigation.PopAsync();

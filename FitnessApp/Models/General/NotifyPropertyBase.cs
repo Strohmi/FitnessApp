@@ -10,6 +10,9 @@ namespace FitnessApp
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// Speichern einer Variablen, nachdem sie geändert wurde
+        /// </summary>
         public void OnPropertyChanged<T>(ref T variable, T value, [CallerMemberName] string propertyName = null)
         {
             variable = value;

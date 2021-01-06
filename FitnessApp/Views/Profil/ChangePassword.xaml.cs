@@ -29,6 +29,9 @@ namespace FitnessApp
             BindingContext = cPWVM;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void Start()
         {
             Title = "Passwort ändern";
@@ -36,6 +39,9 @@ namespace FitnessApp
             curPW = AllVM.Datenbank.User.GetPasswort(cPWVM.User.Nutzername);
         }
 
+        /// <summary>
+        /// Navigationsbar anpassen
+        /// </summary>
         private void SetNavBar()
         {
             ToolbarItem item = new ToolbarItem
@@ -55,6 +61,7 @@ namespace FitnessApp
         /// <param name="e"></param>
         private void Save(object sender, EventArgs e)
         {
+            //Passwort muss bestimmte Kriterien haben
             var hasNumber = new Regex(@"[0-9]+");
             var hasUpperChar = new Regex(@"[A-Z]+");
             var hasLowerChar = new Regex(@"[a-z]+");
@@ -114,6 +121,10 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Aktuelles Passwort ist nicht korrekt!");
         }
 
+        /// <summary>
+        /// Seite aus Stack löschen
+        /// </summary>
+        /// <returns></returns>
         protected override bool OnBackButtonPressed()
         {
             this.Navigation.PopAsync();

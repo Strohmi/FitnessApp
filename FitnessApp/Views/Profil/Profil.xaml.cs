@@ -20,6 +20,7 @@ namespace FitnessApp
         private Timer timer;
         private string idCache;
 
+        //Unterschiedliche Konstrukturen, da beim aktuell angemeldeten Nutzer keine Daten aus der Datenbank benötigt werden
         public Profil()
         {
             InitializeComponent();
@@ -35,6 +36,11 @@ namespace FitnessApp
             Start();
         }
 
+        /// <summary>
+        /// Methode, die erst nach dem Laden der Seite aufgerufen wird
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Loaded(object sender, EventArgs e)
         {
             if (isOther == false)
@@ -45,6 +51,9 @@ namespace FitnessApp
             SetButton();
         }
 
+        /// <summary>
+        /// Persönlichen FitFeed des Benutzers laden
+        /// </summary>
         private void GetFitFeed()
         {
             var cache = AllVM.Datenbank.Feed.GetByUser(ProfilVM.User);
@@ -52,6 +61,9 @@ namespace FitnessApp
                 ProfilVM.FitFeed = cache.OrderByDescending(o => o.ErstelltAm).ToList();
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void Start()
         {
             Title = "Profil";
@@ -64,6 +76,9 @@ namespace FitnessApp
             timer.Elapsed += DisableLikeImage;
         }
 
+        /// <summary>
+        /// Button oben rechts je nach Betrachter individuell anpassen
+        /// </summary>
         private void SetButton()
         {
             if (ProfilVM.User.Nutzername == AllVM.User.Nutzername)
@@ -83,6 +98,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Folgen und Entfolgen eines Nutzers
+        /// </summary>
         void Follow_UnFollow(System.Object sender, System.EventArgs e)
         {
             Button button = (sender as Button);
@@ -95,6 +113,9 @@ namespace FitnessApp
                 Edit();
         }
 
+        /// <summary>
+        /// Folgen eines Nutzers
+        /// </summary>
         private void Follow()
         {
             if (AllVM.Datenbank.User.Follow(ProfilVM.User, AllVM.ConvertToUser()))
@@ -108,6 +129,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Entfolgen eines Nutzers
+        /// </summary>
         private void UnFollow()
         {
             if (AllVM.Datenbank.User.UnFollow(ProfilVM.User, AllVM.ConvertToUser()))
@@ -121,12 +145,18 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Springen zur Bearbeitung des Profils
+        /// </summary>
         private void Edit()
         {
             user = null;
             this.Navigation.PushAsync(new ProfilEdit());
         }
 
+        /// <summary>
+        /// Zum jeweiligen Plan springen
+        /// </summary>
         void GoToPlan(System.Object sender, System.EventArgs e)
         {
             Button button = (sender as Button);
@@ -141,18 +171,27 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Profilbild größer anzeigen
+        /// </summary>
         void ProfilBildTapped(System.Object sender, System.EventArgs e)
         {
             profilBildBig.IsVisible = true;
             grid.IsVisible = false;
         }
 
+        /// <summary>
+        /// Profilbild wieder verkleinern
+        /// </summary>
         void BigProfilBildTapped(System.Object sender, System.EventArgs e)
         {
             profilBildBig.IsVisible = false;
             grid.IsVisible = true;
         }
 
+        /// <summary>
+        /// Springen zur Ansicht der Follower
+        /// </summary>
         void Show_Follower(System.Object sender, System.EventArgs e)
         {
             if (ProfilVM.User.Nutzername == AllVM.User.Nutzername && ProfilVM.User.AnzahlFollower > 0)
@@ -161,6 +200,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Beitrag liken
+        /// </summary>
         void Like(System.Object sender, System.EventArgs e)
         {
             string id = (sender as Frame).ClassId;
@@ -182,17 +224,18 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Liken");
         }
 
+        /// <summary>
+        /// Like-Symbol nach Like entfernen
+        /// </summary>
         private void DisableLikeImage(object sender, ElapsedEventArgs e)
         {
             ProfilVM.FitFeed.Find(s => s.ID.ToString() == idCache).LikedTimer = false;
             idCache = null;
         }
 
-        void DirectChat(System.Object sender, System.EventArgs e)
-        {
-            DisplayAlert("Baustelle", "Das ausgewählte Feature steht noch nicht zur Verfügung", "OK");
-        }
-
+        /// <summary>
+        /// BindingContext des persönlichen FitFeeds bearbeiten/anpassen
+        /// </summary>
         void OnBindingContextChanged(object sender, EventArgs e)
         {
             MenuItem menuItem = new MenuItem();
@@ -221,6 +264,11 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Löschen eines Beitrages
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async void Delete(object sender, EventArgs e)
         {
             MenuItem item = (sender as MenuItem);

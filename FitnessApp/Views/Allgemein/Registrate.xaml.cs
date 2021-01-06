@@ -23,6 +23,9 @@ namespace FitnessApp
             BindingContext = RegVM;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void OnStart()
         {
             Title = "Registrieren";
@@ -30,6 +33,12 @@ namespace FitnessApp
             NavigationPage.SetHasBackButton(this, true);
         }
 
+        /// <summary>
+        /// Prüfen der Daten für die Registrierung und dann speichern der Daten lokal wie in der Datenbank
+        /// Voreinstellung einer Benutzerdaten, sodass ein bessere Userfeeling entsteht
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async void Registrieren(System.Object sender, System.EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(RegVM.User.Nutzername))

@@ -21,6 +21,11 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Anmeldedaten prüfen, lokal speichern und an den Server melden
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async void Save(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(Nutzername))
@@ -59,49 +64,24 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Zur Seite Registrierung springen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Registrate(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new Registrate());
         }
 
+        /// <summary>
+        /// Zur Seite Help springen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Help(object sender, EventArgs e)
         {
             this.Navigation.PushAsync(new Help());
-        }
-
-        private void StartLoading(object sender)
-        {
-            if (sender != null)
-            {
-                if (sender.GetType() == typeof(Entry))
-                {
-                    (sender as Entry).IsEnabled = false;
-                    loading.IsVisible = true;
-                    loading.IsRunning = true;
-                }
-                else if (sender.GetType() == typeof(Button))
-                {
-                    (sender as Button).IsEnabled = false;
-                    loading.IsVisible = true;
-                    loading.IsRunning = true;
-                }
-            }
-        }
-
-        private void StopLoading(object sender)
-        {
-            if (sender.GetType() == typeof(Entry))
-            {
-                (sender as Entry).IsEnabled = false;
-                loading.IsVisible = true;
-                loading.IsRunning = true;
-            }
-            else if (sender != null && sender.GetType() == typeof(Button))
-            {
-                (sender as Button).IsEnabled = true;
-                loading.IsVisible = false;
-                loading.IsRunning = false;
-            }
         }
     }
 }

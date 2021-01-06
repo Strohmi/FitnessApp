@@ -23,6 +23,9 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void Start()
         {
             Title = "Follower";
@@ -38,6 +41,10 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Seite aus Stack löschen
+        /// </summary>
+        /// <returns></returns>
         protected override bool OnBackButtonPressed()
         {
             this.Navigation.PopAsync();

@@ -23,12 +23,19 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         void Start()
         {
             Title = "Trainingsplan";
             CalculateStars();
         }
 
+        /// <summary>
+        /// Plan mit Hilfe der ID aus der Datenbank
+        /// </summary>
+        /// <param name="id">ID des Plans</param>
         void GetByID(int id)
         {
             TPlan = AllVM.Datenbank.Trainingsplan.GetByID(id);
@@ -42,6 +49,9 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Es ist ein Fehler aufgetreten");
         }
 
+        /// <summary>
+        /// Berechnung und Anzeige der Bewertung des Plans
+        /// </summary>
         void CalculateStars()
         {
             int count_bew = 5;
@@ -88,11 +98,17 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Zum Profil springen
+        /// </summary>
         void GoToProfil(System.Object sender, System.EventArgs e)
         {
             this.Navigation.PushAsync(new Profil((sender as Label).ClassId));
         }
 
+        /// <summary>
+        /// Bewertung hinzufügen
+        /// </summary>
         void GoToBewertung(System.Object sender, System.EventArgs e)
         {
             //Eigene Bewertungen sollen vermieden werden
@@ -100,6 +116,9 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new BewertungAdd((sender as Grid).ClassId, typeof(Trainingsplan)));
         }
 
+        /// <summary>
+        /// Plan als Favorit kennzeichnen
+        /// </summary>
         void FavoritePlan(System.Object sender, System.EventArgs e)
         {
             Image image = (sender as Image);
@@ -124,6 +143,15 @@ namespace FitnessApp
             }
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Favorisieren");
+        }
+
+        /// <summary>
+        /// Seite aus Stack löschen
+        /// </summary>
+        protected override bool OnBackButtonPressed()
+        {
+            this.Navigation.PopAsync();
+            return base.OnBackButtonPressed();
         }
     }
 }

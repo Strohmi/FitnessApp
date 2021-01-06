@@ -25,16 +25,25 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Liste erst nach Laden der Seite bereitstellen
+        /// </summary>
         void Loaded(System.Object sender, System.EventArgs e)
         {
             GetList();
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         void Start()
         {
             Title = "Ernährungspläne";
         }
 
+        /// <summary>
+        /// Liste aus Datenbank bereitstellen
+        /// </summary>
         void GetList()
         {
             EPlaene = AllVM.Datenbank.Ernährungsplan.GetList(user.Nutzername);
@@ -48,6 +57,9 @@ namespace FitnessApp
             listView.ItemsSource = EPlaene;
         }
 
+        /// <summary>
+        /// Zum Plan springen
+        /// </summary>
         void GoToPlan(System.Object sender, ItemTappedEventArgs e)
         {
             var item = (e.Item as Ernährungsplan);
@@ -56,6 +68,9 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new MahlzeitAnsicht(item.ID));
         }
 
+        /// <summary>
+        /// BindingContext der Liste anpassen und Bewertung berechnen
+        /// </summary>
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)
         {
             MenuItem menuItem = new MenuItem();
@@ -128,6 +143,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Löschen eines Beitrages
+        /// </summary>
         private void Delete(object sender, EventArgs e)
         {
             Ernährungsplan plan = EPlaene.Find(s => s.ID.ToString() == (sender as MenuItem).ClassId);
@@ -138,6 +156,15 @@ namespace FitnessApp
             }
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
+        }
+
+        /// <summary>
+        /// Seite aus Stack löschen
+        /// </summary>
+        protected override bool OnBackButtonPressed()
+        {
+            this.Navigation.PopAsync();
+            return base.OnBackButtonPressed();
         }
     }
 }

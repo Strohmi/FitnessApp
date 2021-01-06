@@ -9,6 +9,9 @@ namespace FitnessApp.Droid.Helper
 
     public class CloseDROID : ICloseApp
     {
+        /// <summary>
+        /// App schließen
+        /// </summary>
         public void Close()
         {
             var activity = (Activity)Forms.Context;

@@ -33,6 +33,9 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         public void Start()
         {
             SetNavBar();
@@ -43,6 +46,9 @@ namespace FitnessApp
             Categories = AllVM.Datenbank.Trainingsplan.GetCategories();
         }
 
+        /// <summary>
+        /// Nagivationsbar einstellen
+        /// </summary>
         private void SetNavBar()
         {
             ToolbarItem item = new ToolbarItem
@@ -55,7 +61,9 @@ namespace FitnessApp
             ToolbarItems.Add(item);
         }
 
-        //Diese Methode fügt einen neuen Eintrag mit Namen, Menge und Einheit zur Liste "plan.TrainingList" hinzu
+        /// <summary>
+        /// Eine Übung zum Trainingsplan hinzufügen
+        /// </summary>
         private void Add(object sender, EventArgs e)
         {
             try
@@ -94,7 +102,9 @@ namespace FitnessApp
             }
         }
 
-        //Leert die Entrys und aktualisiert die Liste
+        /// <summary>
+        /// Übung für die nächste Eingabe bereit machen
+        /// </summary>
         private void ClearRefresh()
         {
             nameEntry.Text = null;
@@ -106,7 +116,9 @@ namespace FitnessApp
             listView.ItemsSource = plan.UebungList;
         }
 
-        //Diese Methode speichert alle Eingaben in der Datenbank
+        /// <summary>
+        /// Plan in die Datenbank speichern
+        /// </summary>
         private void Save(object sender, EventArgs e)
         {
             //Übergabe von User, Mahlzeittitel und aktuellen Datum an Instanz "plan" von der Klasse Trainingsplan
@@ -146,6 +158,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Seite aus Stack löschen
+        /// </summary>
         protected override bool OnBackButtonPressed()
         {
             this.Navigation.PopAsync();

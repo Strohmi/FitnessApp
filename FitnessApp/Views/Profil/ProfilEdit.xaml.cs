@@ -28,18 +28,27 @@ namespace FitnessApp
             Start();
         }
 
+        /// <summary>
+        /// Methode, die erst nach dem Laden ausgeführt werden soll
+        /// </summary>
         private void Loaded(object sender, EventArgs e)
         {
             pickPhoto = false;
             BindingContext = ProfilVM;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void Start()
         {
             Title = "Profil bearbeiten";
             SetNavBar();
         }
 
+        /// <summary>
+        /// Einstellungen der Navigationsbar
+        /// </summary>
         private void SetNavBar()
         {
             ToolbarItem item = new ToolbarItem
@@ -52,6 +61,9 @@ namespace FitnessApp
             ToolbarItems.Add(item);
         }
 
+        /// <summary>
+        /// Änderungen des Profils speichern und an die Datenbank senden
+        /// </summary>
         private void Save(object sender, EventArgs e)
         {
             ProfilVM.User.OnlyCustomName = onlyCustomName.IsChecked;
@@ -69,6 +81,30 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Speichern");
         }
 
+        /// <summary>
+        /// Auswahl, welches Foto hochgeladen werden soll
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        async void ChangePhoto(System.Object sender, System.EventArgs e)
+        {
+            var result = await DisplayActionSheet("Profilbild ändern", "Abbrechen", null, new string[] { "Aufnehmen", "Hochladen" });
+            switch (result)
+            {
+                case "Aufnehmen":
+                    TakePhoto();
+                    break;
+                case "Hochladen":
+                    UploadPhoto();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Auswahl eines Fotos aus der Mediathek des Gerätes 
+        /// </summary>
         private async void UploadPhoto()
         {
             try
@@ -77,8 +113,8 @@ namespace FitnessApp
                 MemoryStream ms = new MemoryStream();
                 MediaFile photo = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions()
                 {
-                    PhotoSize = PhotoSize.Small,
-                    CompressionQuality = 30,
+                    PhotoSize = PhotoSize.Large,
+                    CompressionQuality = 100,
                     SaveMetaData = false,
                 });
 
@@ -98,6 +134,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Aufnehmen eines Fotos mit der Kamera des Gerätes
+        /// </summary>
         private async void TakePhoto()
         {
             try
@@ -109,7 +148,8 @@ namespace FitnessApp
                     DefaultCamera = CameraDevice.Front,
                     AllowCropping = true,
                     SaveMetaData = false,
-                    CompressionQuality = 30
+                    CompressionQuality = 100,
+                    PhotoSize = PhotoSize.Large
                 });
 
                 if (photo != null)
@@ -129,6 +169,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Profilbild zum Standard-Bild setzen
+        /// </summary>
         void DeletePhoto(System.Object sender, System.EventArgs e)
         {
             using (var webClient = new WebClient())
@@ -137,6 +180,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Nutzer komplett löschen
+        /// </summary>
         async void DeleteUser(System.Object sender, System.EventArgs e)
         {
             if (await DisplayAlert("Löschen?", "Möchtest du deinen Account wirklich löschen?\nAlle deine Daten werden nicht mehr zugänglich sein!", "Ja", "Nein"))
@@ -151,36 +197,29 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Springen zum Passwort ändern
+        /// </summary>
         void ChangePWD(System.Object sender, System.EventArgs e)
         {
             this.Navigation.PushAsync(new ChangePassword(ProfilVM.User));
         }
 
+        /// <summary>
+        /// Seite aus dem Stack löschen
+        /// </summary>
         protected override bool OnBackButtonPressed()
         {
             this.Navigation.PopAsync();
             return true;
         }
 
+        /// <summary>
+        /// Aktuellen Benutzer abmelden und zum Login springen
+        /// </summary>
         void Logoff(System.Object sender, System.EventArgs e)
         {
             App.Current.MainPage = new NavigationPage(new Login());
-        }
-
-        async void ChangePhoto(System.Object sender, System.EventArgs e)
-        {
-            var result = await DisplayActionSheet("Profilbild ändern", "Abbrechen", null, new string[] { "Aufnehmen", "Hochladen" });
-            switch (result)
-            {
-                case "Aufnehmen":
-                    TakePhoto();
-                    break;
-                case "Hochladen":
-                    UploadPhoto();
-                    break;
-                default:
-                    break;
-            }
         }
     }
 }

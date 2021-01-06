@@ -48,16 +48,5 @@ namespace FitnessApp
                     return false;
             }
         }
-
-        public bool IsPlan
-        {
-            get
-            {
-                if (PlanArt != null)
-                    return true;
-                else
-                    return false;
-            }
-        }
     }
 }

@@ -35,6 +35,9 @@ namespace FitnessApp.Droid
             LoadApplication(new App());
         }
 
+        /// <summary>
+        /// Schriftgröße vereinheitlichen
+        /// </summary>
         public void InitFontSize()
         {
             Configuration config = Resources.Configuration;
@@ -45,6 +48,9 @@ namespace FitnessApp.Droid
             BaseContext.Resources.UpdateConfiguration(config, metrics);
         }
 
+        /// <summary>
+        /// Entsprechenden Berechtigungen anfragen
+        /// </summary>
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

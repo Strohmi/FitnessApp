@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using FitnessApp.Models;
 using FitnessApp.Models.General;
-using FitnessApp.Models.DB;
 using System.Linq;
 
 namespace FitnessApp
@@ -25,16 +22,25 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Liste erst nach Laden der Seite bereitstellen
+        /// </summary>
         void Loaded(System.Object sender, System.EventArgs e)
         {
             GetList();
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         void Start()
         {
             Title = "Trainingspläne";
         }
 
+        /// <summary>
+        /// Liste aus Datenbank bereitstellen
+        /// </summary>
         void GetList()
         {
             TPlaene = AllVM.Datenbank.Trainingsplan.GetList(user.Nutzername);
@@ -48,6 +54,9 @@ namespace FitnessApp
             listView.ItemsSource = TPlaene;
         }
 
+        /// <summary>
+        /// Zum Plan springen
+        /// </summary>
         void GoToPlan(System.Object sender, ItemTappedEventArgs e)
         {
             var item = (e.Item as Trainingsplan);
@@ -56,6 +65,9 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new TrainingsplanAnsicht(item.ID));
         }
 
+        /// <summary>
+        /// BindingContext der Liste bearbeiten und Bewertung anzeigen
+        /// </summary>
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)
         {
             MenuItem menuItem = new MenuItem();
@@ -128,6 +140,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Beitrag löschen
+        /// </summary>
         private void Delete(object sender, EventArgs e)
         {
             Trainingsplan plan = TPlaene.Find(s => s.ID.ToString() == (sender as MenuItem).ClassId);
@@ -138,6 +153,15 @@ namespace FitnessApp
             }
             else
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Löschen");
+        }
+
+        /// <summary>
+        /// Seite aus Stack löschen
+        /// </summary>
+        protected override bool OnBackButtonPressed()
+        {
+            this.Navigation.PopAsync();
+            return base.OnBackButtonPressed();
         }
     }
 }

@@ -1,14 +1,12 @@
-using System;
-using System.IO;
 using System.Text;
-using System.Threading.Tasks;
-using Plugin.Media;
-using Plugin.Media.Abstractions;
-using Xamarin.Forms;
 
 namespace FitnessApp.Models.General
 {
     //Autor: NiE
+    // Hinweis:
+    // Es musste ein zweiter User angelegt werden,
+    // weil durch die Benachrichtigung, wenn ein Property geändert wurde,
+    // die Einstellungen direkt gespeichert wurden. Dies war ab und zu nicht gewollt.
 
     public class AllVM
     {

@@ -35,13 +35,8 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Entry Grid.Row="0" Grid.Column="1" Placeholder="Benutzername" Style="{StaticResource Key=EntryStyle}" Text="{Binding Nutzername}" ReturnType="Next" IsTextPredictionEnabled="False" IsSpellCheckEnabled="False"/>
-            <!--<Picker Grid.Row="0" Title="Nutzername..." FontSize="Large" HorizontalTextAlignment="Center" ItemsSource="{Binding Nutzernamen}" SelectedItem="{Binding Nutzername}"/>-->
             <Entry Grid.Row="1" Grid.Column="1" Margin="0,10" Placeholder="Passwort" Style="{StaticResource Key=EntryStyle}" Text="{Binding Passwort}" IsPassword="True" ReturnType="Go" Completed="Save"/>
-
-            <Grid Grid.Row="2" Grid.Column="1">
-                <Button Text="Anmelden" FontSize="Large" CharacterSpacing="2" TextColor="White" BackgroundColor="Green" Clicked="Save"/>
-                <ActivityIndicator x:Name="loading" Color="Red" IsVisible="False"/>
-            </Grid>
+            <Button Grid.Row="2" Grid.Column="1" Text="Anmelden" FontSize="Large" CharacterSpacing="2" TextColor="White" BackgroundColor="Green" Clicked="Save"/>
         </Grid>
 
         <Grid Grid.Row="2" VerticalOptions="End" Margin="0,0,0,20">

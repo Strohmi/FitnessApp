@@ -24,6 +24,9 @@ namespace FitnessApp
             BindingContext = SearchVM;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void Start()
         {
             Title = "Suche";
@@ -32,11 +35,20 @@ namespace FitnessApp
             SearchVM.EPläne = AllVM.Datenbank.Ernährungsplan.GetList();
         }
 
+        /// <summary>
+        /// Permanente Suche beim Eingeben eines neuen Buchstabens
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextChanged(object sender, TextChangedEventArgs e)
         {
             Suchen(e.NewTextValue);
         }
 
+        /// <summary>
+        /// Suche eines Treffers in der entsprechenden Liste
+        /// </summary>
+        /// <param name="text"></param>
         void Suchen(string text)
         {
             if (!string.IsNullOrEmpty(text))
@@ -56,6 +68,11 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Zu dem entsprechenden Eintrag springen, der als Treffer angezeigt wird
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Tapped(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
         {
             ListView list = (sender as ListView);
@@ -68,6 +85,11 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new MahlzeitAnsicht((e.Item as Ernährungsplan).ID));
         }
 
+        /// <summary>
+        /// Auswahl der Liste, in der gesucht werden soll
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ButtonChanged(System.Object sender, EventArgs e)
         {
             Button button = (sender as Button);
@@ -110,6 +132,11 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// BindingContext eines Items der ListView ändern
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)
         {
             MenuItem menuItem = new MenuItem();

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Linq;
 using FitnessApp.Models;
 using FitnessApp.Models.General;
-using System.Threading.Tasks;
-using System.Timers;
 using FitnessApp.ViewModels;
 
 namespace FitnessApp
@@ -26,6 +22,9 @@ namespace FitnessApp
             BindingContext = FavoPlansVM;
         }
 
+        /// <summary>
+        /// Methoden, die erst nach dem Laden ausgeführt werden sollen
+        /// </summary>
         void ContentPage_Appearing(System.Object sender, System.EventArgs e)
         {
             FavoPlansVM.ListTrPlan = new List<Trainingsplan>();
@@ -34,12 +33,18 @@ namespace FitnessApp
             FavoPlansVM.AnzeigeListe = FavoPlansVM.ListTrPlan.ToList<object>();
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void Start()
         {
             Title = "Favoriten";
             NavigationPage.SetIconColor(this, Color.Black);
         }
 
+        /// <summary>
+        /// Aktualisierung der Liste
+        /// </summary>
         void Refresh(System.Object sender, System.EventArgs e)
         {
             FavoPlansVM.AnzeigeListe = new List<object>();
@@ -47,6 +52,9 @@ namespace FitnessApp
             (sender as ListView).IsRefreshing = false;
         }
 
+        /// <summary>
+        /// Liste aus der Datenbank bereitstellen
+        /// </summary>
         private void GetList()
         {
             FavoPlansVM.ListFavoPlans = AllVM.Datenbank.User.GetFavoPlans();
@@ -70,6 +78,9 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Abruf der Liste");
         }
 
+        /// <summary>
+        /// Zum Profil springen
+        /// </summary>
         void GoToProfil(System.Object sender, System.EventArgs e)
         {
             Image image = (sender as Image);
@@ -80,6 +91,25 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new Profil(image.ClassId));
         }
 
+        /// <summary>
+        /// Zum Plan springen
+        /// </summary>
+        void GoToPlan(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
+        {
+            var listview = (sender as ListView);
+            var item = listview.SelectedItem;
+            if (item != null)
+            {
+                if (item.GetType() == typeof(Trainingsplan))
+                    this.Navigation.PushAsync(new TrainingsplanAnsicht((item as Trainingsplan).ID));
+                else if (item.GetType() == typeof(Ernährungsplan))
+                    this.Navigation.PushAsync(new MahlzeitAnsicht((item as Ernährungsplan).ID));
+            }
+        }
+
+        /// <summary>
+        /// Entscheiden, welche Pläne angezeigt werden sollen
+        /// </summary>
         void ChangeCategory(object sender, EventArgs e)
         {
             Button button = (sender as Button);
@@ -98,6 +128,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// BindingContext der Liste anpassen
+        /// </summary>
         void OnBindingContextChanged(System.Object sender, System.EventArgs e)
         {
             MenuItem menuItem = new MenuItem();
@@ -137,6 +170,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Beitrag aus den Favoriten löschen
+        /// </summary>
         private void Delete(object sender, EventArgs e)
         {
             var menuitem = (sender as MenuItem);
@@ -150,19 +186,6 @@ namespace FitnessApp
             else
             {
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Entfernen");
-            }
-        }
-
-        void GoToPlan(System.Object sender, Xamarin.Forms.ItemTappedEventArgs e)
-        {
-            var listview = (sender as ListView);
-            var item = listview.SelectedItem;
-            if (item != null)
-            {
-                if (item.GetType() == typeof(Trainingsplan))
-                    this.Navigation.PushAsync(new TrainingsplanAnsicht((item as Trainingsplan).ID));
-                else if (item.GetType() == typeof(Ernährungsplan))
-                    this.Navigation.PushAsync(new MahlzeitAnsicht((item as Ernährungsplan).ID));
             }
         }
     }

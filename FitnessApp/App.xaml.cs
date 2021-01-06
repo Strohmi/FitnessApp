@@ -20,6 +20,9 @@ namespace FitnessApp
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Methode zum Start der App
+        /// </summary>
         protected override void OnStart()
         {
             if (DeviceInfo.Platform.ToString() == "iOS")
@@ -38,6 +41,9 @@ namespace FitnessApp
 
         }
 
+        /// <summary>
+        /// Lokale Variablen prüfen und ggf. automatisch Anmelden
+        /// </summary>
         private void AutoLogin()
         {
             string user = null, passwort = null;
@@ -96,6 +102,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Berechtigungen unter iOS prüfen, da Reihenfolge des Seitenabrufes bei iOS abweicht
+        /// </summary>
         private async void CheckPermissions()
         {
             try

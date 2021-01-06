@@ -34,12 +34,16 @@ namespace FitnessApp
             BindingContext = FitFeedVM;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         private void Start()
         {
             NavigationPage.SetIconColor(this, Color.White);
 
             if (AllVM.Datenbank.User.GetSubs(AllVM.User.Nutzername).Count == 0)
             {
+                //Wenn ein neuer Nutzer keine Abbonennten hat, soll ein Einstiegstext erscheinen, sodass das Userfeeling erhört wird
                 FitFeedVM.ListNews.Add(new News()
                 {
                     ID = -1,
@@ -67,6 +71,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Methode, die erst nach Laden der Seite ausgeführt wird
+        /// </summary>
         void Loaded(System.Object sender, System.EventArgs e)
         {
             timer = new Timer()
@@ -77,18 +84,31 @@ namespace FitnessApp
             timer.Elapsed += DisableLikeImage;
         }
 
+        /// <summary>
+        /// Nachdem das Like-Symbol angezeigt wird, muss es auch wieder verschwinden
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DisableLikeImage(object sender, ElapsedEventArgs e)
         {
             FitFeedVM.ListNews.First(s => s.ID.ToString() == idCache).LikedTimer = false;
             idCache = null;
         }
 
+        /// <summary>
+        /// Aktualisierung der Liste
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Refresh(System.Object sender, System.EventArgs e)
         {
             GetList();
             (sender as ListView).IsRefreshing = false;
         }
 
+        /// <summary>
+        /// Daten aus der Datenbank bereitstellen
+        /// </summary>
         private void GetList()
         {
             CacheList = AllVM.Datenbank.Feed.Get(AllVM.ConvertToUser(), vonDatum);
@@ -105,12 +125,21 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Abruf der Liste");
         }
 
+        /// <summary>
+        /// Beitrag liken
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void Like(System.Object sender, System.EventArgs e)
         {
             string id = (sender as Frame).ClassId;
             Liken(id);
         }
 
+        /// <summary>
+        /// Gefällt mir bei einem bestimmten Beitrag eintragen und dann Like-Symbol anzeigen
+        /// </summary>
+        /// <param name="id">ID des Beitrages</param>
         void Liken(string id)
         {
             bool? result = AllVM.Datenbank.Feed.Like(id, AllVM.ConvertToUser());
@@ -131,12 +160,21 @@ namespace FitnessApp
                 DependencyService.Get<IMessage>().ShortAlert("Fehler beim Liken");
         }
 
+        /// <summary>
+        /// Springen zum Profil
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void GoToProfil(System.Object sender, System.EventArgs e)
         {
             Label label = (sender as Label);
             ZumProfil(label.ClassId);
         }
 
+        /// <summary>
+        /// Prüfen, welches Profil aufgerufen werden soll
+        /// </summary>
+        /// <param name="nutzername">Nutzername des Profils</param>
         void ZumProfil(string nutzername)
         {
             if (nutzername == AllVM.User.Nutzername)
@@ -145,6 +183,10 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new Profil(nutzername));
         }
 
+        /// <summary>
+        /// Löschen eines Beitrages
+        /// </summary>
+        /// <param name="id"></param>
         async void Delete(string id)
         {
             News news = FitFeedVM.ListNews.First(s => s.ID.ToString() == id);
@@ -163,6 +205,11 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Mehr Beiträge laden. Zeitraum wird immer um 7 Tage addiert, wenn kein Beitrag vorhanden ist
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void LoadMore(object sender, EventArgs e)
         {
             loadMoreBtn.IsVisible = false;
@@ -193,12 +240,22 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Wenn das letzte Item erscheint, dann soll der Button zum Mehrladen erscheinen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ItemAppearing(System.Object sender, EventArgs e)
         {
             if (((sender as ViewCell).View.BindingContext as News) == FitFeedVM.ListNews.Last())
                 loadMoreBtn.IsVisible = true;
         }
 
+        /// <summary>
+        /// Anzeigen, wer den Beitrag geliked hat
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void ShowLikes(System.Object sender, System.EventArgs e)
         {
             StackLayout stack = (sender as StackLayout);
@@ -208,6 +265,11 @@ namespace FitnessApp
                 this.Navigation.PushAsync(new Likes(stack.ClassId));
         }
 
+        /// <summary>
+        /// Zu den Einstellungen eines einzelnen Beitrags gehen
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         async void GoToSettings(System.Object sender, System.EventArgs e)
         {
             News news = FitFeedVM.ListNews.First(s => s.ID.ToString() == (sender as Image).ClassId);

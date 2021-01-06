@@ -8,6 +8,9 @@ namespace FitnessApp.Models.General
 
     public class ByteArrayToImageSourceConverter : IValueConverter
     {
+        /// <summary>
+        /// Aus byte[] eine ImageSource konvertieren
+        /// </summary>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             ImageSource retSource = null;
@@ -28,6 +31,9 @@ namespace FitnessApp.Models.General
 
     public class ImageHeightConverter : IValueConverter
     {
+        /// <summary>
+        /// Höhe eines Bildes ermitteln
+        /// </summary>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             double height = -1;
@@ -50,6 +56,9 @@ namespace FitnessApp.Models.General
 
     public class ImageWidthConverter : IValueConverter
     {
+        /// <summary>
+        /// Breite eines Bildes ermitteln
+        /// </summary>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             double width = -1;
@@ -75,6 +84,9 @@ namespace FitnessApp.Models.General
         public DataTemplate TextTemplate { get; set; }
         public DataTemplate FotoTemplate { get; set; }
 
+        /// <summary>
+        /// Entsprechendes Template bereitstellen
+        /// </summary>
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
             News news = (item as News);

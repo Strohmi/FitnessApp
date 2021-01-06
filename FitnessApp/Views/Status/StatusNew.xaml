@@ -4,6 +4,7 @@
              x:Class="FitnessApp.StatusNew"
              Title="{Binding Title}">
 
+    <!--Zugang zum Converter, um aus byte[] ein Bild zu erstellen-->
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ByteArrayToImageSourceConverter x:Key="ByteArrayToImage" />

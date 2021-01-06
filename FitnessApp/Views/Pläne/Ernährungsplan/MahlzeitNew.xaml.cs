@@ -31,16 +31,21 @@ namespace FitnessApp
             BindingContext = this;
         }
 
+        /// <summary>
+        /// Startmethode für bessere Übersicht, die am Anfang ausgeführt werden müssen
+        /// </summary>
         public void Start()
         {
             SetNavBar();
             Title = "Mahlzeit erstellen";
 
-            //Diese Methoden müssen noch geschrieben werden!
             Units = AllVM.Datenbank.Ernährungsplan.GetUnits();
             Categories = AllVM.Datenbank.Ernährungsplan.GetCategories();
         }
 
+        /// <summary>
+        /// Navigationsbar einstellen
+        /// </summary>
         private void SetNavBar()
         {
             ToolbarItem item = new ToolbarItem
@@ -53,7 +58,9 @@ namespace FitnessApp
             ToolbarItems.Add(item);
         }
 
-        //Diese Methode fügt einen neuen Eintrag mit Namen, Menge und Einheit zur Liste "plan.MahlzeitenList" hinzu
+        /// <summary>
+        /// Ein Teil der Mahlzeit in die Liste hinzufügen
+        /// </summary>
         private void Add(object sender, EventArgs e)
         {
             try
@@ -94,7 +101,9 @@ namespace FitnessApp
             }
         }
 
-        //Diese Methode speichert alle Eingaben in der Datenbank
+        /// <summary>
+        /// Speichern der gesamten Mahlzeit in die Datenbank
+        /// </summary>
         private void Save(object sender, EventArgs e)
         {
             //Übergabe von User, Mahlzeittitel und aktuellen Datum an Instanz "plan" von der Klasse Ernährungsplan
@@ -136,6 +145,9 @@ namespace FitnessApp
             }
         }
 
+        /// <summary>
+        /// Seite aus Stack löschen
+        /// </summary>
         protected override bool OnBackButtonPressed()
         {
             this.Navigation.PopAsync();

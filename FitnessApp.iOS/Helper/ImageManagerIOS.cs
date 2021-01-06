@@ -10,6 +10,9 @@ namespace FitnessApp.iOS.Helper
 
     public class ImageManagerIOS : IImageManager
     {
+        /// <summary>
+        /// Original-Größe des Bildes ermitteln
+        /// </summary>
         public Size GetDimensionsFrom(byte[] bytes)
         {
             var data = NSData.FromArray(bytes);

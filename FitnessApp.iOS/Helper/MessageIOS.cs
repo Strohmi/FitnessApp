@@ -15,16 +15,25 @@ namespace FitnessApp.iOS.Helper
         NSTimer alertDelay;
         UIAlertController alert;
 
+        /// <summary>
+        /// Kurze Nachricht anzeigen
+        /// </summary>
         public void ShortAlert(string message)
         {
             ShowAlert(message, SHORT_DELAY);
         }
 
+        /// <summary>
+        /// Lange Nachricht anzeigen
+        /// </summary>
         public void LongAlert(string message)
         {
             ShowAlert(message, LONG_DELAY);
         }
 
+        /// <summary>
+        /// Nachricht anzeigen
+        /// </summary>
         void ShowAlert(string message, double seconds)
         {
             alertDelay = NSTimer.CreateScheduledTimer(seconds, (obj) =>
@@ -35,6 +44,9 @@ namespace FitnessApp.iOS.Helper
             UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(alert, true, null);
         }
 
+        /// <summary>
+        /// Nachricht nicht mehr anzeigen
+        /// </summary>
         void dismissMessage()
         {
             if (alert != null)

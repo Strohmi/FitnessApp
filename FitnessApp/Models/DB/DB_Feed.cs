@@ -191,14 +191,6 @@ namespace FitnessApp.Models
                 if (!result)
                     return false;
             }
-            else if (news.IsPlan)
-            {
-                //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                //result = StaticDB.RunSQL(com);
-
-                //if (!result)
-                //    return false;
-            }
 
             com = $"DELETE FROM Feed_Likes WHERE Feed_ID = '{news.ID}'";
             result = StaticDB.RunSQL(com);
@@ -214,14 +206,6 @@ namespace FitnessApp.Models
                     StaticDB.Connection.Open();
                     int count = command.ExecuteNonQuery();
                     StaticDB.Connection.Close();
-                }
-                else if (news.IsPlan)
-                {
-                    //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                    //result = StaticDB.RunSQL(com);
-
-                    //if (!result)
-                    //    return false;
                 }
                 return false;
             }
@@ -247,14 +231,6 @@ namespace FitnessApp.Models
                     int count = command.ExecuteNonQuery();
                     StaticDB.Connection.Close();
                 }
-                else if (news.IsPlan)
-                {
-                    //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                    //result = StaticDB.RunSQL(com);
-
-                    //if (!result)
-                    //    return false;
-                }
                 return false;
             }
 
@@ -275,14 +251,6 @@ namespace FitnessApp.Models
                     StaticDB.Connection.Open();
                     int count = command.ExecuteNonQuery();
                     StaticDB.Connection.Close();
-                }
-                else if (news.IsPlan)
-                {
-                    //com = $"DELETE FROM Feed_Fotos WHERE ID = '{news.ID}'";
-                    //result = StaticDB.RunSQL(com);
-
-                    //if (!result)
-                    //    return false;
                 }
                 return false;
             }
