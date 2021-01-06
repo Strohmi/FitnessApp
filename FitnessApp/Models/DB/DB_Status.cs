@@ -4,6 +4,8 @@ using System.Data.SqlClient;
 
 namespace FitnessApp.Models
 {
+    //Autor: Niklas Erichsen
+
     public class DB_Status
     {
         /// <summary>

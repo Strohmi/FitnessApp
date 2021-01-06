@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public partial class FitFeed : ContentPage
     {

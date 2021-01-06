@@ -4,7 +4,7 @@ using FitnessApp.Models.General;
 
 namespace FitnessApp.Droid.Helper
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class MessageDROID : IMessage
     {

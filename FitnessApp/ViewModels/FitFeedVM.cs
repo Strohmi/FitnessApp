@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class FitFeedVM : NotifyPropertyBase
     {

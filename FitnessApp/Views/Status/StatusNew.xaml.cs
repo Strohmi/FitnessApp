@@ -7,7 +7,7 @@ using System.IO;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public partial class StatusNew : ContentPage
     {

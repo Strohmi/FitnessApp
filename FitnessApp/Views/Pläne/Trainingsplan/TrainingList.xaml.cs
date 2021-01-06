@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public partial class TrainingList : ContentPage
     {

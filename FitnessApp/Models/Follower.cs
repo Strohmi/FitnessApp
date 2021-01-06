@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FitnessApp.Models
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class Follower
     {

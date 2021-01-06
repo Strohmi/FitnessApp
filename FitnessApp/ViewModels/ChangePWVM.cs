@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class ChangePWVM : NotifyPropertyBase
     {

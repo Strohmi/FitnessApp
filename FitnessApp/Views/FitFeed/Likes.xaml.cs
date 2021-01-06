@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public partial class Likes : ContentPage
     {

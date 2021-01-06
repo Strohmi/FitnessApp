@@ -6,7 +6,7 @@ using FitnessApp.ViewModels;
 
 namespace FitnessApp.Models
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class DB_User
     {

@@ -1,16 +1,14 @@
 ﻿using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using Xamarin.Essentials;
 using FitnessApp.Models.General;
-using FitnessApp.Models;
 using System.Collections.Generic;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public partial class App : Application
     {

@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace FitnessApp.ViewModels
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class FavoPlansVM : NotifyPropertyBase
     {

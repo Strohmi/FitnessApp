@@ -6,7 +6,7 @@ using FitnessApp.Models.DB;
 
 namespace FitnessApp.Models
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public static class StaticDB
     {

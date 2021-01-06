@@ -5,7 +5,7 @@ using FitnessApp.Models.General;
 
 namespace FitnessApp.Models
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class DB_Feed
     {

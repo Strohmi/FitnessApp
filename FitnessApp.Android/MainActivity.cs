@@ -35,6 +35,7 @@ namespace FitnessApp.Droid
             LoadApplication(new App());
         }
 
+        //Autor: Niklas Erichsen
         /// <summary>
         /// Schriftgröße vereinheitlichen
         /// </summary>

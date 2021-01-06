@@ -1,7 +1,7 @@
 ﻿using System;
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class News : NotifyPropertyBase
     {

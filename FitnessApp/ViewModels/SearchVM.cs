@@ -4,7 +4,7 @@ using FitnessApp.Models;
 
 namespace FitnessApp.ViewModels
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class SearchVM : NotifyPropertyBase
     {

@@ -2,7 +2,8 @@ using System.Text;
 
 namespace FitnessApp.Models.General
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
+
     // Hinweis:
     // Es musste ein zweiter User angelegt werden,
     // weil durch die Benachrichtigung, wenn ein Property geändert wurde,

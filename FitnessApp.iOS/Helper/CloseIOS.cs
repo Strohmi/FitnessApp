@@ -4,7 +4,7 @@ using FitnessApp.Models.General;
 
 namespace FitnessApp.iOS.Helper
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class CloseIOS : ICloseApp
     {

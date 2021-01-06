@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace FitnessApp.Models.General
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class ByteArrayToImageSourceConverter : IValueConverter
     {

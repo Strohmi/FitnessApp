@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public partial class Profil : ContentPage
     {

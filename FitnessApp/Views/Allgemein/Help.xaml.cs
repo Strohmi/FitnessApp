@@ -2,6 +2,8 @@
 
 namespace FitnessApp
 {
+    //Autor: Niklas Erichsen
+
     public partial class Help : ContentPage
     {
         public Help()

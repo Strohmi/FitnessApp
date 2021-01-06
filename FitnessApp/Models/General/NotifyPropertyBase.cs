@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class NotifyPropertyBase : INotifyPropertyChanged
     {

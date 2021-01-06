@@ -8,7 +8,7 @@ using FitnessApp.ViewModels;
 
 namespace FitnessApp
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public partial class FavoPlans : ContentPage
     {

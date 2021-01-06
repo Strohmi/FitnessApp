@@ -6,7 +6,7 @@ using UIKit;
 
 namespace FitnessApp.iOS.Helper
 {
-    //Autor: NiE
+    //Autor: Niklas Erichsen
 
     public class ImageManagerIOS : IImageManager
     {
