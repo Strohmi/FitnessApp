@@ -1,10 +1,7 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
-namespace FitnessApp.Models.General
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public interface IMessage
     {
         void ShortAlert(string message);

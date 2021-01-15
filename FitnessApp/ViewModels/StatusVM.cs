@@ -1,9 +1,5 @@
-﻿using System;
-
-namespace FitnessApp
+﻿namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class StatusVM : NotifyPropertyBase
     {
         private Status _status;

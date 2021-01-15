@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using System.Linq;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
-using System.Text;
-using FitnessApp.ViewModels;
 using System.Net;
 
 namespace FitnessApp

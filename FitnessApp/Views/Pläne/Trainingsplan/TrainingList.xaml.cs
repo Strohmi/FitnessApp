@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
 using System.Linq;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class TrainingList : ContentPage
     {
         public List<Trainingsplan> TPlaene { get; set; }

@@ -1,16 +1,11 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.Content.Res;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Android.Util;
-
-using FitnessApp.Droid.Helper;
 using Xamarin.Forms;
+using FitnessApp.Droid;
 
 [assembly: Dependency(typeof(CloseDROID))]
 [assembly: Dependency(typeof(MessageDROID))]

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using FitnessApp.Models.General;
-using FitnessApp.ViewModels;
 
-namespace FitnessApp.Models
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class DB_User
     {
         /// <summary>

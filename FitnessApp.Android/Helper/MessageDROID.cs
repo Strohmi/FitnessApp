@@ -1,11 +1,7 @@
-﻿using System;
-using Android.Widget;
-using FitnessApp.Models.General;
+﻿using Android.Widget;
 
-namespace FitnessApp.Droid.Helper
+namespace FitnessApp.Droid
 {
-    //Autor: Niklas Erichsen
-
     public class MessageDROID : IMessage
     {
         /// <summary>

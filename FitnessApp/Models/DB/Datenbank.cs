@@ -1,13 +1,8 @@
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using FitnessApp.Models.DB;
 
-namespace FitnessApp.Models
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public static class StaticDB
     {
         public static SqlConnection Connection { get; set; }

@@ -1,14 +1,11 @@
 ﻿using System;
 using Xamarin.Forms;
-using FitnessApp.Models.General;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using System.IO;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class StatusNew : ContentPage
     {
         public StatusVM StatusVM { get; set; }

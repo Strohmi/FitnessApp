@@ -2,14 +2,9 @@
 using System.Collections.Generic;
 using Xamarin.Forms;
 using System.Linq;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
-using FitnessApp.ViewModels;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class FavoPlans : ContentPage
     {
         public FavoPlansVM FavoPlansVM { get; set; }

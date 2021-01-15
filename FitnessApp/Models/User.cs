@@ -1,10 +1,7 @@
 using System;
-using FitnessApp.Models;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     /// <summary>
     /// Benutzerklasse
     /// </summary>

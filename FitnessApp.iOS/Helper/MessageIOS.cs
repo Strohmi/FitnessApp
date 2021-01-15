@@ -1,12 +1,8 @@
-﻿using System;
-using Foundation;
+﻿using Foundation;
 using UIKit;
-using FitnessApp.Models.General;
 
-namespace FitnessApp.iOS.Helper
+namespace FitnessApp.iOS
 {
-    //Autor: Niklas Erichsen
-
     public class MessageIOS : IMessage
     {
         const double SHORT_DELAY = 1.5;

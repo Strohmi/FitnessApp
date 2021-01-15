@@ -1,12 +1,8 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Xamarin.Forms;
-using FitnessApp.Models.General;
 
-namespace FitnessApp.Droid.Helper
+namespace FitnessApp.Droid
 {
-    //Autor: Niklas Erichsen
-
     public class CloseDROID : ICloseApp
     {
         /// <summary>

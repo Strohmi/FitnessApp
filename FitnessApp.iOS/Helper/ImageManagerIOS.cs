@@ -1,13 +1,9 @@
-﻿using System;
-using Xamarin.Forms;
-using FitnessApp.Models.General;
+﻿using Xamarin.Forms;
 using Foundation;
 using UIKit;
 
-namespace FitnessApp.iOS.Helper
+namespace FitnessApp.iOS
 {
-    //Autor: Niklas Erichsen
-
     public class ImageManagerIOS : IImageManager
     {
         /// <summary>

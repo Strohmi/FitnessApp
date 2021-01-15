@@ -1,11 +1,8 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class NotifyPropertyBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;

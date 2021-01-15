@@ -2,8 +2,6 @@
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class Status : NotifyPropertyBase
     {
         private string _beschreibung;

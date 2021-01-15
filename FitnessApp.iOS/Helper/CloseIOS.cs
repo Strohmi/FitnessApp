@@ -1,11 +1,7 @@
-﻿using System;
-using System.Threading;
-using FitnessApp.Models.General;
+﻿using System.Threading;
 
-namespace FitnessApp.iOS.Helper
+namespace FitnessApp.iOS
 {
-    //Autor: Niklas Erichsen
-
     public class CloseIOS : ICloseApp
     {
         /// <summary>

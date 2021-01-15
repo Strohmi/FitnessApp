@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Xamarin.Forms;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
+﻿using Xamarin.Forms;
 using System;
 
 namespace FitnessApp

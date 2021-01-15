@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Net;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
 using Plugin.Media;
 using Plugin.Media.Abstractions;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class ProfilEdit : ContentPage
     {
         public ProfilEditVM ProfilVM { get; set; }

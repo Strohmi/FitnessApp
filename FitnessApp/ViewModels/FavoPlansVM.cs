@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using FitnessApp.Models;
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
 
-namespace FitnessApp.ViewModels
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class FavoPlansVM : NotifyPropertyBase
     {
         private List<object> _anzeigeListe;

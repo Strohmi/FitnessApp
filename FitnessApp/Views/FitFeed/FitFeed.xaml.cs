@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 using System.Linq;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
-using System.Threading.Tasks;
 using System.Timers;
-using System.Reflection;
-using System.Collections.ObjectModel;
 
 namespace FitnessApp
 {
@@ -49,10 +42,8 @@ namespace FitnessApp
                     ID = -1,
                     Beschreibung = "Hey neuer Fitness-User!\n" +
                     "Ich finde es super, dass du die App ausprobierst!\n\n" +
-                    "Wenn du Fragen hast, kannst du mich jederzeit gerne anschreiben!\n" +
                     "Bis dahin, wünsche ich dir viel Spaß beim Teilen deiner Fitnessaktivitäten, deinen leckeren Ernährungsplänen oder deinen anstregenden aber guten Trainingsplänen!\n\n" +
                     "Falls du neue Leute kennen lernen willst, die das gleiche Interesse wie du haben, geh einfach auf die Suche und finde neue Leute!\n\n" +
-                    "Achja, und wenn du ein paar Fehler findest, schreib mir einfach. Ich leite die Nachricht ans Entwicklerteam weiter ;)\n\n" +
                     "Tschüssikowski und bis denne dein Fitness_Bot",
                     Ersteller = new User() { Nutzername = "fitness_bot" },
                     ErstelltAm = DateTime.Now

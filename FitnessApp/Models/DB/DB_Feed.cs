@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using FitnessApp.Models.General;
 
-namespace FitnessApp.Models
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class DB_Feed
     {
         /// <summary>

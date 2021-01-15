@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
-using Plugin.Media;
-using Plugin.Media.Abstractions;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class ChangePassword : ContentPage
     {
         private ChangePWVM cPWVM;

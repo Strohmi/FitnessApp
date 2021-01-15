@@ -1,12 +1,8 @@
 ﻿using System;
 using Xamarin.Forms;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class BewertungAdd : ContentPage
     {
         public Trainingsplan TPlan { get; set; }

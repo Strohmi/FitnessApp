@@ -1,12 +1,7 @@
-﻿using System;
-using System.Drawing;
-using Android.Graphics;
-using FitnessApp.Models.General;
+﻿using Android.Graphics;
 
-namespace FitnessApp.Droid.Helper
+namespace FitnessApp.Droid
 {
-    //Autor: Niklas Erichsen
-
     public class ImageManagerDROID : IImageManager
     {
         /// <summary>

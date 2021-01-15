@@ -1,8 +1,7 @@
 ﻿using System;
-namespace FitnessApp.Models
-{
-    //Autor: Niklas Erichsen
 
+namespace FitnessApp
+{
     public class Follower
     {
         public int Index { get; set; }

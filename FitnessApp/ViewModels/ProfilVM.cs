@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using FitnessApp.Models;
-using FitnessApp.Models.General;
-using Xamarin.Forms;
+﻿using System.Collections.Generic;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class ProfilShowVM : NotifyPropertyBase
     {
         private User _user;

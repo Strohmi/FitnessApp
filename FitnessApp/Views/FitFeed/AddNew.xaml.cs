@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data.SqlClient;
-using FitnessApp.Models.General;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class AddNew : ContentPage
     {
         public AddNew()

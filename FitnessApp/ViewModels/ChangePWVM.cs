@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FitnessApp
+﻿namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class ChangePWVM : NotifyPropertyBase
     {
         private string _curPW;

@@ -1,17 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Net;
 using System.Timers;
-using FitnessApp.Models.General;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class Profil : ContentPage
     {
         public ProfilShowVM ProfilVM { get; set; }
@@ -87,7 +81,7 @@ namespace FitnessApp
             }
             else
             {
-                List<Models.Follower> follows = AllVM.Datenbank.User.GetFollows(ProfilVM.User.Nutzername);
+                List<Follower> follows = AllVM.Datenbank.User.GetFollows(ProfilVM.User.Nutzername);
                 if (follows != null)
                 {
                     if (follows.Exists(s => s.User.Nutzername == AllVM.User.Nutzername))
@@ -196,7 +190,7 @@ namespace FitnessApp
         {
             if (ProfilVM.User.Nutzername == AllVM.User.Nutzername && ProfilVM.User.AnzahlFollower > 0)
             {
-                this.Navigation.PushAsync(new Follower(ProfilVM.User));
+                this.Navigation.PushAsync(new FollowerShow(ProfilVM.User));
             }
         }
 

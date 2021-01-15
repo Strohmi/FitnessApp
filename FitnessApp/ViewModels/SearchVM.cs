@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using FitnessApp.Models;
+﻿using System.Collections.Generic;
 
-namespace FitnessApp.ViewModels
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class SearchVM : NotifyPropertyBase
     {
         private List<User> _users;

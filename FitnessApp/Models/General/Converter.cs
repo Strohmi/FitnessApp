@@ -2,10 +2,8 @@
 using System.IO;
 using Xamarin.Forms;
 
-namespace FitnessApp.Models.General
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class ByteArrayToImageSourceConverter : IValueConverter
     {
         /// <summary>

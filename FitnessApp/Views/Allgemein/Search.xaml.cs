@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using FitnessApp.Models.General;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using FitnessApp.ViewModels;
-using FitnessApp.Models;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public partial class Search : ContentPage
     {
         public SearchVM SearchVM { get; set; }

@@ -1,5 +1,4 @@
-﻿using System;
-namespace FitnessApp.ViewModels
+﻿namespace FitnessApp
 {
     public class RegisterVM : NotifyPropertyBase
     {

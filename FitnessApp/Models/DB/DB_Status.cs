@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Data.SqlClient;
 
-namespace FitnessApp.Models
+namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class DB_Status
     {
         /// <summary>

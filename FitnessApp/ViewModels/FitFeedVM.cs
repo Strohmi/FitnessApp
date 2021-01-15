@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
     public class FitFeedVM : NotifyPropertyBase
     {
         private ObservableCollection<News> _listNews;

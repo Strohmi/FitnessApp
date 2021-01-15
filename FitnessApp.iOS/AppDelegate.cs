@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using FitnessApp.iOS;
 using Foundation;
 using UIKit;
-using FitnessApp.iOS.Helper;
 using Xamarin.Forms;
 
 [assembly: Dependency(typeof(MessageIOS))]

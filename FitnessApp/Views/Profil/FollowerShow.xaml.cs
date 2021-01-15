@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Linq;
-using FitnessApp.Models.General;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace FitnessApp
 {
-    //Autor: Niklas Erichsen
-
-    public partial class Follower : ContentPage
+    public partial class FollowerShow : ContentPage
     {
         public User user { get; set; }
-        public List<Models.Follower> Follows { get; set; }
+        public List<Follower> Follows { get; set; }
 
-        public Follower(User _user)
+        public FollowerShow(User _user)
         {
             InitializeComponent();
             user = _user;
