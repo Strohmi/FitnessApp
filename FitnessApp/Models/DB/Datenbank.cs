@@ -3,7 +3,7 @@ using System.Data.SqlClient;
 
 namespace FitnessApp
 {
-    public static class StaticDB
+    public class StaticDB
     {
         public static SqlConnection Connection { get; set; }
 
