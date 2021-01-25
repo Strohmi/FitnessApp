@@ -16,7 +16,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Frame Grid.Row="0" Margin="20" Padding="10" BackgroundColor="Orange" VerticalOptions="Start">
+        <Frame Grid.Row="0" Margin="20" Padding="10" BackgroundColor="LightBlue" VerticalOptions="Start">
             <Grid BackgroundColor="Transparent">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>

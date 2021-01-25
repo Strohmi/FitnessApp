@@ -91,7 +91,7 @@
             <Button Grid.Row="4" Grid.ColumnSpan="2" Margin="0,10,0,0" Text="Passwort ändern..." FontSize="Medium" TextColor="Black" BorderColor="Black" BorderWidth="1" Clicked="ChangePWD"/>
         </Grid>
 
-        <Button Grid.Row="4" VerticalOptions="End" Text="Abmelden" TextColor="White" FontSize="Medium" FontAttributes="Bold" BackgroundColor="LightSkyBlue" Margin="30,0" CornerRadius="20" Clicked="Logoff"/>
-        <Button Grid.Row="5" VerticalOptions="End" Text="Account löschen" TextColor="White" FontSize="Medium" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0" CornerRadius="20" Clicked="DeleteUser"/>
+        <Button Grid.Row="4" VerticalOptions="End" Text="Abmelden" TextColor="Black" FontSize="Medium" FontAttributes="Bold" BackgroundColor="LightSkyBlue" Margin="30,0" CornerRadius="20" Clicked="Logoff"/>
+        <Button Grid.Row="5" VerticalOptions="End" Text="Account löschen" TextColor="Black" FontSize="Medium" FontAttributes="Bold" BackgroundColor="Red" Margin="30,0" CornerRadius="20" Clicked="DeleteUser"/>
     </Grid>
 </ContentPage>
