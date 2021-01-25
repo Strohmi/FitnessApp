@@ -23,6 +23,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <Frame Grid.Row="0" Grid.ColumnSpan="3" HasShadow="True" Padding="20" BackgroundColor="White" Margin="20">
