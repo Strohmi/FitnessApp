@@ -15,7 +15,7 @@ namespace FitnessApp
         /// </summary>
         private void SetHelpText()
         {
-            string txt = $"Vielen Dank, dass du FitApp benutzt.\n\nHier steht normalerweise der Hilfetext, der aber noch geschrieben werden muss";
+            string txt = $"Vielen Dank, dass du FitApp benutzt.\n\nHier könnte in Zukunft ein Hilfetext stehen.";
             helpText.Text = txt;
         }
     }
